@@ -4,25 +4,4 @@
     <solid android:color="#e8e6e6" />
     <corners android:radius="10dp" />
 </shape>
-<!--<vector-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:width="320dp"-->
-<!--    android:height="170dp"-->
-<!--    android:viewportWidth="320"-->
-<!--    android:viewportHeight="170"-->
-<!--    >-->
-<!--    <group>-->
-<!--        <clip-path-->
-<!--            android:pathData="M8 0H312C316.418 0 320 3.58172 320 8V162C320 166.418 316.418 170 312 170H8C3.58172 170 0 166.418 0 162V8C0 3.58172 3.58172 0 8 0Z"-->
-<!--            />-->
-<!--        <path-->
-<!--            android:pathData="M0 0V170H320V0"-->
-<!--            android:fillColor="#000000"-->
-<!--            />-->
-<!--        <path-->
-<!--            android:pathData="M0 0V170H320V0"-->
-<!--            android:fillColor="#E6FFFFFF"-->
-<!--            />-->
-<!--    </group>-->
-<!--</vector>-->
 

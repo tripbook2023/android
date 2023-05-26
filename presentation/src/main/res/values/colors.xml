@@ -7,8 +7,55 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="base">#e8e6e6</color>
 
-    <color name="tripBook_main">#FF4E16</color>
+    <!--tripBook color-->
+
+    <!--핃백 받고 다른 컴포넌트 컬러두 수정할게용-->
+
+    <!--GrayScale-->
+    <color name="gray_G_0">#FFFAF9F9</color>
+    <color name="gray_G_10">#FFEFECEC</color>
+    <color name="gray_G_20">#FFE1DCDB</color>
+    <color name="gray_G_30">#FFC7BFBD</color>
+    <color name="gray_G_40">#FF9F9693</color>
+    <color name="gray_G_50">#FF7F7471</color>
+    <color name="gray_G_60">#FF615956</color>
+    <color name="gray_G_70">#FF4C4543</color>
+    <color name="gray_G_80">#FF342F2D</color>
+    <color name="gray_G_90">#FF1C1817</color>
+    <color name="gray_G_100">#FF0E0C0C</color>
+
+    <!--Brand - primary-->
+    <color name="p_10">#FFFFD6AD</color>
+    <color name="p_20">#FFFFC294</color>
+    <color name="p_30">#FFFFA770</color>
+    <color name="p_40">#FFFF7E3D</color>
+    <color name="p_50">#FFFF4E16</color>
+    <color name="p_60">#FFE52E00</color>
+    <color name="p_70">#FFC72100</color>
+    <color name="p_80">#FFAD1100</color>
+    <color name="p_90">#FF8F0500</color>
+
+    <!--Brand - Secondary-->
+    <color name="s_10">#FFFFF4C7</color>
+    <color name="s_20">#FFFFEFAD</color>
+    <color name="s_30">#FFFFE98F</color>
+    <color name="s_40">#FFFFDF61</color>
+    <color name="s_50">#FFFFD52F</color>
+    <color name="s_60">#FFFFCD05</color>
+    <color name="s_70">#FFE0B400</color>
+    <color name="s_80">#FFBD9700</color>
+    <color name="s_90">#FF947600</color>
+
+    <!--Brand -  Point-->
+    <color name="point_G1">#FF7BF397</color>
+    <color name="point_G2">#FF67CB94</color>
+    <color name="point_G3">#FF00573A</color>
+    <color name="point_N1">#FF091F33</color>
+
+    <!--State-->
+    <color name="tripBook_main">@color/p_50</color>
     <color name="tripBook_main_transparent">#40FF4E16</color>
     <color name="warning">#DD362C</color>
     <color name="editText_focusOut">#E5E5E5</color>
