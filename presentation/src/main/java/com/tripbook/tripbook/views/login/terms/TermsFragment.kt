@@ -87,24 +87,4 @@ class TermsFragment : BaseFragment<FragmentTermsBinding>(R.layout.fragment_terms
         }
     }
 
-     @BindingAdapter("buttonColor")
-        fun setButtonColor(button: Button, termsChk: Boolean?) {
-         termsChk?.let { isChecked ->
-             val context = button.context
-             val backgroundColor = if (isChecked) {
-                 context.getColor(R.color.tripBook_main)
-             } else {
-                 context.getColor(R.color.base)
-             }
-
-             val textColor = if (isChecked) {
-                 context.getColor(R.color.white)
-             } else {
-                 context.getColor(R.color.white)
-             }
-             button.setBackgroundColor(backgroundColor)
-             button.setTextColor(textColor)
-         }
-
- }
 }

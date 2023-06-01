@@ -2,8 +2,12 @@ package com.tripbook.tripbook.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 
 class TermsViewModel : ViewModel() {
 
@@ -66,8 +70,14 @@ class TermsViewModel : ViewModel() {
         _marketingChecked.value = isChecked
     }
 
-    fun areAllTermsChecked(): Boolean {
-        return _serviceChecked.value && _personalInfoChecked.value && _locationChecked.value
-    }
+    val allItemsChecked : StateFlow<Boolean> = combine(
+        _serviceChecked, _personalInfoChecked, _locationChecked
+    ) { service, personalInfo, location ->
+        service && personalInfo && location
+    }.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5000),
+        false
+    )
 
 }

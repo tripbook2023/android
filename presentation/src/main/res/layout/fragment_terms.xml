@@ -245,7 +245,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            app:buttonColor="@{viewModel.areAllTermsChecked}"/>
+            android:backgroundTint="@{viewModel.allItemsChecked ? @color/tripBook_main : @color/base}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
