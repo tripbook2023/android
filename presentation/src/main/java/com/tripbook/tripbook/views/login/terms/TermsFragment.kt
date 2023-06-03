@@ -1,19 +1,12 @@
 package com.tripbook.tripbook.views.login.terms
 
-import android.os.Bundle
-import android.util.Log
-import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.Toast
-import androidx.databinding.BindingAdapter
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
-
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentTermsBinding
 import com.tripbook.tripbook.viewmodel.TermsViewModel
-import kotlinx.coroutines.launch
 
 class TermsFragment : BaseFragment<FragmentTermsBinding>(R.layout.fragment_terms) {
 
@@ -55,7 +48,6 @@ class TermsFragment : BaseFragment<FragmentTermsBinding>(R.layout.fragment_terms
         binding.termsLocation.setOnCheckedChangeListener(onCheckedChanged)  //위치정보
         binding.termsMarketing.setOnCheckedChangeListener(onCheckedChanged) //마게팅
 
-
     } //init
 
     //이용 동의 타이틀
@@ -76,15 +68,16 @@ class TermsFragment : BaseFragment<FragmentTermsBinding>(R.layout.fragment_terms
 
     //필수 동의 체크 여부
     private fun isCheck()  {
-        if(!viewModel.serviceChecked.value) {
-            Toast.makeText(requireContext(), "서비스 이용 동의는 필수입니다.", Toast.LENGTH_SHORT).show()
-        } else if(!viewModel.personalInfoChecked.value) {
-            Toast.makeText(requireContext(), "개인정보 수집 및 이용 동의는 필수입니다.", Toast.LENGTH_SHORT).show()
-        } else {
-            if(!viewModel.locationChecked.value) {
+        when {
+            !viewModel.serviceChecked.value -> {
+                Toast.makeText(requireContext(), "서비스 이용 동의는 필수입니다.", Toast.LENGTH_SHORT).show()
+            }
+            !viewModel.personalInfoChecked.value -> {
+                Toast.makeText(requireContext(), "개인정보 수집 및 이용 동의는 필수입니다.", Toast.LENGTH_SHORT).show()
+            }
+            !viewModel.locationChecked.value -> {
                 Toast.makeText(requireContext(), "위치정보수집 및 이용 동의는 필수입니다.", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
 }

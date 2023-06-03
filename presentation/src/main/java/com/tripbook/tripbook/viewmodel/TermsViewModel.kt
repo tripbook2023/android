@@ -1,8 +1,8 @@
 package com.tripbook.tripbook.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tripbook.tripbook.data.model.TermsURL
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -42,15 +42,15 @@ class TermsViewModel : ViewModel() {
     fun onAllTermsCheckedChanged(isChecked: Boolean) {
         _allTermsChecked.value = isChecked
         if (isChecked) {
-            _serviceChecked.value = true
-            _personalInfoChecked.value = true
-            _locationChecked.value = true
-            _marketingChecked.value = true
+            setServiceChecked(true)
+            setPersonalInfoChecked(true)
+            setLocationChecked(true)
+            setMarketingChecked(true)
         } else {
-            _serviceChecked.value = false
-            _personalInfoChecked.value = false
-            _locationChecked.value = false
-            _marketingChecked.value = false
+            setServiceChecked(false)
+            setPersonalInfoChecked(false)
+            setLocationChecked(false)
+            setMarketingChecked(false)
         }
     }
 
@@ -70,7 +70,7 @@ class TermsViewModel : ViewModel() {
         _marketingChecked.value = isChecked
     }
 
-    val allItemsChecked : StateFlow<Boolean> = combine(
+    val allItemsBtnChecked : StateFlow<Boolean> = combine(
         _serviceChecked, _personalInfoChecked, _locationChecked
     ) { service, personalInfo, location ->
         service && personalInfo && location
@@ -79,5 +79,13 @@ class TermsViewModel : ViewModel() {
         SharingStarted.WhileSubscribed(5000),
         false
     )
-
+    //이용동의별 URL 가져오기
+    fun getTermsURL(termsTitle: String): TermsURL {
+        return when (termsTitle) {
+            "서비스 이용약관 동의" -> TermsURL(termsTitle, "https://www.naver.com/")
+            "개인정보 수집 및 이용 동의" -> TermsURL(termsTitle,"https://www.youtube.com/")
+            "위치정보수집 및 이용동의" -> TermsURL(termsTitle, "https://www.google.com/webhp?hl=ko&sa=X&ved=0ahUKEwiK9-vYnJ3_AhXOCd4KHaFFByoQPAgI")
+            else -> TermsURL(termsTitle,"https://www.daum.net/")
+        }
+    }
 }

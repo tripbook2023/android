@@ -11,6 +11,7 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.tripbook.tripbook.R
+import com.tripbook.tripbook.data.model.TermsURL
 import com.tripbook.tripbook.databinding.FragmentTermsDialogBinding
 import com.tripbook.tripbook.viewmodel.TermsViewModel
 
@@ -49,19 +50,10 @@ class TermsDialogFragment: DialogFragment() {
         }
 
         val termsTitle = viewModel.termsTitle.value
-        val url = getTermsURL(termsTitle)
-        webView.loadUrl(url)
+        val termsURL: TermsURL = viewModel.getTermsURL(termsTitle)
+        webView.loadUrl(termsURL.url)
 
         return binding.root
-    }
-
-    private fun getTermsURL(termsTitle: String): String {
-        return when (termsTitle) { //임시 url 설정
-            "서비스 이용약관 동의" -> "https://www.naver.com/"
-            "개인정보 수집 및 이용 동의" -> "https://www.youtube.com/"
-            "위치정보수집 및 이용동의" -> "https://www.google.com/webhp?hl=ko&sa=X&ved=0ahUKEwiK9-vYnJ3_AhXOCd4KHaFFByoQPAgI"
-            else -> "https://www.daum.net/"
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,8 +63,5 @@ class TermsDialogFragment: DialogFragment() {
         binding.close.setOnClickListener {
             dismiss()
         }
-
     }
-
-
 }
