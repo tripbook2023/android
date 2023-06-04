@@ -1,6 +1,5 @@
 package com.tripbook.tripbook.views.login.terms
 
-import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import com.tripbook.base.BaseFragment
@@ -41,13 +40,6 @@ class TermsFragment : BaseFragment<FragmentTermsBinding>(R.layout.fragment_terms
             title = binding.termsMarketingText.text.toString()
             loadTermsDialog(title)
         }
-
-        binding.allTermsAgree.setOnCheckedChangeListener(onCheckedChanged) //전체 동의
-        binding.termsService.setOnCheckedChangeListener(onCheckedChanged)//서비스
-        binding.termsPersonalInfo.setOnCheckedChangeListener(onCheckedChanged)  //개인정보
-        binding.termsLocation.setOnCheckedChangeListener(onCheckedChanged)  //위치정보
-        binding.termsMarketing.setOnCheckedChangeListener(onCheckedChanged) //마게팅
-
     } //init
 
     //이용 동의 타이틀
@@ -56,26 +48,16 @@ class TermsFragment : BaseFragment<FragmentTermsBinding>(R.layout.fragment_terms
         TermsDialogFragment().show(childFragmentManager, "TermsDialog Fragment")
     }
 
-    private var onCheckedChanged = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-        when (buttonView.id) {
-            R.id.all_terms_agree -> viewModel.onAllTermsCheckedChanged(isChecked)
-            R.id.terms_service -> viewModel.setServiceChecked(isChecked)
-            R.id.terms_personal_info -> viewModel.setPersonalInfoChecked(isChecked)
-            R.id.terms_location -> viewModel.setLocationChecked(isChecked)
-            R.id.terms_marketing -> viewModel.setMarketingChecked(isChecked)
-        }
-    }
-
     //필수 동의 체크 여부
     private fun isCheck()  {
         when {
-            !viewModel.serviceChecked.value -> {
+            viewModel.serviceChecked.value.not() -> {
                 Toast.makeText(requireContext(), "서비스 이용 동의는 필수입니다.", Toast.LENGTH_SHORT).show()
             }
-            !viewModel.personalInfoChecked.value -> {
+            viewModel.personalInfoChecked.value.not() -> {
                 Toast.makeText(requireContext(), "개인정보 수집 및 이용 동의는 필수입니다.", Toast.LENGTH_SHORT).show()
             }
-            !viewModel.locationChecked.value -> {
+            viewModel.locationChecked.value.not() -> {
                 Toast.makeText(requireContext(), "위치정보수집 및 이용 동의는 필수입니다.", Toast.LENGTH_SHORT).show()
             }
         }
