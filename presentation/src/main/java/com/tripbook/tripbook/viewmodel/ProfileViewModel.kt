@@ -16,7 +16,7 @@ class ProfileViewModel : ViewModel() {
     private val _isProfileValid = MutableStateFlow(false)
     val isProfileValid: StateFlow<Boolean> = _isProfileValid
 
-    private var uri: Uri = Uri.parse("android.resource://com.tripbook.tripbook/drawable/ic_image")
+    private var uri: Uri = Uri.parse("android.resource://com.tripbook.tripbook/drawable/ic_picture")
     private val _profileUri = MutableStateFlow(uri)
     val profileUri: StateFlow<Uri> = _profileUri
 

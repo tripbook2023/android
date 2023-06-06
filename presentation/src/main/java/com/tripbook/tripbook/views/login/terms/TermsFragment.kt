@@ -2,6 +2,7 @@ package com.tripbook.tripbook.views.login.terms
 
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentTermsBinding
@@ -60,6 +61,7 @@ class TermsFragment : BaseFragment<FragmentTermsBinding>(R.layout.fragment_terms
             viewModel.locationChecked.value.not() -> {
                 Toast.makeText(requireContext(), "위치정보수집 및 이용 동의는 필수입니다.", Toast.LENGTH_SHORT).show()
             }
+            else -> findNavController().navigate(R.id.action_termsFragment_to_nicknameFragment)
         }
     }
 }

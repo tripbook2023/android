@@ -3,8 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile"
-    app:startDestination="@+id/nicknameFragment">
+    app:startDestination="@+id/termsFragment">
 
+    <fragment
+        android:id="@+id/termsFragment"
+        android:name="com.tripbook.tripbook.views.login.terms.TermsFragment"
+        tools:layout="@layout/fragment_terms">
+        <action
+            android:id="@+id/action_termsFragment_to_nicknameFragment"
+            app:destination="@id/nicknameFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nicknameFragment"
         android:name="com.tripbook.tripbook.views.login.profile.NicknameFragment"
@@ -18,5 +26,13 @@
         android:id="@+id/profileFragment"
         android:name="com.tripbook.tripbook.views.login.profile.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_additionalFragment"
+            app:destination="@id/additionalFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/additionalFragment"
+        android:name="com.tripbook.tripbook.views.login.profile.AdditionalFragment"
+        android:label="AdditionalFragment" />
 </navigation>

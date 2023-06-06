@@ -39,12 +39,8 @@
 
     <style name="ButtonSolidStyle" parent="Widget.AppCompat.Button">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/button_text</item>
+        <item name="android:textColor">@color/button_text_color</item>
         <item name="android:background">@drawable/button_solid</item>
-<!--        버튼 레이아웃-->
-<!--        <item name="android:layout_marginLeft">@dimen/profile_button_horizontal</item>-->
-<!--        <item name="android:layout_marginRight">@dimen/profile_button_horizontal</item>-->
-<!--        <item name="android:layout_marginBottom">@dimen/profile_button_bottom</item>-->
     </style>
 
     <style name="ButtonOutlineStyle" parent="Widget.AppCompat.Button">
