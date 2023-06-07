@@ -23,17 +23,17 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding>(R.layout.fragment
             val screenHeight = binding.contentView.rootView.height
 
             val keypadHeight = screenHeight - r.bottom
-            if (keypadHeight > screenHeight * 0.15) {
+
+            if (keypadHeight > screenHeight * 0.15) { // 키보드가 올라가 있을 때
                 if (!viewModel.isKeyboardUp.value) {
                     viewModel.setKeyboard(true)
                     binding.root.setOnClickListener {
                         hideKeyboard()
                     }
                 }
-            } else {
+            } else { // 키보드가 내려가있을 때
                 if (viewModel.isKeyboardUp.value) viewModel.setKeyboard(false)
             }
-            binding.contentView.viewTreeObserver.removeOnGlobalLayoutListener(this)
         }
     }
     override fun init() {
@@ -62,7 +62,11 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding>(R.layout.fragment
         return true
     }
 
-    private fun hideKeyboard() {
+    override fun onStop() {
+        binding.contentView.viewTreeObserver.removeOnGlobalLayoutListener(layoutListener)
+        super.onStop()
+    }
+    fun hideKeyboard() {
         requireActivity().currentFocus?.let {
             val inputManager =
                 requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
