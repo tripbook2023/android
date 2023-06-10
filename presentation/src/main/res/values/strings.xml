@@ -25,5 +25,12 @@
     <string name="terms_marketing">(선택) 마케팅 수신 동의</string>
     <string name="terms_button">다음으로 넘어가요</string>
     <string name="close">닫기</string>
+    <string name="additional_textView_label">조금 더 알아볼게요</string>
+    <string name="additional_gender_label">성별을 선택해주세요</string>
+    <string name="additional_button_female">여성</string>
+    <string name="additional_button_male">남성</string>
+    <string name="additional_age_label">연령대를 작성해주세요</string>
+    <string name="additional_age_hint">나이 입력</string>
+    <string name="addtional_button_complete">입력 완료</string>
 
 </resources>

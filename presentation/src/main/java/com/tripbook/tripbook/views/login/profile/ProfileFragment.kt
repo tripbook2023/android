@@ -1,6 +1,7 @@
 package com.tripbook.tripbook.views.login.profile
 
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentProfileBinding
@@ -19,10 +20,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             )
         }
         binding.profileButton.setOnClickListener {
-
+            findNavController().navigate(R.id.action_profileFragment_to_additionalFragment)
         }
         binding.profileLater.setOnClickListener {
-
+            findNavController().navigate(R.id.action_profileFragment_to_additionalFragment)
         }
     }
 }

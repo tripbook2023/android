@@ -20,11 +20,11 @@ class CustomEditText @JvmOverloads constructor(
     defStyleAttr: Int = androidx.appcompat.R.attr.editTextStyle
 ) : AppCompatEditText(context, attrs, defStyleAttr), TextWatcher, View.OnTouchListener, View.OnFocusChangeListener{
 
-    private var clearDrawable: Drawable? = null
+    var clearDrawable: Drawable? = null
     private var focusChangeListener: OnFocusChangeListener? = null
     private var touchListener: OnTouchListener? = null
     private var editorActionListener: OnEditorActionListener? = null
-    var errorMsg: String? = ""
+    private var errorMsg: String? = ""
 
     init {
         // X 버튼 추가, Touch, Focus, TextWatcher 리스너 추가
@@ -41,10 +41,12 @@ class CustomEditText @JvmOverloads constructor(
 
     private fun setClearIconVisible(visible: Boolean){
         clearDrawable?.setVisible(visible, false)
-        val right: Drawable? = if (visible)
+
+        val right: Drawable? = if (visible){
             clearDrawable
-        else
+        }else{
             null
+        }
         setCompoundDrawables(null, null, right, null)
     }
 
@@ -55,9 +57,9 @@ class CustomEditText @JvmOverloads constructor(
         lengthBefore: Int,
         lengthAfter: Int
     ) {
-        // 텍스트 길이에 따라 X버튼 보이기 / 없애기
-        if(isFocused)
+        if(isFocused) {
             setClearIconVisible(text!!.isNotEmpty())
+        }
     }
     override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
@@ -73,6 +75,15 @@ class CustomEditText @JvmOverloads constructor(
         } else if (!nickname.matches(regex)) {
             setError(resources.getString(R.string.nickname_sign_alert))
         }else {
+            setError(null)
+        }
+    }
+
+    fun isAgeValid(age: CharSequence): String?{
+        val regex = Regex("^[1-9]{1}[0-9]{1}$")
+        return if (!age.matches(regex)){
+            setError("10~100 사이의 숫자를 입력해주세요")
+        }else{
             setError(null)
         }
     }

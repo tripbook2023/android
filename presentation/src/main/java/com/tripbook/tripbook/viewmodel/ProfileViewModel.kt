@@ -10,9 +10,6 @@ class ProfileViewModel : ViewModel() {
     private val _isNicknameValid = MutableStateFlow(false)
     val isNicknameValid: StateFlow<Boolean> = _isNicknameValid
 
-    private val _nicknameError = MutableStateFlow(true)
-    val nicknameError: StateFlow<Boolean> = _nicknameError
-
     private val _isProfileValid = MutableStateFlow(false)
     val isProfileValid: StateFlow<Boolean> = _isProfileValid
 
@@ -30,14 +27,12 @@ class ProfileViewModel : ViewModel() {
     val isKeyboardUp: StateFlow<Boolean> get() = _isKeyboardUp
 
     fun setNicknameValid(errorMsg: String?) {
-        errorMsg?.let {str ->
+        errorMsg?.let { str ->
             _errorMsg.value = str
             _isNicknameValid.value = false
-            _nicknameError.value = false
         } ?: run {
             _errorMsg.value = ""
             _isNicknameValid.value = true
-            _nicknameError.value = true
         }
     }
 
@@ -45,7 +40,7 @@ class ProfileViewModel : ViewModel() {
         uri?.let {
             _profileUri.value = it
             _isProfileValid.value = true
-        } ?: run{
+        } ?: run {
             _isProfileValid.value = false
         }
     }
@@ -57,5 +52,4 @@ class ProfileViewModel : ViewModel() {
     fun setKeyboard(up: Boolean) {
         _isKeyboardUp.value = up
     }
-
 }

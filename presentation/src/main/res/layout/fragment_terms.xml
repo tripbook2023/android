@@ -236,13 +236,12 @@
             android:id="@+id/terms_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:backgroundTint="@{viewModel.allItemsBtnChecked ? @color/tripBook_main : @color/base}"
             android:text="@string/terms_button"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:backgroundTint="@{viewModel.allItemsBtnChecked ? @color/tripBook_main : @color/base}"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

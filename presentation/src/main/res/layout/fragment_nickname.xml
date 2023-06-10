@@ -32,7 +32,6 @@
 
         <com.tripbook.tripbook.views.login.profile.CustomEditText
             android:id="@+id/nickname"
-            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="18dp"
@@ -41,7 +40,6 @@
             android:hint="@string/nickname_hint"
             android:imeOptions="actionDone"
             android:inputType="text"
-            android:paddingBottom="14dp"
             android:theme="@style/EditTextStyle"
             app:layout_constraintTop_toBottomOf="@id/nickname_label" />
 
@@ -55,7 +53,7 @@
             android:text="@{viewModel.errorMsg}"
             android:textColor="@color/warning"
             android:textSize="12sp"
-            android:visibility="@{viewModel.nicknameError ? View.GONE : View.VISIBLE, default=gone}"
+            android:visibility="@{viewModel.errorMsg.equals(``) ? View.GONE : View.VISIBLE, default=gone}"
             app:drawableLeftCompat="@drawable/ic_error"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nickname" />
@@ -65,15 +63,15 @@
             style="@style/ButtonSolidStyle"
             android:layout_width="320dp"
             android:layout_height="52dp"
-            android:enabled="@{viewModel.isNicknameValid}"
-            android:text="@string/nickname_button"
             android:layout_marginLeft="@dimen/profile_button_horizontal"
             android:layout_marginRight="@dimen/profile_button_horizontal"
-            app:marginBottom="@{viewModel.isKeyboardUp() ? @dimen/profile_button_bottom_up : @dimen/profile_button_bottom_down}"
+            android:enabled="@{viewModel.isNicknameValid}"
+            android:text="@string/nickname_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:marginBottom="@{viewModel.isKeyboardUp ? @dimen/profile_button_bottom_up : @dimen/profile_button_bottom_down}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

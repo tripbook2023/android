@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <import type="com.tripbook.tripbook.R" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.tripbook.tripbook.viewmodel.AdditionalProfileViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contentView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/nickname_label"
+                    style="@style/ProfileLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/profile_label_margin"
+                    android:text="@string/additional_textView_label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/gender_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="56dp"
+                    android:text="@string/additional_gender_label"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/nickname_label" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_female"
+                    android:layout_width="156dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:background="@{viewModel.femaleButton ? @drawable/button_outline : @drawable/button_outline_unable}"
+                    android:onClick="@{(view)->viewModel.buttonClicked(view)}"
+                    android:text="@string/additional_button_female"
+                    app:layout_constraintEnd_toStartOf="@+id/button_male"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gender_label" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_male"
+                    android:layout_width="156dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@{viewModel.maleButton ? @drawable/button_outline : @drawable/button_outline_unable}"
+                    android:onClick="@{(view)->viewModel.buttonClicked(view)}"
+                    android:text="@string/additional_button_male"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/button_female"
+                    app:layout_constraintTop_toBottomOf="@+id/gender_label" />
+
+                <LinearLayout
+                    android:id="@+id/age_block"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="@{viewModel.femaleButton || viewModel.maleButton ? View.VISIBLE: View.GONE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/button_female">
+
+                    <TextView
+                        android:id="@+id/age_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="48dp"
+                        android:text="@string/additional_age_label"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+
+                    <com.tripbook.tripbook.views.login.profile.CustomEditText
+                        android:id="@+id/age"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginEnd="20dp"
+                        android:hint="@string/additional_age_hint"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:theme="@style/EditTextStyle"
+                        app:validDrawable="@{viewModel.icon}" />
+
+                    <TextView
+                        android:id="@+id/nickname_alert"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:drawablePadding="4dp"
+                        android:text="@{viewModel.errorMsg}"
+                        android:textColor="@color/warning"
+                        android:textSize="12sp"
+                        android:visibility="@{viewModel.errorMsg.equals(``) ? View.GONE : View.VISIBLE, default=gone}"
+                        app:drawableLeftCompat="@drawable/ic_error"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/age" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/complete_button"
+            style="@style/ButtonSolidStyle"
+            android:layout_width="320dp"
+            android:layout_height="52dp"
+            android:layout_marginLeft="@dimen/profile_button_horizontal"
+            android:layout_marginRight="@dimen/profile_button_horizontal"
+            android:enabled="@{viewModel.isAgeValid &amp;&amp; (viewModel.maleButton || viewModel.femaleButton)}"
+            android:text="@string/addtional_button_complete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:marginBottom="@{viewModel.isKeyboardUp ? @dimen/profile_button_bottom_up : @dimen/profile_button_bottom_down}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
+
