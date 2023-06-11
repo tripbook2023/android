@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--기본 -->
+    <font
+        app:font="@font/suit_regular"
+        app:fontStyle="normal"
+        app:fontWeight="400" />
+
+    <!--heading, title -->
+    <font
+        app:font="@font/suit_bold"
+        app:fontStyle="normal"
+        app:fontWeight="700" />
+
+    <!--body, caption -->
+    <font
+        app:font="@font/suit_medium"
+        app:fontStyle="normal"
+        app:fontWeight="500" />
+
+</font-family>

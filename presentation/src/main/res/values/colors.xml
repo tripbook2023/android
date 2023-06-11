@@ -11,8 +11,6 @@
 
     <!--tripBook color-->
 
-    <!--핃백 받고 다른 컴포넌트 컬러두 수정할게용-->
-
     <!--GrayScale-->
     <color name="gray_G_0">#FFFAF9F9</color>
     <color name="gray_G_10">#FFEFECEC</color>
