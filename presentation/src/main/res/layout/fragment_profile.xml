@@ -72,7 +72,7 @@
             android:layout_marginLeft="@dimen/profile_button_horizontal"
             android:layout_marginRight="@dimen/profile_button_horizontal"
             android:layout_marginBottom="@dimen/profile_button_bottom_down"
-            android:enabled="@{viewModel.isProfileValid()}"
+            android:enabled="@{viewModel.isProfileValid}"
             android:text="@string/profile_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

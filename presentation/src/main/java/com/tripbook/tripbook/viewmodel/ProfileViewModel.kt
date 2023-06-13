@@ -1,11 +1,12 @@
 package com.tripbook.tripbook.viewmodel
 
 import android.net.Uri
-import androidx.lifecycle.ViewModel
+import com.tripbook.base.BaseViewModel
+import com.tripbook.tripbook.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel : BaseViewModel() {
 
     private val _isNicknameValid = MutableStateFlow(false)
     val isNicknameValid: StateFlow<Boolean> = _isNicknameValid
@@ -23,10 +24,15 @@ class ProfileViewModel : ViewModel() {
     private var _errorMsg = MutableStateFlow("")
     val errorMsg: StateFlow<String> get() = _errorMsg
 
-    private var _isKeyboardUp = MutableStateFlow(false)
-    val isKeyboardUp: StateFlow<Boolean> get() = _isKeyboardUp
+    private var _icon = MutableStateFlow(0)
+    val icon: StateFlow<Int> get() = _icon
+
+    fun setIcon(value: Int) {
+        _icon.value = value
+    }
 
     fun setNicknameValid(errorMsg: String?) {
+        _icon.value = R.drawable.ic_clear
         errorMsg?.let { str ->
             _errorMsg.value = str
             _isNicknameValid.value = false
@@ -49,7 +55,4 @@ class ProfileViewModel : ViewModel() {
         _nickname.value = nickname
     }
 
-    fun setKeyboard(up: Boolean) {
-        _isKeyboardUp.value = up
-    }
 }

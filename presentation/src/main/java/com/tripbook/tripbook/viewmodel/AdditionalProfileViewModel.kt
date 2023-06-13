@@ -1,21 +1,18 @@
 package com.tripbook.tripbook.viewmodel
 
 import android.view.View
-import androidx.lifecycle.ViewModel
+import com.tripbook.base.BaseViewModel
 import com.tripbook.tripbook.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class AdditionalProfileViewModel : ViewModel() {
+class AdditionalProfileViewModel : BaseViewModel() {
 
     private var _isAgeValid = MutableStateFlow(false)
-    val isAgeValid: StateFlow<Boolean> = _isAgeValid
+    val isAgeValid: StateFlow<Boolean> get() = _isAgeValid
 
     private var _errorMsg = MutableStateFlow("")
     val errorMsg: StateFlow<String> get() = _errorMsg
-
-    private var _isKeyboardUp = MutableStateFlow(false)
-    val isKeyboardUp: StateFlow<Boolean> get() = _isKeyboardUp
 
     private var _femaleButton = MutableStateFlow(false)
     private var _maleButton = MutableStateFlow(false)
@@ -23,8 +20,12 @@ class AdditionalProfileViewModel : ViewModel() {
     val femaleButton: StateFlow<Boolean> get() = _femaleButton
     val maleButton: StateFlow<Boolean> get() = _maleButton
 
-    private var _icon = MutableStateFlow(R.drawable.ic_transparent)
+    private var _icon = MutableStateFlow(0)
     val icon: StateFlow<Int> get() = _icon
+
+    fun setIcon(value: Int) {
+        _icon.value = value
+    }
 
     fun setAgeValid(errorMsg: String?) {
         errorMsg?.let { str ->
@@ -50,9 +51,5 @@ class AdditionalProfileViewModel : ViewModel() {
                 _maleButton.value = !_maleButton.value
             }
         }
-    }
-
-    fun setKeyboard(up: Boolean) {
-        _isKeyboardUp.value = up
     }
 }

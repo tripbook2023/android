@@ -6,9 +6,6 @@
         android:width="320dp"
         android:height="52dp" />
     <stroke
-        android:width="2dp"
+        android:width="1dp"
         android:color="@color/editText_focusOut"/>
-
-        <solid
-            android:color="@color/white"/>
 </shape>

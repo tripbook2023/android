@@ -7,9 +7,9 @@ import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentProfileBinding
 import com.tripbook.tripbook.viewmodel.ProfileViewModel
 
-class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
+class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(R.layout.fragment_profile) {
 
-    private val viewModel: ProfileViewModel by activityViewModels()
+    override val viewModel: ProfileViewModel by activityViewModels()
 
     override fun init() {
         binding.viewModel = viewModel

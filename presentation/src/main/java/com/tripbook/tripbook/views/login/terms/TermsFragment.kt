@@ -8,9 +8,9 @@ import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentTermsBinding
 import com.tripbook.tripbook.viewmodel.TermsViewModel
 
-class TermsFragment : BaseFragment<FragmentTermsBinding>(R.layout.fragment_terms) {
+class TermsFragment : BaseFragment<FragmentTermsBinding, TermsViewModel>(R.layout.fragment_terms) {
 
-    private val viewModel : TermsViewModel by activityViewModels()
+    override val viewModel : TermsViewModel by activityViewModels()
     private lateinit var title : String
 
     override fun init() {

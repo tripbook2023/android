@@ -1,7 +1,7 @@
 package com.tripbook.tripbook.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tripbook.base.BaseViewModel
 import com.tripbook.tripbook.data.model.TermsURL
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
-class TermsViewModel : ViewModel() {
+class TermsViewModel : BaseViewModel() {
 
     //이용 동의 타이틀
     private var _title = MutableStateFlow("")

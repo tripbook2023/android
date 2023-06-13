@@ -1,9 +1,6 @@
 package com.tripbook.tripbook.views.login.profile
 
-import android.content.Context
-import android.graphics.Rect
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.view.inputmethod.InputMethodManager
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -12,32 +9,13 @@ import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentNicknameBinding
 import com.tripbook.tripbook.viewmodel.ProfileViewModel
 
-class NicknameFragment : BaseFragment<FragmentNicknameBinding>(R.layout.fragment_nickname) {
+class NicknameFragment :
+    BaseFragment<FragmentNicknameBinding, ProfileViewModel>(R.layout.fragment_nickname) {
 
-    private val viewModel: ProfileViewModel by activityViewModels()
-
-    private val layoutListener = object : OnGlobalLayoutListener {
-        override fun onGlobalLayout() {
-            val r = Rect()
-            binding.contentView.getWindowVisibleDisplayFrame(r)
-            val screenHeight = binding.contentView.rootView.height
-
-            val keypadHeight = screenHeight - r.bottom
-            if (keypadHeight > screenHeight * 0.15) { // 키보드가 올라가 있을 때
-                if (!viewModel.isKeyboardUp.value) {
-                    viewModel.setKeyboard(true)
-                    binding.root.setOnClickListener {
-                        hideKeyboard()
-                    }
-                }
-            } else { // 키보드가 내려가있을 때
-                if (viewModel.isKeyboardUp.value) viewModel.setKeyboard(false)
-            }
-        }
-    }
+    override val viewModel: ProfileViewModel by activityViewModels()
 
     override fun init() {
-        nicknameTextWatcher()
+        addNicknameTextWatcher()
         binding.contentView.viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
         binding.viewModel = viewModel
         binding.nicknameButton.setOnClickListener {
@@ -50,9 +28,14 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding>(R.layout.fragment
         }
     }
 
-    private fun nicknameTextWatcher() {
+    private fun addNicknameTextWatcher() {
         binding.nickname.doOnTextChanged { text, _, _, _ ->
             viewModel.setNicknameValid(binding.nickname.isNicknameValid(text!!))
+        }
+        binding.nickname.doAfterTextChanged {
+            if (binding.nickname.text.toString() == "") {
+                viewModel.setIcon(0)
+            }
         }
     }
 
@@ -65,16 +48,5 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding>(R.layout.fragment
     override fun onStop() {
         binding.contentView.viewTreeObserver.removeOnGlobalLayoutListener(layoutListener)
         super.onStop()
-    }
-
-    fun hideKeyboard() {
-        requireActivity().currentFocus?.let {
-            val inputManager =
-                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputManager.hideSoftInputFromWindow(
-                requireActivity().currentFocus?.windowToken,
-                InputMethodManager.HIDE_NOT_ALWAYS
-            )
-        }
     }
 }
