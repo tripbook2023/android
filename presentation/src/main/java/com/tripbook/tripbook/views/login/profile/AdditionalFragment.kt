@@ -21,8 +21,6 @@ class AdditionalFragment :
         }
     }
 
-    // 버튼 바인딩
-    // customEdit 완료되면 버튼 valid
     private fun addAgeTextWatcher() {
         binding.age.doOnTextChanged { text, _, _, _ ->
             viewModel.setAgeValid(binding.age.isAgeValid(text!!))

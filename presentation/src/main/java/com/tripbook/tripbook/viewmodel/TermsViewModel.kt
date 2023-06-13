@@ -53,8 +53,7 @@ class TermsViewModel : BaseViewModel() {
 
     val allItemsBtnChecked: StateFlow<Boolean> = combine(
         serviceChecked, personalInfoChecked, locationChecked
-    ) { service, personalInfo, location ->
-        service && personalInfo && location
+    ) { service, personalInfo, location -> service && personalInfo && location
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000),
