@@ -16,6 +16,7 @@ constraintlayout = "2.1.4"
 activity = "1.6.0"
 fragment = "1.5.5"
 navigation = "2.5.3"
+datastore = "1.0.0"
 
 # Timber
 timber = "5.0.1"
@@ -46,42 +47,44 @@ hilt = "2.44"
 
 [plugins]
 # Project Dependency
-android-application = { id = "com.android.application", version.ref = "androidGradlePlugin"}
-android-library = { id = "com.android.library", version.ref = "androidGradlePlugin"}
-kotlin-plugin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin"}
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-plugin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 banManes = { id = "com.github.ben-manes.versions", version.ref = "banManes" }
-littleRobots = { id = "nl.littlerobots.version-catalog-update", version.ref = "little-robots"}
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
+littleRobots = { id = "nl.littlerobots.version-catalog-update", version.ref = "little-robots" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 [libraries]
 # AndroidX
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat"}
-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout"}
-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit-ext"}
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "core-espresso"}
-littleRobots = { group = "nl.littlerobots.vcu", name = "plugin", version.ref = "little-robots"}
-activity = {group = "androidx.activity", name = "activity", version.ref="activity"}
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit-ext" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "core-espresso" }
+littleRobots = { group = "nl.littlerobots.vcu", name = "plugin", version.ref = "little-robots" }
+activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 
-activity-ktx = {group = "androidx.activity", name = "activity-ktx", version.ref="activity"}
-fragment-ktx = {group = "androidx.fragment", name = "fragment-ktx", version.ref ="fragment"}
-navigation = {group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref="navigation"}
-navigation-ui = {group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation"}
+activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity" }
+fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment" }
+navigation = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
+navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
+
+datastore-preference = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore"}
 
 # Google
-material = { group = "com.google.android.material", name = "material", version.ref = "material"}
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 # Coroutine
 coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine" }
 
 # Test
-junit = { group = "junit", name = "junit", version.ref = "junit"}
+junit = { group = "junit", name = "junit", version.ref = "junit" }
 
 #coroutine
 
 #retrofit , moshi
-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit"}
-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "moshi-converter"}
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "moshi-converter" }
 
 #viewmodel
 
@@ -89,19 +92,19 @@ moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.re
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 
 #Hilt
-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt"}
-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt"}
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 
 # Authentication
-auth0 = { group = "com.auth0.android", name = "auth0", version.ref = "auth0"}
+auth0 = { group = "com.auth0.android", name = "auth0", version.ref = "auth0" }
 
 # Dependencies included in Build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
 # circleimageview
-circleimageview = {group = "de.hdodenhof", name= "circleimageview", version.ref = "circleimageview"}
+circleimageview = { group = "de.hdodenhof", name = "circleimageview", version.ref = "circleimageview" }
 
-glide = {group = "com.github.bumptech.glide", name="glide", version.ref = "glide"}
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 [bundles]
 
