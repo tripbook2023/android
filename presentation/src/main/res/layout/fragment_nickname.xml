@@ -25,6 +25,7 @@
             style="@style/ProfileLabelStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="24sp"
             android:layout_margin="@dimen/profile_label_margin"
             android:text="@string/nickname_label"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,9 +70,12 @@
             android:text="@string/nickname_button"
             android:layout_marginLeft="@dimen/profile_button_horizontal"
             android:layout_marginRight="@dimen/profile_button_horizontal"
+            android:textSize="16sp"
             app:marginBottom="@{viewModel.isKeyboardUp() ? @dimen/profile_button_bottom_up : @dimen/profile_button_bottom_down}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/base_button"
+            android:textColor="@color/base_button_text"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
