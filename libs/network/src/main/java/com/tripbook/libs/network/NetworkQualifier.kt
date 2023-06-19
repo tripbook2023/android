@@ -1,4 +1,4 @@
-package com.tripbook.libs.network.interceptor
+package com.tripbook.libs.network
 
 import javax.inject.Qualifier
 
@@ -9,3 +9,16 @@ annotation class AuthNetworkQualifier
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class NoAuthNetworkQualifier
+
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class AuthServiceScope
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class MemberServiceScope
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class TokenServiceScope

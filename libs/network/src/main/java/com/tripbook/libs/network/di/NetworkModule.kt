@@ -2,8 +2,11 @@ package com.tripbook.libs.network.di
 
 import com.squareup.moshi.Moshi
 import com.tripbook.database.DataStoreManager
-import com.tripbook.libs.network.interceptor.AuthNetworkQualifier
-import com.tripbook.libs.network.interceptor.NoAuthNetworkQualifier
+import com.tripbook.libs.network.AuthNetworkQualifier
+import com.tripbook.libs.network.AuthServiceScope
+import com.tripbook.libs.network.MemberServiceScope
+import com.tripbook.libs.network.NoAuthNetworkQualifier
+import com.tripbook.libs.network.TokenServiceScope
 import com.tripbook.libs.network.interceptor.TokenInterceptor
 import com.tripbook.libs.network.interceptor.UserAgentInterceptor
 import com.tripbook.libs.network.service.TokenService
@@ -55,24 +58,36 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    @NoAuthNetworkQualifier
-    fun providesNoAuthRetrofit(
+    @TokenServiceScope
+    fun providesTokenRetrofit(
         moshi: Moshi,
         @NoAuthNetworkQualifier client: OkHttpClient
     ): Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
+        .baseUrl("$BASE_URL/token/")
         .client(client)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
 
     @Provides
     @Singleton
-    @AuthNetworkQualifier
+    @AuthServiceScope
     fun providesAuthRetrofit(
         moshi: Moshi,
-        @AuthNetworkQualifier client: OkHttpClient
+        @NoAuthNetworkQualifier client: OkHttpClient
     ): Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
+        .baseUrl("$BASE_URL/login/")
+        .client(client)
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .build()
+
+    @Provides
+    @Singleton
+    @MemberServiceScope
+    fun providesMemberRetrofit(
+        moshi: Moshi,
+        @NoAuthNetworkQualifier client: OkHttpClient
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl("${BASE_URL}/member/")
         .client(client)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()

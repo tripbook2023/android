@@ -1,6 +1,9 @@
 package com.tripbook.libs.network.di
 
-import com.tripbook.libs.network.interceptor.NoAuthNetworkQualifier
+import com.tripbook.libs.network.AuthServiceScope
+import com.tripbook.libs.network.MemberServiceScope
+import com.tripbook.libs.network.TokenServiceScope
+import com.tripbook.libs.network.service.AuthService
 import com.tripbook.libs.network.service.TokenService
 import com.tripbook.libs.network.service.MemberService
 import dagger.Module
@@ -16,11 +19,18 @@ import javax.inject.Singleton
 object ServiceModule {
     @Provides
     @Singleton
-    fun providesUserService(@NoAuthNetworkQualifier retrofit: Retrofit)
+    fun providesMemberService(@MemberServiceScope retrofit: Retrofit)
     : MemberService = retrofit.create()
 
     @Provides
     @Singleton
-    fun providesTokenService(@NoAuthNetworkQualifier retrofit: Retrofit)
+    fun providesTokenService(@TokenServiceScope retrofit: Retrofit)
     : TokenService = retrofit.create()
+
+    @Provides
+    @Singleton
+    fun providesAuthService(@AuthServiceScope retrofit: Retrofit)
+    : AuthService = retrofit.create()
+
+
 }
