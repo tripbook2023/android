@@ -1,12 +1,9 @@
 package com.tripbook.libs.network.service
 
-import com.tripbook.libs.network.UserTokenDto
+import com.tripbook.libs.network.model.response.TokenResponse
 import retrofit2.http.GET
 
 interface TokenService {
     @GET("/token/issue")
-    suspend fun refreshToken(): UserTokenDto
-
-    @GET("/login/oauth2")
-    suspend fun signUp(): UserTokenDto
+    suspend fun refreshToken(): TokenResponse
 }

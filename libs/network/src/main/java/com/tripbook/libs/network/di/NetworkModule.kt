@@ -1,4 +1,4 @@
-package com.tripbook.libs.network
+package com.tripbook.libs.network.di
 
 import com.squareup.moshi.Moshi
 import com.tripbook.database.DataStoreManager

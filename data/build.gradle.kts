@@ -1,6 +1,7 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("com.tripbook.library")
+    id("com.tripbook.hilt")
 }
 
 android {
