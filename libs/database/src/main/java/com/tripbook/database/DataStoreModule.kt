@@ -37,10 +37,5 @@ object DataStoreModule {
         )
     }
 
-    @Singleton
-    @Provides
-    fun providesDataStoreManager(
-        dataStore: DataStore<Preferences>
-    ): DataStoreManager = DataStoreManager(dataStore)
 }
 

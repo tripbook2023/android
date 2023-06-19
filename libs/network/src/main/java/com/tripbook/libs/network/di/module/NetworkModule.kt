@@ -1,12 +1,12 @@
-package com.tripbook.libs.network.di
+package com.tripbook.libs.network.di.module
 
 import com.squareup.moshi.Moshi
-import com.tripbook.database.DataStoreManager
-import com.tripbook.libs.network.AuthNetworkQualifier
-import com.tripbook.libs.network.AuthServiceScope
-import com.tripbook.libs.network.MemberServiceScope
-import com.tripbook.libs.network.NoAuthNetworkQualifier
-import com.tripbook.libs.network.TokenServiceScope
+import com.tripbook.database.TokenDataStore
+import com.tripbook.libs.network.di.qualifier.AuthNetworkQualifier
+import com.tripbook.libs.network.di.qualifier.AuthServiceScope
+import com.tripbook.libs.network.di.qualifier.MemberServiceScope
+import com.tripbook.libs.network.di.qualifier.NoAuthNetworkQualifier
+import com.tripbook.libs.network.di.qualifier.TokenServiceScope
 import com.tripbook.libs.network.interceptor.TokenInterceptor
 import com.tripbook.libs.network.interceptor.UserAgentInterceptor
 import com.tripbook.libs.network.service.TokenService
@@ -44,7 +44,7 @@ object NetworkModule {
     @AuthNetworkQualifier
     fun providesAuthOkhttpClient(
         tokenService: TokenService,
-        dataStoreManager: DataStoreManager,
+        dataStoreManager: TokenDataStore,
     ): OkHttpClient = getBaseOkhttpBuilder()
         .addInterceptor(UserAgentInterceptor())
         .addInterceptor(
@@ -87,7 +87,7 @@ object NetworkModule {
         moshi: Moshi,
         @NoAuthNetworkQualifier client: OkHttpClient
     ): Retrofit = Retrofit.Builder()
-        .baseUrl("${BASE_URL}/member/")
+        .baseUrl("$BASE_URL/member/")
         .client(client)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()

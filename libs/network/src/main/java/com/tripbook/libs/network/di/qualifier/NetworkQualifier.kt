@@ -1,4 +1,4 @@
-package com.tripbook.libs.network
+package com.tripbook.libs.network.di.qualifier
 
 import javax.inject.Qualifier
 

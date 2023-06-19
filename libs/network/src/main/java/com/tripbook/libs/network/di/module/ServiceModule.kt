@@ -1,8 +1,8 @@
-package com.tripbook.libs.network.di
+package com.tripbook.libs.network.di.module
 
-import com.tripbook.libs.network.AuthServiceScope
-import com.tripbook.libs.network.MemberServiceScope
-import com.tripbook.libs.network.TokenServiceScope
+import com.tripbook.libs.network.di.qualifier.AuthServiceScope
+import com.tripbook.libs.network.di.qualifier.MemberServiceScope
+import com.tripbook.libs.network.di.qualifier.TokenServiceScope
 import com.tripbook.libs.network.service.AuthService
 import com.tripbook.libs.network.service.TokenService
 import com.tripbook.libs.network.service.MemberService

@@ -1,7 +1,7 @@
 package com.tripbook.libs.network.interceptor
 
-import com.tripbook.database.DataStoreManager
 import com.tripbook.database.Token
+import com.tripbook.database.TokenDataStore
 import com.tripbook.libs.network.service.TokenService
 import com.tripbook.libs.network.toToken
 import kotlinx.coroutines.flow.first
@@ -13,27 +13,31 @@ import javax.inject.Inject
 
 class TokenInterceptor @Inject constructor(
     private val tokenService: TokenService,
-    private val dataStoreManager: DataStoreManager
+    private val dataStoreManager: TokenDataStore
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response = runBlocking {
         val token = dataStoreManager.tokenFlow.first()
-        val tokenAddedRequest = chain.request().putAuthorizationHeader(token)
+        token?.let {
+            val tokenAddedRequest = chain.request().putAuthorizationHeader(
+                Token(it.accessToken, it.refreshToken)
+            )
 
-        val response = chain.proceed(tokenAddedRequest)
-        return@runBlocking when (response.code()) {
-            401, 500 -> {
-                val refreshedToken = tokenService.refreshToken().toToken()
-                val refreshRequest = chain.request().putAuthorizationHeader(refreshedToken)
-                chain.proceed(refreshRequest).also {
-                    if (it.isSuccessful) {
-                        dataStoreManager.setToken(refreshedToken)
+            val firstResponse = chain.proceed(tokenAddedRequest)
+            return@runBlocking when (firstResponse.code()) {
+                401, 500 -> {
+                    val refreshedToken = tokenService.refreshToken().toToken()
+                    val refreshRequest = chain.request().putAuthorizationHeader(refreshedToken)
+                    chain.proceed(refreshRequest).also { response ->
+                        if (response.isSuccessful) {
+                            dataStoreManager.setToken(refreshedToken)
+                        }
                     }
                 }
+                else -> {
+                    firstResponse
+                }
             }
-            else -> {
-                response
-            }
-        }
+        } ?: chain.proceed(chain.request())
     }
 
     private fun Request.putAuthorizationHeader(token: Token): Request = this.newBuilder()

@@ -1,6 +1,5 @@
 package com.tripbook.tripbook.data.repository
 
-import com.tripbook.database.DataStoreManager
 import com.tripbook.libs.network.NetworkResult
 import com.tripbook.libs.network.safeApiCall
 import com.tripbook.libs.network.service.AuthService
@@ -12,7 +11,6 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
-    private val dataStoreManager: DataStoreManager
 ) : AuthRepository {
     override fun validateToken(token: String): Flow<Boolean> =
         safeApiCall(Dispatchers.IO) { authService.validateToken() }.map {

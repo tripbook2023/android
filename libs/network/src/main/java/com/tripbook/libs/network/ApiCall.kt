@@ -1,7 +1,7 @@
 package com.tripbook.libs.network
 
 import com.squareup.moshi.Moshi
-import com.tripbook.libs.network.model.response.ErrorResponse
+import com.tripbook.libs.network.model.response.UnitResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -36,10 +36,10 @@ fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend () -> T): 
     }
 
 
-private fun convertErrorBody(throwable: HttpException): ErrorResponse? =
+private fun convertErrorBody(throwable: HttpException): UnitResponse? =
     try {
         throwable.response()?.errorBody()?.source()?.let {
-            val moshiAdapter = Moshi.Builder().build().adapter(ErrorResponse::class.java)
+            val moshiAdapter = Moshi.Builder().build().adapter(UnitResponse::class.java)
             moshiAdapter.fromJson(it)
         }
     } catch (exception: Exception) {
