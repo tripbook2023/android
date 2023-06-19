@@ -8,8 +8,8 @@ import retrofit2.HttpException
 import java.io.IOException
 import java.lang.Exception
 
-suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend () -> Unit) {
-    return withContext(dispatcher) {
+suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend () -> Unit) =
+    withContext(dispatcher) {
         try {
             NetworkResult.Success(apiCall.invoke())
         } catch (throwable: Throwable) {
@@ -23,16 +23,16 @@ suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend ()
                         errorResponse?.code
                     )
                 }
+
                 else -> {
                     NetworkResult.GeneralError(null, null, null)
                 }
             }
         }
     }
-}
 
-private fun convertErrorBody(throwable: HttpException): ErrorResponse? { // ERROR_RESPONSE
-    return try {
+private fun convertErrorBody(throwable: HttpException): ErrorResponse? =
+    try {
         throwable.response()?.errorBody()?.source()?.let {
             val moshiAdapter = Moshi.Builder().build().adapter(ErrorResponse::class.java)
             moshiAdapter.fromJson(it)
@@ -40,4 +40,3 @@ private fun convertErrorBody(throwable: HttpException): ErrorResponse? { // ERRO
     } catch (exception: Exception) {
         null
     }
-}

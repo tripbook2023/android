@@ -8,9 +8,9 @@ android {
 }
 
 dependencies {
-
     implementation(project(":domain"))
-
+    implementation(project(":libs:network"))
+    implementation(project(":libs:database"))
 
     implementation(libs.retrofit)
     implementation(libs.moshi)

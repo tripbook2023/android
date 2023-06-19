@@ -55,6 +55,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @NoAuthNetworkQualifier
     fun providesNoAuthRetrofit(
         moshi: Moshi,
         @NoAuthNetworkQualifier client: OkHttpClient
@@ -66,6 +67,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @AuthNetworkQualifier
     fun providesAuthRetrofit(
         moshi: Moshi,
         @AuthNetworkQualifier client: OkHttpClient
