@@ -1,8 +1,8 @@
 package com.tripbook.libs.network.service
 
 import com.tripbook.libs.network.UserTokenDto
-import com.tripbook.libs.network.model.LoginResponse
-import com.tripbook.libs.network.model.SignUpRequest
+import com.tripbook.libs.network.model.response.LoginResponse
+import com.tripbook.libs.network.model.request.SignUpRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

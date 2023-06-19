@@ -1,4 +1,4 @@
-package com.tripbook.libs.network.model
+package com.tripbook.libs.network.model.response
 
 import com.squareup.moshi.Json
 
