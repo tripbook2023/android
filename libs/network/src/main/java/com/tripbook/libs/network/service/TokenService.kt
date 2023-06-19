@@ -1,5 +1,6 @@
-package com.tripbook.libs.network
+package com.tripbook.libs.network.service
 
+import com.tripbook.libs.network.UserTokenDto
 import retrofit2.http.GET
 
 interface TokenService {

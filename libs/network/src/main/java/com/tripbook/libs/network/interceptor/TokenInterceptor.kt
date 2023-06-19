@@ -1,7 +1,9 @@
-package com.tripbook.libs.network
+package com.tripbook.libs.network.interceptor
 
 import com.tripbook.database.DataStoreManager
 import com.tripbook.database.Token
+import com.tripbook.libs.network.service.TokenService
+import com.tripbook.libs.network.toToken
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor

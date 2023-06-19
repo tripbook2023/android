@@ -1,18 +1,16 @@
-package com.tripbook.libs.network
+package com.tripbook.libs.network.model
 
 import com.squareup.moshi.Json
 
-data class UserTokenDto(
+data class LoginResponse(
     @Json(name = "nickname")
-    val name: String?,
+    val nickname: String?,
     @Json(name = "accessToken")
-    val accessToken: String,
+    val accessToken: String?,
     @Json(name = "refreshToken")
-    val refreshToken: String,
+    val refreshToken: String?,
     @Json(name = "status")
     val status: String?,
     @Json(name = "email")
     val email: String?,
-    @Json(name = "message")
-    val message: String
 )

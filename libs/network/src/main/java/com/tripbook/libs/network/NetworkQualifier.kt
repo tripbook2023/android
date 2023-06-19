@@ -1,10 +1,6 @@
-package com.tripbook.libs.network
+package com.tripbook.libs.network.interceptor
 
 import javax.inject.Qualifier
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class UserAgentNetworkQualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
