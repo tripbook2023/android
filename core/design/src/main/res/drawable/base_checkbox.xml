@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 체크박스 해제 상태 -->
-    <!--이거 체크박스 이미지가 디자인 시스템에 넘 고정돼 있어서 ..백터 이미지 자체에
-    어떻게 수정해야 되는지 잘 모르겠어 ㅠ 핃백 주면 그거 대로 후다닥 수정할게요..! -->
     <item android:state_checked="false"
         android:drawable="@drawable/uncheck"/>
     <!-- 체크박스 선택 상태 -->

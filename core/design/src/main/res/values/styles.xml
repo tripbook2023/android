@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources >
+
+    <!--heading, title : textview -> H1 /bold -->
+    <style name="HeadingBoldStyle" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/tripbook_font</item>
+    </style>
+
+    <!--button, editText : medium -->
+    <style name="ButtonStyle" parent="@android:style/Widget.DeviceDefault.Button">
+        <item name="android:fontFamily">@font/tripbook_font</item>
+    </style>
+
+    <style name="EditTextStyle" parent="@android:style/Widget.DeviceDefault.EditText">
+        <item name="android:fontFamily">@font/tripbook_font</item>
+    </style>
+
+    <style name="RadioButtonStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.RadioButton">
+        <item name="android:fontFamily">@font/tripbook_font</item>
+    </style>
+
+    <style name="CheckboxStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.CheckBox">
+        <item name="android:fontFamily">@font/tripbook_font</item>
+    </style>
+
+</resources>
