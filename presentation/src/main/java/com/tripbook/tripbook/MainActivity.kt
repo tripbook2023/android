@@ -4,7 +4,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.NavHost
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.tripbook.base.BaseActivity
 import com.tripbook.tripbook.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,13 +35,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         val navHost = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHost
         val toolbar = findViewById<Toolbar>(R.id.main_toolbar)
         navController = navHost.navController
+
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
+
         appBarConfiguration = AppBarConfiguration(navController.graph)
-        toolbar.setupWithNavController(navController, appBarConfiguration)
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            binding.mainToolbar.title.text = destination.label
             if (destination.parent!!.startDestinationId != destination.id) {
-                toolbar.setNavigationIcon(R.drawable.baseline_arrow)
+                toolbar.setNavigationIcon(com.tripbook.tripbook.core.design.R.drawable.icn_before_24)
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return super.onSupportNavigateUp() || navController.navigateUp(appBarConfiguration)
     }
 }
