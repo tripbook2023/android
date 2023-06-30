@@ -19,7 +19,7 @@ fun <T: Any> safeApiCall(
         try {
             val response = apiCall.invoke()
             Log.d("MyTagResponse", response.toString())
-            NetworkResult.Success(response)
+            emit(NetworkResult.Success(response))
         } catch (throwable: Throwable) {
             throwable.printStackTrace()
             when (throwable) {
