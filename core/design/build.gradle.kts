@@ -1,6 +1,6 @@
 plugins {
     id("com.tripbook.library")
-    id("kotlin-kapt")
+    kotlin("kapt")
 }
 
 android {
@@ -13,4 +13,6 @@ android {
 
 dependencies {
     implementation(libs.glide)
+
+    implementation(libs.appcompat)
 }

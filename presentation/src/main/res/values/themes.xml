@@ -14,6 +14,13 @@
         <!-- Customize your theme here. -->
         <item name="android:dialogTheme">@style/DialogTheme</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="android:textViewStyle">@style/HeadingBoldStyle</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+        <item name="android:editTextStyle">@style/EditTextStyle</item>
+        <item name="android:radioButtonStyle">@style/RadioButtonStyle</item>
+        <item name="android:checkboxStyle">@style/CheckboxStyle</item>
+
     </style>
 
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">

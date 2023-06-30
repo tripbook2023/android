@@ -38,12 +38,12 @@
                 android:layout_height="364dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="14dp"
-                />
+                android:layout_marginTop="14dp" />
 
         </LinearLayout>
         <Button
             android:id="@+id/close"
+            android:textSize="12sp"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/black"

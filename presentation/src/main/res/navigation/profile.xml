@@ -24,6 +24,7 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.tripbook.tripbook.views.login.profile.ProfileFragment"
+        android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_additionalFragment"
@@ -31,5 +32,6 @@
     </fragment>
     <fragment
         android:id="@+id/additionalFragment"
-        android:name="com.tripbook.tripbook.views.login.profile.AdditionalFragment" />
+        android:name="com.tripbook.tripbook.views.login.profile.AdditionalFragment"
+        android:label="AdditionalFragment" />
 </navigation>

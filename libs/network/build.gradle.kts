@@ -1,5 +1,6 @@
 plugins {
     id("com.tripbook.library")
+    id("com.tripbook.hilt")
 }
 
 android {
@@ -7,7 +8,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":libs:database"))
 
     implementation(libs.retrofit)
     implementation(libs.moshi)
+
+    implementation(libs.coroutine)
 }
