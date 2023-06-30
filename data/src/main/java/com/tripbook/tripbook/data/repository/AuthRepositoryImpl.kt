@@ -13,7 +13,9 @@ class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
 ) : AuthRepository {
     override fun validateToken(token: String): Flow<Boolean> =
-        safeApiCall(Dispatchers.IO) { authService.validateToken() }.map {
+        safeApiCall(Dispatchers.IO) {
+            authService.validateToken("Bearer $token")
+        }.map {
             when (it) {
                 is NetworkResult.Success -> {
                     true

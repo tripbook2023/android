@@ -15,6 +15,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
@@ -24,7 +25,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL = "http://152.69.235.171:9000"
+    private const val BASE_URL = "http://13.124.98.251:9000"
     // FIXME: 서버 도메인 변경 시 같이 변경이 필요합니다!
 
     @Provides
@@ -37,6 +38,7 @@ object NetworkModule {
     @NoAuthNetworkQualifier
     fun providesNoAuthOkhttpClient(): OkHttpClient = getBaseOkhttpBuilder()
         .addInterceptor(UserAgentInterceptor())
+        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
         .build()
 
     @Provides

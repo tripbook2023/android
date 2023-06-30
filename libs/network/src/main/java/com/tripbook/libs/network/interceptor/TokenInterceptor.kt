@@ -2,8 +2,8 @@ package com.tripbook.libs.network.interceptor
 
 import com.tripbook.database.Token
 import com.tripbook.database.TokenDataStore
+import com.tripbook.database.TokenEntity
 import com.tripbook.libs.network.service.TokenService
-import com.tripbook.libs.network.toToken
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -23,13 +23,19 @@ class TokenInterceptor @Inject constructor(
             )
 
             val firstResponse = chain.proceed(tokenAddedRequest)
-            return@runBlocking when (firstResponse.code()) {
+            return@runBlocking when (firstResponse.code) {
                 401, 500 -> {
-                    val refreshedToken = tokenService.refreshToken().toToken()
-                    val refreshRequest = chain.request().putAuthorizationHeader(refreshedToken)
+                    val refreshedToken = tokenService.refreshToken()
+                    val refreshRequest = chain.request().putAuthorizationHeader(
+                        Token(refreshedToken.accessToken, refreshedToken.refreshToken))
                     chain.proceed(refreshRequest).also { response ->
                         if (response.isSuccessful) {
-                            dataStoreManager.setToken(refreshedToken)
+                            dataStoreManager.setToken(
+                                TokenEntity(
+                                    refreshedToken.accessToken,
+                                    refreshedToken.refreshToken
+                                )
+                            )
                         }
                     }
                 }

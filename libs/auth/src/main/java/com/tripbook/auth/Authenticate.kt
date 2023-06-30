@@ -8,7 +8,7 @@ import com.auth0.android.callback.Callback
 import com.auth0.android.provider.WebAuthProvider
 import com.auth0.android.result.Credentials
 
-fun Context.loginWithBrowser(account: Auth0) {
+fun Context.loginWithBrowser(account: Auth0, onLoginCompleted: (String) -> Unit) {
     WebAuthProvider.login(account)
         .withScheme("demo")
         .start(this, object : Callback<Credentials, AuthenticationException> {
@@ -18,11 +18,14 @@ fun Context.loginWithBrowser(account: Auth0) {
 
             override fun onSuccess(result: Credentials) {
                 val accessToken = result.accessToken
-                Log.d("MyTag", accessToken)
+                onLoginCompleted(accessToken).also {
+                    Log.d("MyTag", accessToken)
+                }
             }
         })
 }
 
+@Suppress("UNUSED")
 fun Context.logout(account: Auth0) {
     WebAuthProvider.login(account)
         .withScheme("demo")

@@ -15,5 +15,5 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.moshi)
-
+    implementation(libs.timber)
 }

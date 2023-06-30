@@ -13,12 +13,12 @@ import retrofit2.http.Query
 
 interface MemberService {
     @Multipart
-    @POST("/signup")
+    @POST("signup/")
     suspend fun signUp(
         @Part file: MultipartBody.Part,
         @PartMap params: Map<String, RequestBody>
     ): SignUpResponse
 
-    @GET("/nickname/validate")
+    @GET("nickname/validate/")
     suspend fun validateNickname(@Query("name") nickname: String): UnitResponse
 }

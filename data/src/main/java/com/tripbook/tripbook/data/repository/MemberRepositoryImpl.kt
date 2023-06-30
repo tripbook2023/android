@@ -9,9 +9,10 @@ import com.tripbook.tripbook.domain.repository.MemberRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import javax.inject.Inject
 
@@ -30,20 +31,20 @@ class MemberRepositoryImpl @Inject constructor(
         gender: String,
         birth: String
     ): Flow<Boolean> = safeApiCall(Dispatchers.IO) {
-        val nameBody = RequestBody.create(MediaType.parse("text/plain"), name)
-        val emailBody = RequestBody.create(MediaType.parse("text/plain"), email)
+        val nameBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
+        val emailBody = email.toRequestBody("text/plain".toMediaTypeOrNull())
         val serviceTerms =
-            RequestBody.create(MediaType.parse("text/plain"), termsOfService.toString())
+            termsOfService.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val privacyTerms =
-            RequestBody.create(MediaType.parse("text/plain"), termsOfPrivacy.toString())
+            termsOfPrivacy.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val locationTerms =
-            RequestBody.create(MediaType.parse("text/plain"), termsOfLocation.toString())
+            termsOfLocation.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val marketing =
-            RequestBody.create(MediaType.parse("text/plain"), marketingConsent.toString())
-        val genderBody = RequestBody.create(MediaType.parse("text/plain"), gender)
-        val birthBody = RequestBody.create(MediaType.parse("text/plain"), birth)
+            marketingConsent.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val genderBody = gender.toRequestBody("text/plain".toMediaTypeOrNull())
+        val birthBody = birth.toRequestBody("text/plain".toMediaTypeOrNull())
 
-        val fileBody = RequestBody.create(MediaType.parse("image/jpeg"), file)
+        val fileBody = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val filePart = MultipartBody.Part.createFormData("photo", "photo.jpg", fileBody)
 
         memberService.signUp(

@@ -36,6 +36,7 @@ little-robots = "0.8.0"
 #Libraries
 retrofit = "2.9.0"
 moshi-converter = "2.9.0"
+httplogginginterceptor = "4.11.0"
 circleimageview = "3.1.0"
 glide = "4.15.1"
 
@@ -85,6 +86,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 #retrofit , moshi
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "moshi-converter" }
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "httplogginginterceptor"}
 
 #viewmodel
 

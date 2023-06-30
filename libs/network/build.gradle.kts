@@ -12,6 +12,7 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.moshi)
+    implementation(libs.logging.interceptor)
 
     implementation(libs.coroutine)
 }
