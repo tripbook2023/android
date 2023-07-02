@@ -18,6 +18,10 @@ fragment = "1.5.5"
 navigation = "2.5.3"
 datastore = "1.0.0"
 
+# Firebase
+gms = "4.3.15"
+firebase-bom = "32.1.1"
+
 # Timber
 timber = "5.0.1"
 
@@ -53,6 +57,7 @@ kotlin-plugin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 banManes = { id = "com.github.ben-manes.versions", version.ref = "banManes" }
 littleRobots = { id = "nl.littlerobots.version-catalog-update", version.ref = "little-robots" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+gms = { id = "com.google.gms.google-services", version.ref = "gms"}
 
 [libraries]
 # AndroidX
@@ -76,6 +81,10 @@ material = { group = "com.google.android.material", name = "material", version.r
 
 # Coroutine
 coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine" }
+
+# Firebase
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx"}
 
 # Test
 junit = { group = "junit", name = "junit", version.ref = "junit" }

@@ -8,4 +8,5 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.banManes) apply false
     alias(libs.plugins.littleRobots) apply false
+    alias(libs.plugins.gms) apply false
 }

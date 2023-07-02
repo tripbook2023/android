@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1061773344385",
+    "project_id": "tripbook-23854",
+    "storage_bucket": "tripbook-23854.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061773344385:android:9a24d2aafe7cd1dbd7d780",
+        "android_client_info": {
+          "package_name": "com.tripbook.tripbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1061773344385-nl32bagheed02f0u1n525u82cvnvjem4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqNFS_GHw6MPdxBdaq2FkjI7gdeNTckhQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1061773344385-nl32bagheed02f0u1n525u82cvnvjem4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

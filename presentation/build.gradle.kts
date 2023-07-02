@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.plugin)
     alias(libs.plugins.android.application)
     id("com.tripbook.hilt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -61,6 +62,10 @@ dependencies {
     implementation(libs.material)
     implementation(libs.constraintlayout)
     implementation(libs.retrofit)
+
+    val firebaseBom = platform(libs.firebase.bom)
+    implementation(firebaseBom)
+    implementation(libs.firebase.analytics)
 
     implementation(libs.activity.ktx)
     implementation(libs.fragment.ktx)
