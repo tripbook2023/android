@@ -127,7 +127,7 @@
             android:enabled="@{viewModel.isAgeValid &amp;&amp; (viewModel.maleButton || viewModel.femaleButton)}"
             android:text="@string/addtional_button_complete"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:marginBottom="@{viewModel.isKeyboardUp ? @dimen/profile_button_bottom_up : @dimen/profile_button_bottom_down}" />
+            app:marginBottom="@{viewModel.isKeyboardUp ? @dimen/button_bottom_up : @dimen/button_bottom_down}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

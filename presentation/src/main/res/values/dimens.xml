@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="profile_button_horizontal">20dp</dimen>
-    <dimen name="profile_button_bottom_up">16dp</dimen>
-    <dimen name="profile_button_bottom_down">56dp</dimen>
+    <dimen name="button_bottom_up">16dp</dimen>
+    <dimen name="button_bottom_down">56dp</dimen>
     <dimen name="profile_label_size">24sp</dimen>
     <dimen name="profile_label_margin">20dp</dimen>
     <dimen name="profile_dialog_margin">16dp</dimen>
     <dimen name="profile_dialog_width">320dp</dimen>
+    <dimen name="margin_start">20dp</dimen>
 </resources>

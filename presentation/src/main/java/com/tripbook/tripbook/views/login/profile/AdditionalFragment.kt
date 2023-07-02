@@ -16,7 +16,6 @@ class AdditionalFragment :
     override fun init() {
         binding.viewModel = viewModel
         addAgeTextWatcher()
-        binding.contentView.viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
         binding.completeButton.setOnClickListener {
         }
     }
@@ -32,8 +31,4 @@ class AdditionalFragment :
         }
     }
 
-    override fun onStop() {
-        binding.contentView.viewTreeObserver.removeOnGlobalLayoutListener(layoutListener)
-        super.onStop()
-    }
 }

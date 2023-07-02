@@ -75,7 +75,7 @@
             android:textColor="@color/base_button_text"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:marginBottom="@{viewModel.isKeyboardUp ? @dimen/profile_button_bottom_up : @dimen/profile_button_bottom_down}" />
+            app:marginBottom="@{viewModel.isKeyboardUp ? @dimen/button_bottom_up : @dimen/button_bottom_down}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

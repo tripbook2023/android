@@ -73,7 +73,7 @@
             android:layout_height="52dp"
             android:layout_marginLeft="@dimen/profile_button_horizontal"
             android:layout_marginRight="@dimen/profile_button_horizontal"
-            android:layout_marginBottom="@dimen/profile_button_bottom_down"
+            android:layout_marginBottom="@dimen/button_bottom_down"
             android:enabled="@{viewModel.isProfileValid}"
             android:text="@string/profile_button"
             android:textSize="16sp"

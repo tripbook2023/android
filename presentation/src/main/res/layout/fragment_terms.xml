@@ -162,7 +162,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
-          
+
         <CheckBox
             android:id="@+id/terms_location"
             android:layout_width="24dp"
@@ -235,7 +235,7 @@
             android:layout_height="52dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="@dimen/profile_button_bottom_down"
+            android:layout_marginBottom="@dimen/button_bottom_down"
             android:background="@drawable/base_button"
             android:enabled="@{viewModel.allItemsBtnChecked}"
             android:text="@string/terms_button"

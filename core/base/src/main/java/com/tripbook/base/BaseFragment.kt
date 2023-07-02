@@ -35,6 +35,7 @@ abstract class BaseFragment<B : ViewDataBinding, V : BaseViewModel>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
         init()
     }
 
@@ -45,7 +46,7 @@ abstract class BaseFragment<B : ViewDataBinding, V : BaseViewModel>(
         super.onDestroyView()
     }
 
-    private fun hideKeyboard() {
+    fun hideKeyboard() {
         requireActivity().currentFocus?.let {
             val inputManager =
                 requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -72,5 +73,10 @@ abstract class BaseFragment<B : ViewDataBinding, V : BaseViewModel>(
         } else { // 키보드가 내려가있을 때
             if (viewModel.isKeyboardUp.value) viewModel.setKeyboard(false)
         }
+    }
+
+    override fun onStop() {
+        binding.root.viewTreeObserver.removeOnGlobalLayoutListener(layoutListener)
+        super.onStop()
     }
 }
