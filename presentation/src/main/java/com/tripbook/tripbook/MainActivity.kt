@@ -39,7 +39,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             if (destination.parent!!.startDestinationId != destination.id) {
-                toolbar.setNavigationIcon(R.drawable.baseline_arrow)
+                toolbar.setNavigationIcon(com.tripbook.tripbook.core.design.R.drawable.icn_before_24)
             }
         }
     }

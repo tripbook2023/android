@@ -35,6 +35,7 @@ abstract class BaseFragment<B : ViewDataBinding, V : BaseViewModel>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
         init()
     }
 
@@ -45,18 +46,16 @@ abstract class BaseFragment<B : ViewDataBinding, V : BaseViewModel>(
         super.onDestroyView()
     }
 
-    private fun hideKeyboard() {
-        requireActivity().currentFocus?.let {
-            val inputManager =
-                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputManager.hideSoftInputFromWindow(
-                requireActivity().currentFocus?.windowToken,
-                InputMethodManager.HIDE_NOT_ALWAYS
-            )
-        }
+    fun hideKeyboard() {
+        val inputManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(
+            requireActivity().currentFocus?.windowToken,
+            InputMethodManager.HIDE_NOT_ALWAYS
+        )
     }
 
-    val layoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+    private val layoutListener = ViewTreeObserver.OnGlobalLayoutListener {
         val r = Rect()
         binding.root.getWindowVisibleDisplayFrame(r)
         val screenHeight = binding.root.rootView.height
@@ -69,8 +68,13 @@ abstract class BaseFragment<B : ViewDataBinding, V : BaseViewModel>(
                     hideKeyboard()
                 }
             }
-        } else { // 키보드가 내려가있을 때
+        } else { // 키보드가 내려가 있을 때
             if (viewModel.isKeyboardUp.value) viewModel.setKeyboard(false)
         }
+    }
+
+    override fun onStop() {
+        binding.root.viewTreeObserver.removeOnGlobalLayoutListener(layoutListener)
+        super.onStop()
     }
 }

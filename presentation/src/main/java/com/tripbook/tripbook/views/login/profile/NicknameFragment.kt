@@ -16,7 +16,6 @@ class NicknameFragment :
 
     override fun init() {
         addNicknameTextWatcher()
-        binding.contentView.viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
         binding.viewModel = viewModel
         binding.nicknameButton.setOnClickListener {
             if (duplicateCheck()) {
@@ -43,10 +42,5 @@ class NicknameFragment :
     private fun duplicateCheck(): Boolean {
         // 닉네임 중복확인 API 호출
         return true
-    }
-
-    override fun onStop() {
-        binding.contentView.viewTreeObserver.removeOnGlobalLayoutListener(layoutListener)
-        super.onStop()
     }
 }
