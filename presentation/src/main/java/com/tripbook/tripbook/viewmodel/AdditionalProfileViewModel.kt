@@ -1,42 +1,51 @@
 package com.tripbook.tripbook.viewmodel
 
 import android.view.View
+import androidx.lifecycle.viewModelScope
 import com.tripbook.base.BaseViewModel
 import com.tripbook.tripbook.R
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 
 class AdditionalProfileViewModel : BaseViewModel() {
 
-    private var _isAgeValid = MutableStateFlow(false)
-    val isAgeValid: StateFlow<Boolean> get() = _isAgeValid
-
-    private var _errorMsg = MutableStateFlow("")
-    val errorMsg: StateFlow<String> get() = _errorMsg
-
     private var _femaleButton = MutableStateFlow(false)
+
     private var _maleButton = MutableStateFlow(false)
 
     val femaleButton: StateFlow<Boolean> get() = _femaleButton
     val maleButton: StateFlow<Boolean> get() = _maleButton
 
-    private var _icon = MutableStateFlow(0)
-    val icon: StateFlow<Int> get() = _icon
+    private var year = MutableStateFlow(false)
 
-    fun setIcon(value: Int) {
-        _icon.value = value
-    }
+    private var month = MutableStateFlow(false)
 
-    fun setAgeValid(errorMsg: String?) {
-        errorMsg?.let { str ->
-            _errorMsg.value = str
-            _isAgeValid.value = false
-            _icon.value = R.drawable.ic_clear
-        } ?: run {
-            _errorMsg.value = ""
-            _isAgeValid.value = true
-            _icon.value = R.drawable.ic_check
+    private var day = MutableStateFlow(false)
+
+    private var _initBirth = MutableStateFlow(true)
+
+    val initBirth: StateFlow<Boolean> get() = _initBirth
+
+    val allSpinnerChecked: StateFlow<Boolean> = combine(
+        year, month, day
+    ) { year, month, day ->
+        year && month && day
+    }.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5000),
+        false
+    )
+
+    fun setBirth(str: String) {
+        when (str) {
+            "year" ->  year.value = true
+            "month" -> month.value = true
+            "day" -> day.value = true
         }
+        _initBirth.value = false
     }
 
     fun buttonClicked(view: View) {
