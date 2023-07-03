@@ -12,6 +12,9 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.res.Configuration
+import android.util.Log
 
 abstract class BaseFragment<B : ViewDataBinding, V : BaseViewModel>(
     @LayoutRes private val layoutResId: Int
