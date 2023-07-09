@@ -56,15 +56,6 @@ class CustomEditText @JvmOverloads constructor(
         }
     }
 
-    fun isAgeValid(age: CharSequence): String? {
-        val regex = Regex("^[1-9]{1}[0-9]{1}$")
-        return if (!age.matches(regex)) {
-            setError("10~100 사이의 숫자를 입력해주세요")
-        } else {
-            setError(null)
-        }
-    }
-
     fun setError(str: String?): String? {
         if (str == null) {
             backgroundTintList = ContextCompat.getColorStateList(context, R.color.black)

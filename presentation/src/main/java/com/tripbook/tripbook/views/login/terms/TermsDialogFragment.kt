@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.DialogFragment
@@ -13,11 +12,11 @@ import androidx.fragment.app.activityViewModels
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.data.model.TermsURL
 import com.tripbook.tripbook.databinding.FragmentTermsDialogBinding
-import com.tripbook.tripbook.viewmodel.TermsViewModel
+import com.tripbook.tripbook.viewmodel.LoginViewModel
 
 class TermsDialogFragment: DialogFragment() {
 
-    private val viewModel : TermsViewModel by activityViewModels()
+    private val viewModel : LoginViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

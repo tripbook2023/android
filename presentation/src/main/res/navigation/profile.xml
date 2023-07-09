@@ -5,6 +5,8 @@
     android:id="@+id/profile"
     app:startDestination="@+id/termsFragment">
 
+    <include app:graph="@navigation/travel_news" />
+
     <fragment
         android:id="@+id/termsFragment"
         android:name="com.tripbook.tripbook.views.login.terms.TermsFragment"
@@ -31,5 +33,15 @@
     </fragment>
     <fragment
         android:id="@+id/additionalFragment"
-        android:name="com.tripbook.tripbook.views.login.profile.AdditionalFragment"/>
+        android:name="com.tripbook.tripbook.views.login.profile.AdditionalFragment"
+        tools:layout="@layout/fragment_additional">
+        <action
+            android:id="@+id/action_additionalFragment_to_signUpSuccessFragment"
+            app:destination="@id/signUpSuccessFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpSuccessFragment"
+        android:name="com.tripbook.tripbook.views.login.profile.SignUpSuccessFragment"
+        tools:layout="@layout/fragment_signup_success">
+    </fragment>
 </navigation>

@@ -5,22 +5,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 
 object BindingAdapter {
 
     @JvmStatic
-    @BindingAdapter("imgUri", "defaultImg")
-    fun setImageUri(imageView: ImageView, uri: Uri?, default: Boolean) {
-        if (default) {
-            imageView.setImageURI((uri))
-        } else {
-            Glide.with(imageView.context)
-                .load(uri)
-                .circleCrop()
-                .into(imageView)
+    @BindingAdapter("borderColor")
+    fun setBirthBorderColor(textView: TextView, valid: Boolean) {
+        if(valid){
+            textView.setBackgroundResource(R.drawable.border_text_birth_after)
+        }else{
+            textView.setBackgroundResource(R.drawable.border_text_birth_before)
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("imgUri")
+    fun setImageUri(imageView: ImageView, uri: Uri?) {
+        Glide.with(imageView.context)
+            .load(uri)
+            .placeholder(R.drawable.icn_pic_36)
+            .circleCrop()
+            .into(imageView)
     }
 
     @JvmStatic

@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.tripbook.tripbook.viewmodel.ProfileViewModel" />
+            type="com.tripbook.tripbook.viewmodel.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,8 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/profile_label_margin"
-            android:textSize="24sp"
             android:text="@string/profile_label"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,7 +34,6 @@
             android:background="@drawable/border_circleimageview"
             android:contentDescription="@string/profile_label"
             android:scaleType="center"
-            app:defaultImg="@{!viewModel.isProfileValid}"
             app:imgUri="@{viewModel.profileUri}"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -74,11 +73,11 @@
             android:layout_marginLeft="@dimen/profile_button_horizontal"
             android:layout_marginRight="@dimen/profile_button_horizontal"
             android:layout_marginBottom="@dimen/button_bottom_down"
-            android:enabled="@{viewModel.isProfileValid}"
-            android:text="@string/profile_button"
-            android:textSize="16sp"
-            android:textColor="@color/base_button_text"
             android:background="@drawable/base_button"
+            android:enabled="@{viewModel.profileUri != null}"
+            android:text="@string/profile_button"
+            android:textColor="@color/base_button_text"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.tripbook.tripbook.viewmodel.AdditionalProfileViewModel" />
+            type="com.tripbook.tripbook.viewmodel.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,67 +74,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:paddingHorizontal="20dp"
                     android:visibility="@{viewModel.femaleButton || viewModel.maleButton ? View.VISIBLE: View.GONE}">
 
                     <TextView
                         android:id="@+id/age_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
                         android:layout_marginTop="48dp"
                         android:text="@string/additional_age_label"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/text_birth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="20dp"
-                        android:paddingTop="24dp"
-                        android:paddingEnd="20dp">
+                        android:layout_marginTop="26dp"
+                        android:hint="@string/additional_birth_hint"
+                        android:textColor="@color/black"
+                        app:borderColor="@{viewModel.isBirthValid}"
+                        app:drawableRightCompat="@drawable/icn_calendar_24" />
 
-                        <Spinner
-                            android:id="@+id/spinner_year"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="4dp"
-                            android:layout_weight="5"
-                            android:background="@drawable/spinner_background"
-                            android:textSize="14sp" />
-
-                        <Spinner
-                            android:id="@+id/spinner_month"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="4dp"
-                            android:layout_weight="4"
-                            android:background="@drawable/spinner_background"
-                            android:textSize="14sp" />
-
-                        <Spinner
-                            android:id="@+id/spinner_day"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="4dp"
-                            android:layout_weight="4"
-                            android:background="@drawable/spinner_background"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/birth_alert"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="8dp"
-                        android:drawablePadding="4dp"
-                        android:paddingBottom="12dp"
-                        android:text="@string/profile_additional_birth_warning"
-                        android:textColor="@color/warning"
-                        android:textSize="12sp"
-                        android:visibility="@{viewModel.initBirth || viewModel.allSpinnerChecked ? View.GONE : View.VISIBLE, default=gone}"
-                        app:drawableLeftCompat="@drawable/ic_error" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
@@ -147,8 +108,8 @@
             android:layout_marginLeft="@dimen/profile_button_horizontal"
             android:layout_marginRight="@dimen/profile_button_horizontal"
             android:layout_marginBottom="56dp"
-            android:enabled="@{viewModel.allSpinnerChecked &amp;&amp; (viewModel.maleButton || viewModel.femaleButton)}"
-            android:text="@string/addtional_button_complete"
+            android:enabled="@{viewModel.isBirthValid &amp;&amp; (viewModel.maleButton || viewModel.femaleButton)}"
+            android:text="@string/additional_button_complete"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

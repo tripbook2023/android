@@ -10,6 +10,9 @@ annotation class AuthNetworkQualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class NoAuthNetworkQualifier
 
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class NoAuthNetworkQualifierNoAgent
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)

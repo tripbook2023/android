@@ -6,11 +6,11 @@ import androidx.navigation.fragment.findNavController
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentTermsBinding
-import com.tripbook.tripbook.viewmodel.TermsViewModel
+import com.tripbook.tripbook.viewmodel.LoginViewModel
 
-class TermsFragment : BaseFragment<FragmentTermsBinding, TermsViewModel>(R.layout.fragment_terms) {
+class TermsFragment : BaseFragment<FragmentTermsBinding, LoginViewModel>(R.layout.fragment_terms) {
 
-    override val viewModel : TermsViewModel by activityViewModels()
+    override val viewModel : LoginViewModel by activityViewModels()
     private lateinit var title : String
 
     override fun init() {

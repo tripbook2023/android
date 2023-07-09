@@ -1,6 +1,6 @@
 package com.tripbook.tripbook.views.login
 
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -20,7 +20,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
     layoutResId = R.layout.fragment_login
 ) {
     private lateinit var auth0: Auth0
-    override val viewModel: LoginViewModel by viewModels()
+    override val viewModel: LoginViewModel by activityViewModels()
 
     override fun init() {
         auth0 = Auth0(
@@ -30,8 +30,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
 
         collectProperties()
 
-        requireContext().loginWithBrowser(auth0) {
-            viewModel.validateToken(it).start()
+        requireContext().loginWithBrowser(auth0) {token->
+            viewModel.validateToken(token).start()
         }
     }
 

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.tripbook.tripbook.viewmodel.TermsViewModel" />
+            type="com.tripbook.tripbook.viewmodel.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

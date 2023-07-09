@@ -2,6 +2,7 @@ package com.tripbook.tripbook.views.login.profile
 
 import android.content.ContentResolver
 import android.content.ContentValues
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,14 +17,15 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentProfileDialogBinding
-import com.tripbook.tripbook.viewmodel.ProfileViewModel
+import com.tripbook.tripbook.viewmodel.LoginViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+
 class ProfileDialogFragment: DialogFragment() {
 
-    private val viewModel: ProfileViewModel by activityViewModels()
+    private val viewModel: LoginViewModel by activityViewModels()
 
     private var _binding: FragmentProfileDialogBinding? = null
     private val binding get() = _binding!!
@@ -31,8 +33,9 @@ class ProfileDialogFragment: DialogFragment() {
     private lateinit var photoUri: Uri
     private val galleryLauncher = registerForActivityResult(PickVisualMedia()){ uri ->
         uri?.let {
-            Log.d("Photo Picker", uri.toString())
-            viewModel.setProfileUri(uri)
+            val fullPath = getRealPathFromURI(uri)
+            Log.d("Photo Picker fullPath", fullPath.toString())
+            viewModel.setProfileUri(uri, fullPath, false)
         } ?: {
             Log.d("Photo Picker", "No Media selected")
         }
@@ -41,7 +44,9 @@ class ProfileDialogFragment: DialogFragment() {
 
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()){ isSuccess ->
         if(isSuccess){
-            viewModel.setProfileUri(photoUri)
+            val fullPath = getRealPathFromURI(photoUri)
+            Log.d("Photo Picker fullPath", fullPath.toString())
+            viewModel.setProfileUri(photoUri, fullPath,false)
         }
         else{
             Log.d("cameraLauncher", "Failed")
@@ -75,7 +80,8 @@ class ProfileDialogFragment: DialogFragment() {
                 .appendPath(resources.getResourceTypeName(R.drawable.tripbook_image))
                 .appendPath(resources.getResourceEntryName(R.drawable.tripbook_image))
                 .build()
-            viewModel.setProfileUri(uri)
+            val fullPath = getRealPathFromURI(uri)
+            viewModel.setProfileUri(uri, fullPath, true)
             dismiss()
         }
         binding.cancelButton.setOnClickListener{
@@ -90,6 +96,20 @@ class ProfileDialogFragment: DialogFragment() {
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
         }
         return requireContext().contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, content)
+    }
+
+    private fun getRealPathFromURI(contentURI: Uri): String? {
+        val result: String?
+        val cursor: Cursor? = requireContext().contentResolver.query(contentURI, null, null, null, null)
+        if (cursor == null) {
+            result = contentURI.path
+        } else {
+            cursor.moveToFirst()
+            val idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+            result = cursor.getString(idx)
+            cursor.close()
+        }
+        return result
     }
 
     override fun onDestroyView() {

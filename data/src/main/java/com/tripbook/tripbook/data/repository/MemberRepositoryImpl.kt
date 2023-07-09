@@ -23,7 +23,7 @@ class MemberRepositoryImpl @Inject constructor(
     override fun signUp(
         name: String,
         email: String,
-        file: File,
+        file: File?,
         termsOfService: Boolean,
         termsOfPrivacy: Boolean,
         termsOfLocation: Boolean,
@@ -44,8 +44,8 @@ class MemberRepositoryImpl @Inject constructor(
         val genderBody = gender.toRequestBody("text/plain".toMediaTypeOrNull())
         val birthBody = birth.toRequestBody("text/plain".toMediaTypeOrNull())
 
-        val fileBody = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-        val filePart = MultipartBody.Part.createFormData("photo", "photo.jpg", fileBody)
+        val fileBody = file?.asRequestBody("image/jpeg".toMediaTypeOrNull())
+        val filePart = fileBody?.let { MultipartBody.Part.createFormData("photo", "photo.jpg", it) }
 
         memberService.signUp(
             filePart,

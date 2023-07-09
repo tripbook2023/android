@@ -6,6 +6,7 @@ import com.tripbook.libs.network.di.qualifier.AuthNetworkQualifier
 import com.tripbook.libs.network.di.qualifier.AuthServiceScope
 import com.tripbook.libs.network.di.qualifier.MemberServiceScope
 import com.tripbook.libs.network.di.qualifier.NoAuthNetworkQualifier
+import com.tripbook.libs.network.di.qualifier.NoAuthNetworkQualifierNoAgent
 import com.tripbook.libs.network.di.qualifier.TokenServiceScope
 import com.tripbook.libs.network.interceptor.TokenInterceptor
 import com.tripbook.libs.network.interceptor.UserAgentInterceptor
@@ -39,6 +40,13 @@ object NetworkModule {
     fun providesNoAuthOkhttpClient(): OkHttpClient = getBaseOkhttpBuilder()
         .addInterceptor(UserAgentInterceptor())
         .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+        .build()
+
+    @Provides
+    @Singleton
+    @NoAuthNetworkQualifierNoAgent
+    fun providesNoAuthOkhttpClientNoAgent(): OkHttpClient = getBaseOkhttpBuilder()
+        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
         .build()
 
     @Provides
@@ -87,7 +95,7 @@ object NetworkModule {
     @MemberServiceScope
     fun providesMemberRetrofit(
         moshi: Moshi,
-        @NoAuthNetworkQualifier client: OkHttpClient
+        @NoAuthNetworkQualifierNoAgent client: OkHttpClient
     ): Retrofit = Retrofit.Builder()
         .baseUrl("$BASE_URL/member/")
         .client(client)

@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.tripbook.tripbook.viewmodel.ProfileViewModel" />
+            type="com.tripbook.tripbook.viewmodel.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

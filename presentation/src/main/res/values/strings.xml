@@ -29,8 +29,12 @@
     <string name="additional_gender_label">성별을 선택해주세요</string>
     <string name="additional_button_female">여성</string>
     <string name="additional_button_male">남성</string>
-    <string name="additional_age_label">연령대를 작성해주세요</string>
+    <string name="additional_age_label">생일을 작성해주세요</string>
     <string name="additional_age_hint">나이 입력</string>
-    <string name="addtional_button_complete">입력 완료</string>
+    <string name="additional_button_complete">입력 완료</string>
+    <string name="additional_birth_warning">생년월일을 모두 입력해주세요</string>
 
+    <string name="news_add_characters"></string>
+    <string name="additional_birth_hint">YYYY-DD-MM</string>
+    <string name="additional_birth_text">%d-%02d-%02d</string>
 </resources>

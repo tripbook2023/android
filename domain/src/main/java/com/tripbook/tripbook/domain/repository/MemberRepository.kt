@@ -8,7 +8,7 @@ interface MemberRepository {
     fun signUp(
         name: String,
         email: String,
-        file: File,
+        file: File?,
         termsOfService: Boolean,
         termsOfPrivacy: Boolean,
         termsOfLocation: Boolean,
