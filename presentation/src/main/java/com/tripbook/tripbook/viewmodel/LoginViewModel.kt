@@ -24,6 +24,10 @@ import java.io.File
 import javax.inject.Inject
 
 
+enum class Gender {
+    FEMALE, MALE
+}
+
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
@@ -31,14 +35,75 @@ class LoginViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase
 ) : BaseViewModel() {
 
+    // 토큰 확인
+    private val _isValidatedUser: MutableStateFlow<UserLoginStatus?> = MutableStateFlow(null)
+    val isValidatedUser: StateFlow<UserLoginStatus?> = _isValidatedUser
+
+    // 이용약관 관련
+    private var _title = MutableStateFlow("")
+    val termsTitle: StateFlow<String> get() = _title
+
+    private val _allTermsChecked = MutableStateFlow(false) //전체 동의
+    val allTermsChecked: StateFlow<Boolean> get() = _allTermsChecked
+
+    val serviceChecked: MutableStateFlow<Boolean> = MutableStateFlow(false)  //서비스 동의
+
+    val personalInfoChecked: MutableStateFlow<Boolean> = MutableStateFlow(false) //개인정보 동의
+
+    val locationChecked: MutableStateFlow<Boolean> = MutableStateFlow(false) //위치정보 동의
+
+    val marketingChecked: MutableStateFlow<Boolean> = MutableStateFlow(false) //마케팅 동의
+
+    val allItemsBtnChecked: StateFlow<Boolean> = combine(
+        serviceChecked, personalInfoChecked, locationChecked
+    ) { service, personalInfo, location ->
+        service && personalInfo && location
+    }.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5000),
+        false
+    )
+
+    // 닉네임
+    private val _isNicknameValid = MutableStateFlow(false)
+    val isNicknameValid: StateFlow<Boolean> = _isNicknameValid
+
+    private var _nickname = MutableStateFlow("")
+    val nickname: StateFlow<String> get() = _nickname
+
+    private var _errorMsg = MutableStateFlow("")
+    val errorMsg: StateFlow<String> get() = _errorMsg
+
+    private var _icon = MutableStateFlow(0)
+    val icon: StateFlow<Int> get() = _icon
+
+    // 프로필 사진
+    private val _profileUri = MutableStateFlow<Uri?>(null)
+    val profileUri: StateFlow<Uri?> = _profileUri
+
+    private val profilePath = MutableStateFlow<String?>("")
+
+    private val profileDefault = MutableStateFlow(false)
+
+    // 추가정보 기입
+    private var _femaleButton = MutableStateFlow(false)
+    val femaleButton: StateFlow<Boolean> get() = _femaleButton
+
+    private var _maleButton = MutableStateFlow(false)
+    val maleButton: StateFlow<Boolean> get() = _maleButton
+
+    private var birth = MutableStateFlow("")
+
+    private val _isBirthValid = MutableStateFlow(false)
+    val isBirthValid: StateFlow<Boolean> get() = _isBirthValid
 
     // 회원가입
     fun signUp(): Flow<Boolean> {
-        val gender = if (femaleButton.value) "FEMALE" else "MALE"
+        val gender = if (femaleButton.value) Gender.FEMALE.name else Gender.MALE.name
         val imageFile: File? = if (profileUri.value == null || profileDefault.value) {
             null
         } else {
-            File(profilePath.value)
+            File(profilePath.value!!)
         }
 
         return signUpUseCase(
@@ -54,28 +119,9 @@ class LoginViewModel @Inject constructor(
         )
     }
 
-    private val _isValidatedUser: MutableStateFlow<UserLoginStatus?> = MutableStateFlow(null)
-    val isValidatedUser: StateFlow<UserLoginStatus?> = _isValidatedUser
-
     fun validateToken(accessToken: String) = loginUseCase(accessToken).onEach {
         _isValidatedUser.emit(it)
     }.launchIn(viewModelScope)
-
-    // 이용약관 관련
-    private var _title = MutableStateFlow("")
-    val termsTitle: StateFlow<String> get() = _title
-
-
-    private val _allTermsChecked = MutableStateFlow(false) //전체 동의
-    val allTermsChecked: StateFlow<Boolean> get() = _allTermsChecked
-
-    val serviceChecked: MutableStateFlow<Boolean> = MutableStateFlow(false)  //서비스 동의
-
-    val personalInfoChecked: MutableStateFlow<Boolean> = MutableStateFlow(false) //개인정보 동의
-
-    val locationChecked: MutableStateFlow<Boolean> = MutableStateFlow(false) //위치정보 동의
-
-    val marketingChecked: MutableStateFlow<Boolean> = MutableStateFlow(false) //마케팅 동의
 
     fun setTermsTitle(title: String) {
         _title.value = title.substring(5)
@@ -96,16 +142,6 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    val allItemsBtnChecked: StateFlow<Boolean> = combine(
-        serviceChecked, personalInfoChecked, locationChecked
-    ) { service, personalInfo, location ->
-        service && personalInfo && location
-    }.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5000),
-        false
-    )
-
     //이용동의별 URL 가져오기
     fun getTermsURL(termsTitle: String): TermsURL {
         return when (termsTitle) {
@@ -119,19 +155,6 @@ class LoginViewModel @Inject constructor(
             else -> TermsURL(termsTitle, "https://www.daum.net/")
         }
     }
-
-    // 닉네임
-    private val _isNicknameValid = MutableStateFlow(false)
-    val isNicknameValid: StateFlow<Boolean> = _isNicknameValid
-
-    private var _nickname = MutableStateFlow("")
-    val nickname: StateFlow<String> get() = _nickname
-
-    private var _errorMsg = MutableStateFlow("")
-    val errorMsg: StateFlow<String> get() = _errorMsg
-
-    private var _icon = MutableStateFlow(0)
-    val icon: StateFlow<Int> get() = _icon
 
     fun validateUserName(name: String) = validateUserNameUseCase(name)
 
@@ -154,14 +177,6 @@ class LoginViewModel @Inject constructor(
         _icon.value = value
     }
 
-    // 프로필 사진
-    private val _profileUri = MutableStateFlow<Uri?>(null)
-    val profileUri: StateFlow<Uri?> = _profileUri
-
-    private val profilePath = MutableStateFlow<String?>("")
-
-    private val profileDefault = MutableStateFlow(false)
-
     fun setProfileUri(uri: Uri?, fullPath: String?, default: Boolean) {
         uri?.let {
             _profileUri.value = it
@@ -171,20 +186,6 @@ class LoginViewModel @Inject constructor(
         }
         profileDefault.value = default // update
     }
-
-
-    // 추가정보 기입
-    private var _femaleButton = MutableStateFlow(false)
-
-    private var _maleButton = MutableStateFlow(false)
-
-    val femaleButton: StateFlow<Boolean> get() = _femaleButton
-    val maleButton: StateFlow<Boolean> get() = _maleButton
-
-    private var birth = MutableStateFlow("")
-
-    private val _isBirthValid = MutableStateFlow(false)
-    val isBirthValid: StateFlow<Boolean> get() = _isBirthValid
 
     fun setBirthday(str: String) {
         birth.value = str // update
