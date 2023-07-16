@@ -51,7 +51,14 @@ class CardAdapter : ListAdapter<MainNewsUiModel, RecyclerView.ViewHolder>(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        when(holder) {
+            is BannerViewHolder -> {
+                holder.bind((currentList[position] as MainNewsUiModel.Banners).list)
+            }
+            is CardViewHolder -> {
+                holder.bind((currentList[position] as MainNewsUiModel.Card).news)
+            }
+        }
     }
 
     override fun getItemViewType(position: Int): Int =
@@ -62,7 +69,7 @@ class CardAdapter : ListAdapter<MainNewsUiModel, RecyclerView.ViewHolder>(
     ) : RecyclerView.ViewHolder(
         binding.root
     ) {
-        fun bind(item: Banner) {
+        fun bind(item: List<Banner>) {
             // 여기다가 ViewPager,
         }
     }
@@ -73,7 +80,6 @@ class CardAdapter : ListAdapter<MainNewsUiModel, RecyclerView.ViewHolder>(
         binding.root
     ) {
         fun bind(item: News) {
-            // 여기다가 Binding 진행 및 터치 Event 장착
         }
     }
 
