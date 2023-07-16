@@ -4,7 +4,7 @@ name: Android Build CI
 
 on:
   pull_request:
-    branches: [ "feature/*" ]
+    branches: [ feature/* ]
 
 jobs:
   build:
