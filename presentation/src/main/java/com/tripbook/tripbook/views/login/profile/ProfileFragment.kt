@@ -20,6 +20,10 @@ class ProfileFragment :
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
         binding.viewModel = viewModel
+
+        binding.upButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
         binding.profile.setOnClickListener {
             requestPermissionLauncher.launch(android.Manifest.permission.READ_MEDIA_IMAGES)
         }
@@ -36,14 +40,11 @@ class ProfileFragment :
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             if (granted) {
                 ProfileDialogFragment().show(
-                    requireActivity().supportFragmentManager,
-                    "Profile Fragment"
+                    requireActivity().supportFragmentManager, "Profile Fragment"
                 )
             } else {
                 Toast.makeText(
-                    requireContext(),
-                    "권한 동의를 하셔야 프로필 이미지를 설정할 수 있습니다.",
-                    Toast.LENGTH_SHORT
+                    requireContext(), "권한 동의를 하셔야 프로필 이미지를 설정할 수 있습니다.", Toast.LENGTH_SHORT
                 ).show()
             }
         }

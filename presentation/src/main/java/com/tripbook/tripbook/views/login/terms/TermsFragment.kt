@@ -16,6 +16,10 @@ class TermsFragment : BaseFragment<FragmentTermsBinding, LoginViewModel>(R.layou
     override fun init() {
         binding.viewModel = viewModel
 
+        binding.upButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         //필수 동의 체크 여부
         binding.termsButton.setOnClickListener {
             isCheck()
@@ -41,7 +45,7 @@ class TermsFragment : BaseFragment<FragmentTermsBinding, LoginViewModel>(R.layou
             title = binding.termsMarketingText.text.toString()
             loadTermsDialog(title)
         }
-    } //init
+    }
 
     //이용 동의 타이틀
     private fun loadTermsDialog (termsTitle : String) {

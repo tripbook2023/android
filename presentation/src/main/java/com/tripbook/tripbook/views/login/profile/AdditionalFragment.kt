@@ -20,7 +20,11 @@ class AdditionalFragment :
 
     override fun init() {
         binding.viewModel = viewModel
+
         setUpBirthday()
+        binding.upButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
         binding.completeButton.setOnClickListener {
             signUp()// 서버에 전체 회원가입 정보 전송
         }
@@ -47,9 +51,15 @@ class AdditionalFragment :
         val day = today.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog =
-            DatePickerDialog(requireContext(),
+            DatePickerDialog(
+                requireContext(),
                 { _, y, m, d ->
-                    binding.textBirth.text = String.format(resources.getString(R.string.additional_birth_text), y, m+1, d)
+                    binding.textBirth.text = String.format(
+                        resources.getString(R.string.additional_birth_text),
+                        y,
+                        m + 1,
+                        d
+                    )
                     viewModel.setBirthday(binding.textBirth.text.toString())
                 }, year, month, day
             )

@@ -1,6 +1,5 @@
 package com.tripbook.tripbook.views.login.profile
 
-import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,10 +14,12 @@ class NicknameFragment :
     BaseFragment<FragmentNicknameBinding, LoginViewModel>(R.layout.fragment_nickname) {
 
     override val viewModel: LoginViewModel by activityViewModels()
-
     override fun init() {
-        addNicknameTextWatcher()
         binding.viewModel = viewModel
+        addNicknameTextWatcher()
+        binding.upButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
         binding.nicknameButton.setOnClickListener {
             duplicateCheck()
         }
@@ -28,20 +29,15 @@ class NicknameFragment :
         binding.nickname.doOnTextChanged { text, _, _, _ ->
             viewModel.setNicknameValid(binding.nickname.isNicknameValid(text!!))
         }
-        binding.nickname.doAfterTextChanged {
-            if (binding.nickname.text.toString() == "") {
-                viewModel.setIcon(0)
-            }
-        }
     }
 
     private fun duplicateCheck() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.validateUserName(binding.nickname.text.toString()).collect{
-                if(it){
+            viewModel.validateUserName(binding.nickname.text.toString()).collect {
+                if (it) {
                     viewModel.setNickname(binding.nickname.text.toString())
                     findNavController().navigate(R.id.action_nicknameFragment_to_profileFragment)
-                }else{
+                } else {
                     viewModel.setNicknameValid(binding.nickname.setError(resources.getString(R.string.nickname_duplicate_alert)))
                 }
             }

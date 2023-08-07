@@ -7,16 +7,11 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <include
-            android:id="@+id/main_toolbar"
-            layout="@layout/toolbar"/>
-
         <!--화면 확인용-->
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?actionBarSize"
             android:name="androidx.navigation.fragment.NavHostFragment"
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph"/>

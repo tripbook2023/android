@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,6 +63,12 @@ class ProfileDialogFragment: DialogFragment() {
         _binding = FragmentProfileDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+    override fun onStart() {
+        super.onStart()
+        dialog!!.window!!.setGravity(Gravity.BOTTOM)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.album.setOnClickListener{

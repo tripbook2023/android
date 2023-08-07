@@ -4,7 +4,4 @@
         android:radius="19dp" />
     <solid
         android:color="@color/black"/>
-    <size
-        android:width="320dp"
-        android:height="38dp" />
 </shape>

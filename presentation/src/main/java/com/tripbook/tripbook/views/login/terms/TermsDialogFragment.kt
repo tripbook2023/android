@@ -2,6 +2,7 @@ package com.tripbook.tripbook.views.login.terms
 
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,17 +15,20 @@ import com.tripbook.tripbook.data.model.TermsURL
 import com.tripbook.tripbook.databinding.FragmentTermsDialogBinding
 import com.tripbook.tripbook.viewmodel.LoginViewModel
 
-class TermsDialogFragment: DialogFragment() {
+class TermsDialogFragment : DialogFragment() {
 
-    private val viewModel : LoginViewModel by activityViewModels()
-
+    private val viewModel: LoginViewModel by activityViewModels()
+    private lateinit var binding: FragmentTermsDialogBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.DialogTheme)
         isCancelable = true
     }
 
-    private lateinit var binding: FragmentTermsDialogBinding
+    override fun onStart() {
+        super.onStart()
+        dialog!!.window!!.setGravity(Gravity.BOTTOM)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

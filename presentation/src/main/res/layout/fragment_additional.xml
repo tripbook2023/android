@@ -12,101 +12,115 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/contentView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <LinearLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/complete_button"
+            android:layout_height="@dimen/toolbar_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/up_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:paddingStart="@dimen/margin_start"
+                android:src="@drawable/icn_before_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <TextView
+                android:id="@+id/nickname_label"
+                style="@style/ProfileLabelStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_start"
+                android:text="@string/additional_textView_label" />
+
+            <TextView
+                android:id="@+id/gender_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="56dp"
+                android:text="@string/additional_gender_label"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="25dp"
+                android:gravity="center">
 
-                <TextView
-                    android:id="@+id/nickname_label"
-                    style="@style/ProfileLabelStyle"
-                    android:layout_width="wrap_content"
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_female"
+                    android:layout_width="156dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/profile_label_margin"
-                    android:text="@string/additional_textView_label" />
+                    android:background="@{viewModel.femaleButton ? @drawable/button_outline : @drawable/button_outline_unable}"
+                    android:onClick="@{(view)->viewModel.buttonClicked(view)}"
+                    android:text="@string/additional_button_female" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_male"
+                    android:layout_width="156dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@{viewModel.maleButton ? @drawable/button_outline : @drawable/button_outline_unable}"
+                    android:onClick="@{(view)->viewModel.buttonClicked(view)}"
+                    android:text="@string/additional_button_male" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/age_block"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:visibility="@{viewModel.femaleButton || viewModel.maleButton ? View.VISIBLE: View.GONE}">
 
                 <TextView
-                    android:id="@+id/gender_label"
+                    android:id="@+id/age_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="56dp"
-                    android:text="@string/additional_gender_label"
+                    android:layout_marginTop="48dp"
+                    android:text="@string/additional_age_label"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/text_birth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:gravity="center">
+                    android:layout_marginTop="26dp"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/additional_birth_hint"
+                    android:textColor="@color/black"
+                    app:borderColor="@{viewModel.isBirthValid}"
+                    app:drawableLeftCompat="@drawable/icn_calendar_24" />
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/button_female"
-                        android:layout_width="156dp"
-                        android:layout_height="wrap_content"
-                        android:background="@{viewModel.femaleButton ? @drawable/button_outline : @drawable/button_outline_unable}"
-                        android:onClick="@{(view)->viewModel.buttonClicked(view)}"
-                        android:text="@string/additional_button_female" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/button_male"
-                        android:layout_width="156dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:background="@{viewModel.maleButton ? @drawable/button_outline : @drawable/button_outline_unable}"
-                        android:onClick="@{(view)->viewModel.buttonClicked(view)}"
-                        android:text="@string/additional_button_male" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/age_block"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="20dp"
-                    android:visibility="@{viewModel.femaleButton || viewModel.maleButton ? View.VISIBLE: View.GONE}">
-
-                    <TextView
-                        android:id="@+id/age_label"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="48dp"
-                        android:text="@string/additional_age_label"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/text_birth"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="26dp"
-                        android:hint="@string/additional_birth_hint"
-                        android:textColor="@color/black"
-                        app:borderColor="@{viewModel.isBirthValid}"
-                        app:drawableRightCompat="@drawable/icn_calendar_24" />
-
-                </LinearLayout>
             </LinearLayout>
-        </ScrollView>
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/complete_button"
             style="@style/ButtonSolidStyle"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginLeft="@dimen/profile_button_horizontal"
-            android:layout_marginRight="@dimen/profile_button_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_start"
             android:layout_marginBottom="56dp"
             android:enabled="@{viewModel.isBirthValid &amp;&amp; (viewModel.maleButton || viewModel.femaleButton)}"
             android:text="@string/additional_button_complete"
