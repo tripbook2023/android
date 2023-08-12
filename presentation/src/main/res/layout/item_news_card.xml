@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,8 +11,6 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -30,6 +30,15 @@
                 android:layout_height="match_parent"
                 android:layout_margin="24dp">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@drawable/icn_bookmark_24"
+                    app:tint="@color/white"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
                 <LinearLayout
                     android:id="@+id/view_editer"
                     android:layout_width="match_parent"
@@ -47,7 +56,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         tools:text="에디터D"/>
                 </LinearLayout>
 
@@ -77,13 +86,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@null"
+                        app:tint="@color/white"
                         android:src="@drawable/icn_like_24" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         tools:text="5" />
 
                     <ImageView
@@ -91,32 +101,24 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="@null"
                         android:layout_marginStart="16dp"
+                        app:tint="@color/white"
                         android:src="@drawable/icn_comment_24" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         tools:text="57" />
 
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@null"
+                        android:layout_marginStart="16dp"
+                        app:tint="@color/white"
                         android:src="@drawable/icn_share_24" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@null"
-                        android:layout_marginStart="@dimen/margin_start"
-                        android:src="@drawable/icn_bookmark_24" />
 
 
                 </LinearLayout>

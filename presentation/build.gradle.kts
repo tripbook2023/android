@@ -3,6 +3,7 @@
 plugins {
     alias(libs.plugins.kotlin.plugin)
     alias(libs.plugins.android.application)
+    kotlin("kapt")
     id("com.tripbook.hilt")
     id("com.google.gms.google-services")
 }

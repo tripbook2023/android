@@ -1,5 +1,6 @@
 plugins {
     id("com.tripbook.library")
+    id("com.tripbook.hilt")
 }
 
 android {

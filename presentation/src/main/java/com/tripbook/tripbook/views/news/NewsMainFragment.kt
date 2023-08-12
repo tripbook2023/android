@@ -18,7 +18,9 @@ class NewsMainFragment: BaseFragment<FragmentNewsMainBinding, NewsMainViewModel>
 ) {
     override val viewModel: NewsMainViewModel by viewModels()
     private val adapter by lazy {
-        CardAdapter()
+        CardAdapter().also {
+            binding.recyclerNews.adapter = it
+        }
     }
     override fun init() {
         collectData()
@@ -27,10 +29,8 @@ class NewsMainFragment: BaseFragment<FragmentNewsMainBinding, NewsMainViewModel>
     private fun collectData() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.mainItem.collectLatest {
-                    it.forEach {
-
-                    }
+                viewModel.mainItem.collectLatest { mainItem ->
+                    adapter.submitList(mainItem)
                 }
             }
         }
