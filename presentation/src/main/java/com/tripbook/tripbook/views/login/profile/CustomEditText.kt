@@ -33,7 +33,7 @@ class CustomEditText @JvmOverloads constructor(
             context,
             com.tripbook.tripbook.core.design.R.drawable.icn_clear_20
         )
-        clearDrawable = DrawableCompat.wrap(tempDrawable!!)
+        clearDrawable = tempDrawable?.let { DrawableCompat.wrap(it) }
         clearDrawable!!.setBounds(0, 0, clearDrawable!!.intrinsicWidth, clearDrawable!!.intrinsicHeight)
         setClearIconVisible(false)
 

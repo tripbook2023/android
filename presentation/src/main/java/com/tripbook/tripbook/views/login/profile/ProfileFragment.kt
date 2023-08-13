@@ -44,7 +44,7 @@ class ProfileFragment :
                 )
             } else {
                 Toast.makeText(
-                    requireContext(), "권한 동의를 하셔야 프로필 이미지를 설정할 수 있습니다.", Toast.LENGTH_SHORT
+                    requireContext(), getString(R.string.profile_authority_text), Toast.LENGTH_SHORT
                 ).show()
             }
         }

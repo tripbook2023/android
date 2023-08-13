@@ -12,6 +12,7 @@
     <string name="basic_image">기본 이미지 사용</string>
     <string name="profile_cancel">취소</string>
     <string name="profile_button">이미지 등록했어요</string>
+    <string name="profile_authority_text">이미지 권한에 동의하셔야 프로필 이미지를 등록하실 수 있습니다.</string>
     <string name="nickname_sign_alert">한글, 영어, 숫자를 입력해주세요</string>
     <string name="nickname_length_alert">10글자 이내 한글 또는 영문, 숫자를 입력해주세요</string>
     <string name="nickname_duplicate_alert">다른 분이 사용 중인 닉네임입니다</string>
@@ -25,6 +26,7 @@
     <string name="terms_marketing">(선택) 마케팅 수신 동의</string>
     <string name="terms_button">다음으로 넘어가요</string>
     <string name="close">닫기</string>
+
     <string name="additional_textView_label">조금 더 알아볼게요</string>
     <string name="additional_gender_label">성별을 선택해주세요</string>
     <string name="additional_button_female">여성</string>
@@ -33,8 +35,30 @@
     <string name="additional_age_hint">나이 입력</string>
     <string name="additional_button_complete">입력 완료</string>
     <string name="additional_birth_warning">생년월일을 모두 입력해주세요</string>
-
-    <string name="news_add_characters"></string>
     <string name="additional_birth_hint">YYYY-DD-MM</string>
     <string name="additional_birth_text">%d-%02d-%02d</string>
+
+    <string name="news_add_characters">/10,000</string>
+    <string name="news_add_title_hint">제목을 입력해주세요</string>
+    <string name="news_add_editText_hint">최소 800자 이상의 글자수를 작성해주세요</string>
+    <string name="news_add_temp_save">임시저장</string>
+    <string name="news_add_pic_add">사진을 등록해주세요</string>
+    <string name="news_add_title_length">/30</string>
+    <string name="news_add_button_location">여행지 선택</string>
+    <string name="news_add_location_text">여행지를 검색해주세요</string>
+    <string name="text_options_title">제목</string>
+    <string name="text_options_subtitle">소제목</string>
+    <string name="text_options_maintext">본문</string>
+    <string name="text_options_bold">B</string>
+    <string name="temp_save_label">임시저장 목록</string>
+    <string name="temp_save_button">선택</string>
+    <string name="temp_save_list">임시%d</string>
+    <string name="check">확인</string>
+    <string name="temp_save_popup_title">임시저장 되었습니다!</string>
+    <string name="temp_save_popup_content">PC 및 다른 기기에서도 이어서\n작성이 가능합니다.</string>
+    <string name="temp_save_delete">삭제하시겠습니까?</string>
+    <string name="temp_save_delete_button">삭제하기</string>
+    <string name="news_add_title">여행소식 작성</string>
+    <string name="news_add_button">등록</string>
+
 </resources>
