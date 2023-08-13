@@ -34,7 +34,7 @@ class CustomEditText @JvmOverloads constructor(
             com.tripbook.tripbook.core.design.R.drawable.icn_clear_20
         )
         clearDrawable = tempDrawable?.let { DrawableCompat.wrap(it) }
-        clearDrawable!!.setBounds(0, 0, clearDrawable!!.intrinsicWidth, clearDrawable!!.intrinsicHeight)
+        clearDrawable?.run { setBounds(0, 0, intrinsicWidth, intrinsicHeight) }
         setClearIconVisible(false)
 
         super.setOnTouchListener(this)
@@ -45,10 +45,7 @@ class CustomEditText @JvmOverloads constructor(
 
     private fun setClearIconVisible(visible: Boolean) {
         clearDrawable?.setVisible(visible, false)
-        val right: Drawable? = if (visible)
-            clearDrawable
-        else
-            null
+        val right: Drawable? = if (visible) clearDrawable else null
         setCompoundDrawables(null, null, right, null)
     }
 
@@ -61,7 +58,7 @@ class CustomEditText @JvmOverloads constructor(
     ) {
         // 텍스트 길이에 따라 X버튼 보이기 / 없애기
         if (isFocused)
-            setClearIconVisible(text!!.isNotEmpty())
+            setClearIconVisible(text.isNullOrEmpty().not())
     }
 
     override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -104,12 +101,14 @@ class CustomEditText @JvmOverloads constructor(
     override fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
         val x = motionEvent.x
 
-        if (clearDrawable!!.isVisible && x > width - paddingRight - clearDrawable!!.intrinsicWidth) {
-            if (motionEvent.action == MotionEvent.ACTION_UP) {
-                error = null
-                text = null
+        clearDrawable?.run {
+            if (isVisible && x > width - paddingRight - intrinsicWidth) {
+                if (motionEvent.action == MotionEvent.ACTION_UP) {
+                    error = null
+                    text = null
+                }
+                return true
             }
-            return true
         }
 
         return touchListener?.onTouch(view, motionEvent) ?: false
@@ -117,7 +116,7 @@ class CustomEditText @JvmOverloads constructor(
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
         if (hasFocus) {
-            setClearIconVisible(text!!.isNotEmpty())
+            setClearIconVisible(text.isNullOrEmpty().not())
         } else {
             setClearIconVisible(false)
         }

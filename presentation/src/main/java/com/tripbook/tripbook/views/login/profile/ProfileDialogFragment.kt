@@ -24,7 +24,7 @@ import java.util.Date
 import java.util.Locale
 
 
-class ProfileDialogFragment: DialogFragment() {
+class ProfileDialogFragment : DialogFragment() {
 
     private val viewModel: LoginViewModel by activityViewModels()
 
@@ -32,7 +32,7 @@ class ProfileDialogFragment: DialogFragment() {
     private val binding get() = _binding!!
 
     private lateinit var photoUri: Uri
-    private val galleryLauncher = registerForActivityResult(PickVisualMedia()){ uri ->
+    private val galleryLauncher = registerForActivityResult(PickVisualMedia()) { uri ->
         uri?.let {
             val fullPath = getRealPathFromURI(uri)
             Log.d("Photo Picker fullPath", fullPath.toString())
@@ -43,17 +43,17 @@ class ProfileDialogFragment: DialogFragment() {
         dismiss()
     }
 
-    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()){ isSuccess ->
-        if(isSuccess){
-            val fullPath = getRealPathFromURI(photoUri)
-            Log.d("Photo Picker fullPath", fullPath.toString())
-            viewModel.setProfileUri(photoUri, fullPath,false)
+    private val cameraLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+            if (isSuccess) {
+                val fullPath = getRealPathFromURI(photoUri)
+                Log.d("Photo Picker fullPath", fullPath.toString())
+                viewModel.setProfileUri(photoUri, fullPath, false)
+            } else {
+                Log.d("cameraLauncher", "Failed")
+            }
+            dismiss()
         }
-        else{
-            Log.d("cameraLauncher", "Failed")
-        }
-        dismiss()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,21 +66,24 @@ class ProfileDialogFragment: DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        dialog!!.window!!.setGravity(Gravity.BOTTOM)
+        dialog?.window?.setGravity(Gravity.BOTTOM)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.album.setOnClickListener{
+        binding.album.setOnClickListener {
             galleryLauncher.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
         }
-        binding.camera.setOnClickListener{
+        binding.camera.setOnClickListener {
             createImgFile().let { uri ->
-                photoUri = uri!!
-                cameraLauncher.launch(uri)
+                uri?.let { fileUri ->
+                    cameraLauncher.launch(fileUri).also {
+                        photoUri = fileUri
+                    }
+                }
             }
         }
-        binding.basicImage.setOnClickListener{
+        binding.basicImage.setOnClickListener {
             val uri: Uri = Uri.Builder()
                 .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
                 .authority(resources.getResourcePackageName(R.drawable.tripbook_image))
@@ -91,23 +94,27 @@ class ProfileDialogFragment: DialogFragment() {
             viewModel.setProfileUri(uri, fullPath, true)
             dismiss()
         }
-        binding.cancelButton.setOnClickListener{
+        binding.cancelButton.setOnClickListener {
             dismiss()
         }
     }
 
-    private fun createImgFile(): Uri?{
+    private fun createImgFile(): Uri? {
         val now = SimpleDateFormat("yyMMdd-HHmmss", Locale.getDefault()).format(Date())
         val content = ContentValues().apply {
-            put(MediaStore.Images.Media.DISPLAY_NAME,"IMG_$now.jpg")
+            put(MediaStore.Images.Media.DISPLAY_NAME, "IMG_$now.jpg")
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
         }
-        return requireContext().contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, content)
+        return requireContext().contentResolver.insert(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            content
+        )
     }
 
     private fun getRealPathFromURI(contentURI: Uri): String? {
         val result: String?
-        val cursor: Cursor? = requireContext().contentResolver.query(contentURI, null, null, null, null)
+        val cursor: Cursor? =
+            requireContext().contentResolver.query(contentURI, null, null, null, null)
         if (cursor == null) {
             result = contentURI.path
         } else {

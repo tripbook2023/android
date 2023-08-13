@@ -100,7 +100,7 @@ class LoginViewModel @Inject constructor(
         val imageFile: File? = if (profileUri.value == null || profileDefault.value) {
             null
         } else {
-            File(profilePath.value!!)
+            profilePath.value?.let { File(it) }
         }
 
         return signUpUseCase(
@@ -176,11 +176,11 @@ class LoginViewModel @Inject constructor(
         fullPath?.let {
             profilePath.value = it
         }
-        profileDefault.value = default // update
+        profileDefault.value = default
     }
 
     fun setBirthday(str: String) {
-        birth.value = str // update
+        birth.value = str
         _isBirthValid.value = true
     }
 

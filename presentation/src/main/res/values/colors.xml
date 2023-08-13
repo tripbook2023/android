@@ -26,7 +26,7 @@
 
     <!--Brand - primary-->
     <color name="p_1">#FFFFF9F2</color>
-    <color name="p_5">#FFECD9</color>
+    <color name="p_5">#FFFFECD9</color>
     <color name="p_10">#FFFFD6AD</color>
     <color name="p_20">#FFFFC294</color>
     <color name="p_30">#FFFFA770</color>
