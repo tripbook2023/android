@@ -61,4 +61,10 @@
     <string name="news_add_title">여행소식 작성</string>
     <string name="news_add_button">등록</string>
 
+
+    <!--  여행소식  -->
+    <string name="news_main_my">%s 님은 여행소식을\n<font color="#FF4E16">%d편</font> 작성하셨네요!</string>
+    <string name="news_apply_ongoing">승인대기중</string>
+    <string name="news_apply_failed">반려</string>
+    <string name="news_apply_success">승인완료</string>
 </resources>

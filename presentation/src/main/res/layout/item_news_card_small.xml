@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="card"
+            type="com.tripbook.tripbook.domain.model.News" />
+
+        <import type="com.tripbook.tripbook.domain.model.NewsApplyStatus" />
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="154dp"
+        android:layout_height="154dp"
+        app:backgroundImg="@{card.thumbnail}"
+        app:cardCornerRadius="12dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@{card.applyStatus != NewsApplyStatus.APPLY_SUCCESS ? card.applyStatus != NewsApplyStatus.APPLY_FAILED ? @color/warning : @color/point_G1 : @color/tripBook_main }"
+                android:text="@{card.applyStatus != NewsApplyStatus.APPLY_SUCCESS ? card.applyStatus != NewsApplyStatus.APPLY_FAILED ? @string/news_apply_failed : @string/news_apply_ongoing : @string/news_apply_success}"
+                android:textColor="@{card.applyStatus == NewsApplyStatus.APPLY_ONGOING ? @color/point_G3 : @color/white}"
+                android:fontFamily="@font/suit_medium"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="12sp"
+                android:text="@{card.title}"
+                app:layout_constraintBottom_toTopOf="@id/tv_news_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="4dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_news_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="16dp"
+                android:layout_marginHorizontal="16dp"
+                android:text="@{card.uploadDate}"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
+
+
