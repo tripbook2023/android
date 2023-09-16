@@ -6,6 +6,10 @@
         <variable
             name="viewModel"
             type="com.tripbook.tripbook.viewmodel.LoginViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.tripbook.tripbook.views.trip.detail.TripDetailRecyclerViewAdapter" />
     </data>
 
 
