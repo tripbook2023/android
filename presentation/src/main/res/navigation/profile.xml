@@ -5,7 +5,7 @@
     android:id="@+id/profile"
     app:startDestination="@+id/termsFragment">
 
-    <include app:graph="@navigation/travel_news" />
+    <!--<include app:graph="@navigation/travel_news" />-->
 
     <fragment
         android:id="@+id/termsFragment"

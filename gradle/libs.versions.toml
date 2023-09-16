@@ -50,6 +50,9 @@ auth0 = "2.9.1"
 #hilt
 hilt = "2.44"
 
+#lottie
+lottie = "6.1.0"
+
 [plugins]
 # Project Dependency
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -91,6 +94,9 @@ firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 
 #coroutine
+
+#lottie
+lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
 
 #retrofit , moshi
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
