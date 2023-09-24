@@ -5,7 +5,7 @@
     android:id="@+id/profile"
     app:startDestination="@+id/termsFragment">
 
-    <!--<include app:graph="@navigation/travel_news" />-->
+    <include app:graph="@navigation/travel_news" />
 
     <fragment
         android:id="@+id/termsFragment"
@@ -43,5 +43,8 @@
         android:id="@+id/signUpSuccessFragment"
         android:name="com.tripbook.tripbook.views.login.profile.SignUpSuccessFragment"
         tools:layout="@layout/fragment_signup_success">
+        <action
+            android:id="@+id/action_signUpSuccessFragment_to_travel_news"
+            app:destination="@id/travel_news" />
     </fragment>
 </navigation>

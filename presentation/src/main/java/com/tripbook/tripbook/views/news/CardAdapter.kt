@@ -15,9 +15,9 @@ import com.tripbook.tripbook.domain.model.ui.MainNewsUiModel
 class CardAdapter : ListAdapter<MainNewsUiModel, RecyclerView.ViewHolder>(
     itemComparator
 ) {
-    private val bannerAdapter by lazy {
-        BannerViewPagerAdapter()
-    }
+//    private val bannerAdapter by lazy {
+//        BannerViewPagerAdapter()
+//    }
     private val myCardsAdapter by lazy {
         SmallCardAdapter()
     }
@@ -40,14 +40,14 @@ class CardAdapter : ListAdapter<MainNewsUiModel, RecyclerView.ViewHolder>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            0 -> BannerViewHolder(
-                ItemNewsEventBannerBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                ),
-                bannerAdapter
-            )
+//            0 -> BannerViewHolder(
+//                ItemNewsEventBannerBinding.inflate(
+//                    LayoutInflater.from(parent.context),
+//                    parent,
+//                    false
+//                ),
+//                bannerAdapter
+//            )
             1 -> MyCardViewHolder(
                 ItemNewsMyCardsBinding.inflate(
                     LayoutInflater.from(parent.context),

@@ -1,14 +1,16 @@
 package com.tripbook.tripbook.views.login.profile
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentSignupSuccessBinding
+import kotlinx.coroutines.launch
 
 class SignUpSuccessFragment : Fragment() {
 
@@ -31,6 +33,9 @@ class SignUpSuccessFragment : Fragment() {
     }
 
     private fun startLoading() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            findNavController().navigate(R.id.action_signUpSuccessFragment_to_travel_news)
+        }
         // n초 후 메인 홈으로 이동
     }
 

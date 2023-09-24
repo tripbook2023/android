@@ -32,4 +32,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         val navHost = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHost
         navController = navHost.navController
     }
+
+    override fun onBackPressed() {
+        if (navController.backQueue.isEmpty()) {
+            finish()
+        } else {
+            navController.popBackStack()
+        }
+    }
 }
