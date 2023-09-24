@@ -3,8 +3,8 @@ package com.tripbook.tripbook.viewmodel
 import android.net.Uri
 import android.view.View
 import androidx.lifecycle.viewModelScope
-import com.tripbook.base.BaseViewModel
 import com.tripbook.tripbook.R
+import com.tripbook.tripbook.TripBookBaseViewModel
 import com.tripbook.tripbook.data.model.TermsURL
 import com.tripbook.tripbook.domain.model.UserLoginStatus
 import com.tripbook.tripbook.domain.usecase.LoginUseCase
@@ -33,7 +33,7 @@ class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val validateUserNameUseCase: ValidateUserNameUseCase,
     private val signUpUseCase: SignUpUseCase
-) : BaseViewModel() {
+) : TripBookBaseViewModel() {
 
     // 토큰 확인
     private val _isValidatedUser: MutableStateFlow<UserLoginStatus?> = MutableStateFlow(null)

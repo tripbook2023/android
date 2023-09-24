@@ -4,8 +4,8 @@ import android.app.DatePickerDialog
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
+import com.tripbook.tripbook.TripBookBaseFragment
 import com.tripbook.tripbook.databinding.FragmentAdditionalBinding
 import com.tripbook.tripbook.viewmodel.LoginViewModel
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ import java.util.Calendar
 import java.util.Date
 
 class AdditionalFragment :
-    BaseFragment<FragmentAdditionalBinding, LoginViewModel>(R.layout.fragment_additional) {
+    TripBookBaseFragment<FragmentAdditionalBinding, LoginViewModel>(R.layout.fragment_additional) {
 
     override val viewModel: LoginViewModel by activityViewModels()
 

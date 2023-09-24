@@ -6,14 +6,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
+import com.tripbook.tripbook.TripBookBaseFragment
 import com.tripbook.tripbook.databinding.FragmentProfileBinding
 import com.tripbook.tripbook.viewmodel.LoginViewModel
 
 
 class ProfileFragment :
-    BaseFragment<FragmentProfileBinding, LoginViewModel>(R.layout.fragment_profile) {
+    TripBookBaseFragment<FragmentProfileBinding, LoginViewModel>(R.layout.fragment_profile) {
 
     override val viewModel: LoginViewModel by activityViewModels()
 

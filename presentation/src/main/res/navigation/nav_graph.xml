@@ -17,4 +17,15 @@
             app:destination="@id/travel_news"/>
     </fragment>
 
+    <fragment
+        android:id="@+id/errorFragment"
+        android:name="com.tripbook.tripbook.views.error.ErrorFragment">
+        <argument
+            android:name="errorText"
+            app:argType="string" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_errorFragment"
+        app:destination="@id/errorFragment" />
+
 </navigation>

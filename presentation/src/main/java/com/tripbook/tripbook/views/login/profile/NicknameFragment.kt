@@ -4,14 +4,14 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
+import com.tripbook.tripbook.TripBookBaseFragment
 import com.tripbook.tripbook.databinding.FragmentNicknameBinding
 import com.tripbook.tripbook.viewmodel.LoginViewModel
 import kotlinx.coroutines.launch
 
 class NicknameFragment :
-    BaseFragment<FragmentNicknameBinding, LoginViewModel>(R.layout.fragment_nickname) {
+    TripBookBaseFragment<FragmentNicknameBinding, LoginViewModel>(R.layout.fragment_nickname) {
 
     override val viewModel: LoginViewModel by activityViewModels()
     override fun init() {

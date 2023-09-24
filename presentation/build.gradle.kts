@@ -6,6 +6,7 @@ plugins {
     kotlin("kapt")
     id("com.tripbook.hilt")
     id("com.google.gms.google-services")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {

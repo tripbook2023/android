@@ -10,3 +10,13 @@ plugins {
     alias(libs.plugins.littleRobots) apply false
     alias(libs.plugins.gms) apply false
 }
+
+buildscript {
+    repositories {
+        google()
+    }
+
+    dependencies {
+        classpath(libs.navigation.args)
+    }
+}

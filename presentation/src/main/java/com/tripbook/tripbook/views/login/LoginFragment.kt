@@ -8,8 +8,8 @@ import androidx.navigation.fragment.findNavController
 import com.auth0.android.Auth0
 import com.auth0.android.authentication.AuthenticationException
 import com.auth0.android.provider.WebAuthProvider
-import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
+import com.tripbook.tripbook.TripBookBaseFragment
 import com.tripbook.tripbook.databinding.FragmentLoginBinding
 import com.tripbook.tripbook.domain.model.UserLoginStatus
 import com.tripbook.tripbook.viewmodel.LoginViewModel
@@ -17,8 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
-    layoutResId = R.layout.fragment_login
+class LoginFragment : TripBookBaseFragment<FragmentLoginBinding, LoginViewModel>(
+    layoutRes = R.layout.fragment_login
 ) {
     private lateinit var auth0: Auth0
     override val viewModel: LoginViewModel by activityViewModels()

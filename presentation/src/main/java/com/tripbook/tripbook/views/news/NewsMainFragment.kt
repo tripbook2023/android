@@ -1,14 +1,14 @@
 package com.tripbook.tripbook.views.news
 
 import androidx.fragment.app.viewModels
-import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
+import com.tripbook.tripbook.TripBookBaseFragment
 import com.tripbook.tripbook.databinding.FragmentNewsMainBinding
 import com.tripbook.tripbook.viewmodel.NewsMainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NewsMainFragment: BaseFragment<FragmentNewsMainBinding, NewsMainViewModel>(
+class NewsMainFragment: TripBookBaseFragment<FragmentNewsMainBinding, NewsMainViewModel>(
     R.layout.fragment_news_main
 ) {
     override val viewModel: NewsMainViewModel by viewModels()
