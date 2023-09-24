@@ -12,10 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_splash) {
     override fun init() {
-        val view = binding.lottieView
-
-        view.playAnimation()
-
         loadSplash()
     }
 
