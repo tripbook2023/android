@@ -6,7 +6,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.auth0.android.Auth0
-import com.tripbook.auth.loginWithBrowser
+import com.auth0.android.authentication.AuthenticationException
+import com.auth0.android.provider.WebAuthProvider
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentLoginBinding
@@ -29,10 +30,23 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
         ) // 이걸 Hilt Module 로써 관리를 하면 어떨까..?
 
         collectProperties()
+        loginWithAuth0()
+    }
 
-        requireContext().loginWithBrowser(auth0) {token->
-            viewModel.validateToken(token).start()
+    private fun loginWithAuth0() {
+        lifecycleScope.launch {
+            try {
+                val credential = WebAuthProvider.login(account = auth0)
+                    .withScheme("demo")
+                    .withTrustedWebActivity()
+                    .await(requireContext())
+                println(credential)
+                viewModel.validateToken(credential.accessToken).start()
+            } catch(e: AuthenticationException) {
+                e.printStackTrace()
+            }
         }
+
     }
 
     private fun collectProperties() {

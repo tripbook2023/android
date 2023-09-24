@@ -2,6 +2,7 @@ package com.tripbook.tripbook.domain.usecase
 
 import com.tripbook.tripbook.domain.model.Banner
 import com.tripbook.tripbook.domain.model.News
+import com.tripbook.tripbook.domain.model.NewsApplyStatus
 import com.tripbook.tripbook.domain.model.ui.MainNewsUiModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -26,6 +27,8 @@ class GetNewsUseCase @Inject constructor(
                     1000,
                     false,
                     1500,
+                    applyStatus = NewsApplyStatus.APPLY_ONGOING,
+                    ""
                 ),
                 News(
                     "업무가 하기 싫을 때 기분 전환할 수 있는 바다 여행지 BEST3",
@@ -33,6 +36,8 @@ class GetNewsUseCase @Inject constructor(
                     1000,
                     false,
                     1500,
+                    applyStatus = NewsApplyStatus.APPLY_ONGOING,
+                    ""
                 ),
                 News(
                     "혼자가기 좋은 벚꽃여행지 BEST5",
@@ -40,6 +45,8 @@ class GetNewsUseCase @Inject constructor(
                     1000,
                     false,
                     1500,
+                    applyStatus = NewsApplyStatus.APPLY_ONGOING,
+                    ""
                 )
             )
         )
