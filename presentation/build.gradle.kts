@@ -72,9 +72,10 @@ dependencies {
     implementation(libs.fragment.ktx)
     implementation(libs.navigation)
     implementation(libs.navigation.ui)
-
     implementation(libs.circleimageview)
-    
+    implementation(libs.richeditor)
+    implementation(libs.kakaomap)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.test.junit)
     androidTestImplementation(libs.espresso.core)

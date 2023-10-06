@@ -21,7 +21,7 @@
         <item name="android:editTextStyle">@style/EditTextStyle</item>
         <item name="android:radioButtonStyle">@style/RadioButtonStyle</item>
         <item name="android:checkboxStyle">@style/CheckboxStyle</item>
-
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
@@ -65,8 +65,16 @@
         <item name="android:background">@drawable/button_outline</item>
     </style>
 
-    <style name="DatePickerStyle" parent="Theme.AppCompat.Light">
+    <style name="AppBottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
 
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/border_bottom_sheet</item>
     </style>
 
 </resources>

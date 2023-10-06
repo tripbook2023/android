@@ -3,7 +3,6 @@ package com.tripbook.tripbook.core.design
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -14,9 +13,9 @@ object BindingAdapter {
     @JvmStatic
     @BindingAdapter("borderColor")
     fun setBirthBorderColor(textView: TextView, valid: Boolean) {
-        if(valid){
+        if (valid) {
             textView.setBackgroundResource(R.drawable.border_text_birth_after)
-        }else{
+        } else {
             textView.setBackgroundResource(R.drawable.border_text_birth_before)
         }
     }
@@ -32,17 +31,19 @@ object BindingAdapter {
     }
 
     @JvmStatic
+    @BindingAdapter("imageUrl")
+    fun setTitleImageUri(imageView: ImageView, uri: Uri?) {
+        Glide.with(imageView.context)
+            .load(uri)
+            .into(imageView)
+    }
+
+    @JvmStatic
     @BindingAdapter("marginBottom")
     fun setButtonMarginBottom(view: View, dimen: Float) {
         (view.layoutParams as ViewGroup.MarginLayoutParams).let {
             it.bottomMargin = dimen.toInt()
             view.layoutParams = it
         }
-    }
-
-    @JvmStatic
-    @BindingAdapter("validDrawable")
-    fun setValidAgeIcon(view: EditText, icon: Int) {
-        view.setCompoundDrawablesWithIntrinsicBounds(0, 0, icon, 0)
     }
 }

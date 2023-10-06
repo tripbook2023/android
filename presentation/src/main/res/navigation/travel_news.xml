@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/travel_news"
+    app:startDestination="@id/newsAddFragment">
+    <fragment
+        android:id="@+id/newsAddFragment"
+        android:name="com.tripbook.tripbook.views.tripAdd.NewsAddFragment"
+        android:label="여행소식 작성"
+        tools:layout="@layout/fragment_news_add" />
+</navigation>

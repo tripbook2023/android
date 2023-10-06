@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.tripbook.tripbook.viewmodel.NewsAddViewModel" />
+
+        <variable
+            name="baseDialog"
+            type="com.tripbook.tripbook.views.tripAdd.DialogItem" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_temp_popup"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@{baseDialog.title}"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@{baseDialog.description}"
+            android:textColor="@color/black"
+            android:visibility="@{baseDialog.description == null ? View.GONE : View.VISIBLE}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_start"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_negative"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_close"
+                android:text="@{baseDialog.negativeBtnText}"
+                android:textColor="@color/white"
+                android:visibility="@{baseDialog.negativeBtnText == null ? View.GONE : View.VISIBLE}" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_positive"
+                style="@style/ButtonSolidStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{baseDialog.positiveBtnText}"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

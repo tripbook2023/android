@@ -12,17 +12,17 @@
     <!--tripBook color-->
 
     <!--GrayScale-->
-    <color name="gray_G_0">#FFFAF9F9</color>
-    <color name="gray_G_10">#FFEFECEC</color>
-    <color name="gray_G_20">#FFE1DCDB</color>
-    <color name="gray_G_30">#FFC7BFBD</color>
-    <color name="gray_G_40">#FF9F9693</color>
-    <color name="gray_G_50">#FF7F7471</color>
-    <color name="gray_G_60">#FF615956</color>
-    <color name="gray_G_70">#FF4C4543</color>
-    <color name="gray_G_80">#FF342F2D</color>
-    <color name="gray_G_90">#FF1C1817</color>
-    <color name="gray_G_100">#FF0E0C0C</color>
+    <color name="gray_G_1">#FFFAF9F9</color>
+    <color name="gray_G_5">#FFEFECEC</color>
+    <color name="gray_G_10">#FFE1DCDB</color>
+    <color name="gray_G_20">#FFC7BFBD</color>
+    <color name="gray_G_30">#FF9F9693</color>
+    <color name="gray_G_40">#FF7F7471</color>
+    <color name="gray_G_50">#FF615956</color>
+    <color name="gray_G_60">#FF4C4543</color>
+    <color name="gray_G_70">#FF342F2D</color>
+    <color name="gray_G_80">#FF1C1817</color>
+    <color name="gray_G_90">#FF0E0C0C</color>
 
     <!--Brand - primary-->
     <color name="p_1">#FFFFF9F2</color>
@@ -63,4 +63,5 @@
     <color name="editText_focusOut">#E5E5E5</color>
     <color name="button_text">#4C4543</color>
     <color name="profile_image">#EFECEC</color>
+    <color name="option_default">#757575</color>
 </resources>

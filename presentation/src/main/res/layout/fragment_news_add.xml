@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.widget.ImageView" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="uiStatus"
+            type="com.tripbook.tripbook.viewmodel.NewsAddViewModel.UiStatus" />
+
+        <variable
+            name="viewModel"
+            type="com.tripbook.tripbook.viewmodel.NewsAddViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/up_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:paddingStart="@dimen/margin_start"
+                android:src="@drawable/icn_before_24" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/news_add_title"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                style="@style/ButtonSolidStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_start"
+                android:enabled="@{viewModel.allConditionSatisfied}"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:text="@string/news_add_button"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/news_add_bottom"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="310dp">
+
+                    <ImageView
+                        android:id="@+id/title_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="@{viewModel.titleImageUri == null ? 0.3f : 1.0f}"
+                        android:background="@color/gray_G_80"
+                        android:contentDescription="@null"
+                        android:scaleType="fitXY"
+                        android:tintMode="src_atop"
+                        app:imageUrl="@{viewModel.titleImageUri}"
+                        app:tint="#80000000" />
+
+                    <TextView
+                        android:id="@+id/title_image_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawableTop="@{viewModel.titleImageUri == null ? @drawable/icn_pic_36 : null}"
+                        android:drawablePadding="8dp"
+                        android:gravity="center"
+                        android:onClick="@{() -> viewModel.setUiStatus(uiStatus.TITLE_GALLERY)}"
+                        android:padding="25dp"
+                        android:text="@string/news_add_pic_add"
+                        android:textColor="@{viewModel.titleImageUri == null ? @color/white : @android:color/transparent}"
+                        android:textSize="12sp"
+                        app:drawableTint="@color/white" />
+
+                    <EditText
+                        android:id="@+id/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginHorizontal="@dimen/margin_start"
+                        android:layout_marginBottom="38dp"
+                        android:background="@null"
+                        android:hint="@string/news_add_title_hint"
+                        android:paddingVertical="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginVertical="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/title_length"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{String.valueOf(viewModel.titleLength)}"
+                            android:textColor="@color/p_20"
+                            android:textSize="11sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/news_add_title_length"
+                            android:textColor="@color/gray_G_1"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <com.tripbook.tripbook.views.tripAdd.CustomRichEditor
+                    android:id="@+id/main_editor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+        <LinearLayout
+            android:id="@+id/news_add_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginVertical="10dp"
+                android:layout_marginEnd="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(viewModel.contentLength)}"
+                    android:textColor="@color/p_70"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/main_text_length"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/news_add_characters"
+                    android:textColor="@color/gray_G_20"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_G_10" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="15dp">
+
+                <LinearLayout
+                    android:id="@+id/basic_options"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="@{viewModel.basicOptions ? View.VISIBLE : View.GONE}">
+
+                    <ImageView
+                        android:id="@+id/button_keyboard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewModel.setUiStatus(uiStatus.HIDE_KEYBOARD)}"
+                        android:paddingVertical="12dp"
+                        android:src="@drawable/icn_keyboard_24"
+                        app:tint="@color/gray_G_40" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="24dp"
+                        android:layout_marginHorizontal="14dp"
+                        android:background="@color/gray_G_10" />
+
+                    <ImageView
+                        android:id="@+id/button_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:onClick="@{()->viewModel.setBasicOptions()}"
+                        android:paddingVertical="12dp"
+                        android:src="@drawable/icn_txt_24"
+                        app:tint="@color/gray_G_40" />
+
+                    <ImageView
+                        android:id="@+id/button_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:onClick="@{() -> viewModel.setUiStatus(uiStatus.CONTENT_GALLERY)}"
+                        android:paddingVertical="12dp"
+                        android:src="@drawable/icn_pic_24"
+                        app:tint="@color/gray_G_40" />
+
+                    <ImageView
+                        android:id="@+id/button_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewModel.setUiStatus(uiStatus.LOCATION)}"
+                        android:paddingVertical="12dp"
+                        android:src="@drawable/icn_location_24"
+                        app:tint="@color/gray_G_40" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/text_options"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:visibility="@{viewModel.basicOptions ? View.GONE : View.VISIBLE}">
+
+                    <ImageView
+                        android:id="@+id/text_options_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{()->viewModel.setBasicOptions()}"
+                        android:paddingVertical="12dp"
+                        android:src="@drawable/icn_left_24"
+                        app:tint="@color/gray_G_30" />
+
+                    <TextView
+                        android:id="@+id/text_options_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewModel.setUiStatus(uiStatus.TITLE)}"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="12dp"
+                        android:text="@string/text_options_title"
+                        android:textColor="@{viewModel.textOptionsTitle ? @color/p_50 : @color/option_default}" />
+
+                    <TextView
+                        android:id="@+id/text_options_subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewModel.setUiStatus(uiStatus.SUBTITLE)}"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="12dp"
+                        android:text="@string/text_options_subtitle"
+                        android:textColor="@{viewModel.textOptionsSubtitle ? @color/p_50 : @color/option_default}" />
+
+                    <TextView
+                        android:id="@+id/text_options_main_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewModel.setUiStatus(uiStatus.MAIN_TEXT)}"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="12dp"
+                        android:text="@string/text_options_maintext"
+                        android:textColor="@{viewModel.textOptionsMainText ? @color/p_50 : @color/option_default}" />
+
+                    <TextView
+                        android:id="@+id/text_options_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewModel.setUiStatus(uiStatus.BOLD)}"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="12dp"
+                        android:text="@string/text_options_bold"
+                        android:textColor="@{viewModel.textOptionsBold ? @color/p_50 : @color/option_default}"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/button_temp_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:onClick="@{() -> viewModel.setUiStatus(uiStatus.TEMP_SAVE)}"
+                    android:paddingVertical="12dp"
+                    android:text="@{@string/temp_save_list(viewModel.tempSaveCount)}"
+                    android:visibility="@{viewModel.tempSaveCount == 0 ? View.GONE : View.VISIBLE}" />
+
+                <TextView
+                    android:id="@+id/button_temp_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.setUiStatus(uiStatus.TEMP_SAVE_SUCCESS)}"
+                    android:paddingVertical="12dp"
+                    android:text="@string/news_add_temp_save" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

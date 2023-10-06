@@ -5,6 +5,8 @@
     app:startDestination="@id/loginFragment">
 
     <include app:graph = "@navigation/profile"/>
+    <include app:graph = "@navigation/travel_news"/>
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.tripbook.tripbook.views.login.LoginFragment">
