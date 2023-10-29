@@ -11,11 +11,13 @@
         android:paddingHorizontal="20dp"
         android:paddingVertical="16dp">
 
-        <TextView
+        <EditText
             android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:bufferType="spannable"
+            android:enabled="false"
+            android:background="@null"
             android:textColor="@color/black"
             android:textSize="14sp" />
 

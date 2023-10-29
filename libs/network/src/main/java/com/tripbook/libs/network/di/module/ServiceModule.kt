@@ -4,10 +4,12 @@ import com.tripbook.libs.network.di.qualifier.AuthServiceScope
 import com.tripbook.libs.network.di.qualifier.LocationServiceScope
 import com.tripbook.libs.network.di.qualifier.MemberServiceScope
 import com.tripbook.libs.network.di.qualifier.TokenServiceScope
+import com.tripbook.libs.network.di.qualifier.TripNewsServiceScope
 import com.tripbook.libs.network.service.AuthService
 import com.tripbook.libs.network.service.LocationService
 import com.tripbook.libs.network.service.MemberService
 import com.tripbook.libs.network.service.TokenService
+import com.tripbook.libs.network.service.TripNewsService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,4 +40,9 @@ object ServiceModule {
     @Singleton
     fun providesLocationService(@LocationServiceScope retrofit: Retrofit)
     : LocationService = retrofit.create()
+
+    @Provides
+    @Singleton
+    fun providesTripNewsService(@TripNewsServiceScope retrofit: Retrofit)
+    : TripNewsService = retrofit.create()
 }

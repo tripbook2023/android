@@ -17,7 +17,7 @@ class NewsAddLocationBottomFragment :
     override fun init() {
         binding.viewModel = viewModel
         val adapter = LocationListAdapter { selectedPos ->
-            viewModel.setListIndex(selectedPos)
+            viewModel.setLocationListIndex(selectedPos)
         }
         binding.locationList.adapter = adapter
         binding.locationList.layoutManager = LinearLayoutManager(requireContext())
@@ -28,7 +28,13 @@ class NewsAddLocationBottomFragment :
         }
 
         binding.locationSearch.doOnTextChanged { text, _, _, _ ->
-            viewModel.searchKeyword(text.toString())
+            viewModel.searchLocation(text.toString())
+            adapter.keyword = text.toString()
         }
+    }
+
+    override fun onDestroyView() {
+        viewModel.initLocationList()
+        super.onDestroyView()
     }
 }

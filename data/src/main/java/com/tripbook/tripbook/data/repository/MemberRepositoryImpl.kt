@@ -8,6 +8,7 @@ import com.tripbook.libs.network.service.MemberService
 import com.tripbook.tripbook.domain.repository.MemberRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -45,7 +46,7 @@ class MemberRepositoryImpl @Inject constructor(
         val birthBody = birth.toRequestBody("text/plain".toMediaTypeOrNull())
 
         val fileBody = file?.asRequestBody("image/jpeg".toMediaTypeOrNull())
-        val filePart = fileBody?.let { MultipartBody.Part.createFormData("photo", "photo.jpg", it) }
+        val filePart = fileBody?.let { MultipartBody.Part.createFormData("imageFile", "photo.jpg", it) }
 
         memberService.signUp(
             filePart,
@@ -68,7 +69,7 @@ class MemberRepositoryImpl @Inject constructor(
                         it.value.accessToken,
                         it.value.refreshToken
                     )
-                )
+                ).collect()
                 true
             }
             else -> run {

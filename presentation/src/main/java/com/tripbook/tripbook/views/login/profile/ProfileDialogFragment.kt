@@ -23,8 +23,8 @@ class ProfileDialogFragment :
     private lateinit var photoUri: Uri
     private val galleryLauncher = registerForActivityResult(PickVisualMedia()) { uri ->
         uri?.let {
-            val fullPath = getImagePathFromURI(uri, requireContext())
-            Log.d("Photo Picker fullPath", fullPath.toString())
+            Log.d("Photo Picker Uri", uri.toString())
+            val fullPath = requireContext().getImagePathFromURI(uri)
             viewModel.setProfileUri(uri, fullPath, false)
         } ?: {
             Log.d("Photo Picker", "No Media selected")
@@ -35,8 +35,7 @@ class ProfileDialogFragment :
     private val cameraLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
             if (isSuccess) {
-                val fullPath = getImagePathFromURI(photoUri, requireContext())
-                Log.d("Photo Picker fullPath", fullPath.toString())
+                val fullPath = requireContext().getImagePathFromURI(photoUri)
                 viewModel.setProfileUri(photoUri, fullPath, false)
             } else {
                 Log.d("cameraLauncher", "Failed")
@@ -54,7 +53,7 @@ class ProfileDialogFragment :
             galleryLauncher.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
         }
         binding.camera.setOnClickListener {
-            createImageFile(requireContext()).let { uri ->
+            requireContext().createImageFile().let { uri ->
                 uri?.let { fileUri ->
                     cameraLauncher.launch(fileUri).also {
                         photoUri = fileUri
@@ -69,7 +68,7 @@ class ProfileDialogFragment :
                 .appendPath(resources.getResourceTypeName(R.drawable.tripbook_image))
                 .appendPath(resources.getResourceEntryName(R.drawable.tripbook_image))
                 .build()
-            val fullPath = getImagePathFromURI(uri, requireContext())
+            val fullPath = requireContext().getImagePathFromURI(uri)
             viewModel.setProfileUri(uri, fullPath, true)
             dismiss()
         }

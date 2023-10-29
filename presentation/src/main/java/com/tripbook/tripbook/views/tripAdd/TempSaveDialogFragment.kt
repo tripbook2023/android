@@ -30,7 +30,7 @@ class TempSaveDialogFragment : BaseDialogFragment<FragmentTempSaveBinding, NewsA
                 requireActivity().supportFragmentManager, "TempSaveFragment"
             )
         }, { selectedPos ->
-            viewModel.setListIndex(selectedPos)
+            viewModel.setLocationListIndex(selectedPos)
         })
 
         binding.tempSaveList.adapter = adapter

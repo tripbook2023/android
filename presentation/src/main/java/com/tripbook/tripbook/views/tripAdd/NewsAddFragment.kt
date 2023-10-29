@@ -1,6 +1,7 @@
 package com.tripbook.tripbook.views.tripAdd
 
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
@@ -11,7 +12,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.Utils.convertPxToDp
-import com.tripbook.tripbook.Utils.getImagePathFromURI
 import com.tripbook.tripbook.databinding.FragmentNewsAddBinding
 import com.tripbook.tripbook.viewmodel.NewsAddViewModel
 import jp.wasabeef.richeditor.RichEditor
@@ -26,12 +26,11 @@ class NewsAddFragment :
     private val titleGalleryLauncher =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             uri?.let {
-                val fullPath = getImagePathFromURI(uri, requireContext())
-                viewModel.setTitleImageUri(uri, fullPath)
+                viewModel.setTitleImageUri(uri)
             }
         }
     private val imagesGalleryLauncher =
-        // 최대 30장, 최소 5장
+        // 최대 30장, 최소 1장
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(30)) { uris ->
             if (uris.isNotEmpty()) {
                 for (uri in uris) {
@@ -40,8 +39,9 @@ class NewsAddFragment :
                     binding.mainEditor.insertImageC(
                         uri.toString(),
                         "",
-                        (convertPxToDp(deviceWidth, requireContext()) * 0.8).toInt()
+                        (requireContext().convertPxToDp(deviceWidth) * 0.9).toInt()
                     )
+                    viewModel.addImage(uri.toString())
                 }
             }
         }
@@ -69,7 +69,8 @@ class NewsAddFragment :
             viewModel.locationAdd.collect { location ->
                 if (location != "") {
                     binding.mainEditor.insertLocation(location)
-                    viewModel.setListIndex(-1)
+                    viewModel.addLocationTag(location)
+                    viewModel.setLocationListIndex(-1)
                     viewModel.setLocation("")
                 }
             }
@@ -82,6 +83,24 @@ class NewsAddFragment :
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiStatus.collect { status ->
                     when (status) {
+                        NewsAddViewModel.UiStatus.NEWS_ADD -> {
+                            viewLifecycleOwner.lifecycleScope.launch {
+                                viewModel.saveTripNews(
+                                    binding.title.text.toString(),
+                                    binding.mainEditor.html,
+                                    requireContext()
+                                ).collect{
+                                    if(it){
+                                        // 여행소식 등록 성공
+                                        Toast.makeText(requireContext(), "여행소식 등록에 성공하였습니다.", Toast.LENGTH_SHORT).show()
+
+                                    }else{
+                                        // 여행소식 등록 실패
+                                        Toast.makeText(requireContext(), "여행소식 등록에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            }
+                        }
                         NewsAddViewModel.UiStatus.TITLE_GALLERY -> {
                             titleGalleryLauncher.launch(
                                 PickVisualMediaRequest(

@@ -40,6 +40,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:hint="@string/news_add_location_text"
                     android:textColorHint="@color/gray_G_20"
                     android:textSize="14sp" />

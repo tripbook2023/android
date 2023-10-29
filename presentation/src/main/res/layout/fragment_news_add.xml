@@ -47,6 +47,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:text="@string/news_add_title"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -64,6 +66,7 @@
                 android:enabled="@{viewModel.allConditionSatisfied}"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
+                android:onClick="@{() -> viewModel.setUiStatus(uiStatus.NEWS_ADD)}"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="6dp"
                 android:text="@string/news_add_button"
@@ -90,12 +93,12 @@
                         android:id="@+id/title_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:alpha="@{viewModel.titleImageUri == null ? 0.3f : 1.0f}"
+                        android:alpha="@{viewModel.thumbNailUri == null ? 0.3f : 1.0f}"
                         android:background="@color/gray_G_80"
                         android:contentDescription="@null"
                         android:scaleType="fitXY"
                         android:tintMode="src_atop"
-                        app:imageUrl="@{viewModel.titleImageUri}"
+                        app:imageUrl="@{viewModel.thumbNailUri}"
                         app:tint="#80000000" />
 
                     <TextView
@@ -103,14 +106,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:drawableTop="@{viewModel.titleImageUri == null ? @drawable/icn_pic_36 : null}"
+                        android:drawableTop="@{viewModel.thumbNailUri == null ? @drawable/icn_pic_36 : null}"
                         android:drawablePadding="8dp"
                         android:gravity="center"
                         android:onClick="@{() -> viewModel.setUiStatus(uiStatus.TITLE_GALLERY)}"
                         android:padding="25dp"
                         android:text="@string/news_add_pic_add"
-                        android:textColor="@{viewModel.titleImageUri == null ? @color/white : @android:color/transparent}"
-                        android:textSize="12sp"
+                        android:textColor="@{viewModel.thumbNailUri == null ? @color/white : @android:color/transparent}"
+                        android:textSize="10sp"
                         app:drawableTint="@color/white" />
 
                     <EditText

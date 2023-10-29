@@ -10,6 +10,7 @@ import com.tripbook.tripbook.domain.model.UserAuth
 import com.tripbook.tripbook.domain.repository.AuthRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -32,6 +33,6 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun setCurrentToken(accessToken: String, refreshToken: String) {
         dataStore.setToken(
             TokenEntity(accessToken, refreshToken)
-        )
+        ).collect()
     }
 }

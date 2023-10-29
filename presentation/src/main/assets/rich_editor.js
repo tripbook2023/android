@@ -31,6 +31,7 @@ RE.positionY = 0;
 
 RE.editor = document.getElementById('editor');
 
+//RE.editor.addEventListener("input", function() { RE.getCaret(); });
 document.addEventListener("selectionchange", function() { RE.backuprange(); });
 var bold = document.createElement('b')
 
@@ -42,18 +43,42 @@ RE.checkSelection = function(){
     if(parent.isEqualNode(bold)){
         parent = parent.parentElement
     }
-
     return parent.getAttribute('size'); // return 널값인 경우: 아무런 옵션 선택 X, 크기가 2일 때 bold
+}
+
+RE.getCaret = function(){
+    var x=0, y=0;
+    var isSupported = typeof window.getSelection!=="undefined";
+    if(isSupported){
+        const selection=window.getSelection();
+        if(selection.rangeCount!==0){
+            const range = selection.getRangeAt(0).cloneRange();
+            range.collapse(true);
+            const rect = range.getClientRects()[0];
+            if(rect){
+                x=rect.left;
+                y=rect.top;
+            }
+        }
+    }
+
+    RE.positionX=x;
+    RE.positionY=y;
+    window.android.editorScrollTo(x, y)
 }
 
 function deleteLocation(idx){
     var id = 'location' + idx
+    var tag = document.getElementById(id).children[1].innerHTML
     document.getElementById(id).remove();
+    window.android.removeTagItem(tag) // tag string 전달
 }
 
 function deleteImage(idx){
     var id = 'imageDiv' + idx
-    var img = document.getElementById(id).remove()
+    var img = document.getElementById(id).children[0].children[0].getAttribute('src')
+    document.getElementById(id).remove()
+    window.android.removeImageItem(img) // image uri 전달
 }
 
 function changeStyle(idx){

@@ -24,10 +24,6 @@ import java.io.File
 import javax.inject.Inject
 
 
-enum class Gender {
-    FEMALE, MALE
-}
-
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
@@ -196,5 +192,9 @@ class LoginViewModel @Inject constructor(
                 _maleButton.value = !_maleButton.value
             }
         }
+    }
+
+    enum class Gender {
+        FEMALE, MALE
     }
 }

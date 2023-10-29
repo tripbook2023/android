@@ -1,9 +1,11 @@
 package com.tripbook.libs.network.interceptor
 
+import android.util.Log
 import com.tripbook.database.Token
 import com.tripbook.database.TokenDataStore
 import com.tripbook.database.TokenEntity
 import com.tripbook.libs.network.service.TokenService
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -18,16 +20,21 @@ class TokenInterceptor @Inject constructor(
     override fun intercept(chain: Interceptor.Chain): Response = runBlocking {
         val token = dataStoreManager.tokenFlow.first()
         token?.let {
+            Log.d("response check", it.accessToken + ", " + it.refreshToken)
             val tokenAddedRequest = chain.request().putAuthorizationHeader(
-                Token(it.accessToken, it.refreshToken)
+                Token("Bearer " + it.accessToken, it.refreshToken)
             )
 
             val firstResponse = chain.proceed(tokenAddedRequest)
             return@runBlocking when (firstResponse.code) {
                 401, 500 -> {
-                    val refreshedToken = tokenService.refreshToken()
+                    val refreshedToken = tokenService.refreshToken("Bearer " + it.refreshToken)
+                    firstResponse.close()
                     val refreshRequest = chain.request().putAuthorizationHeader(
-                        Token(refreshedToken.accessToken, refreshedToken.refreshToken))
+                        Token("Bearer " + refreshedToken.accessToken, refreshedToken.refreshToken)
+                    )
+                    Log.d("refreshedToken", refreshedToken.accessToken)
+
                     chain.proceed(refreshRequest).also { response ->
                         if (response.isSuccessful) {
                             dataStoreManager.setToken(
@@ -35,7 +42,9 @@ class TokenInterceptor @Inject constructor(
                                     refreshedToken.accessToken,
                                     refreshedToken.refreshToken
                                 )
-                            )
+                            ).collect()
+                        } else {
+                            // TODO: 에러처리 -> network exception throw
                         }
                     }
                 }

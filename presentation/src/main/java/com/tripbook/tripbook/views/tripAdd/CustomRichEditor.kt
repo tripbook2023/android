@@ -10,6 +10,9 @@ class CustomRichEditor @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : RichEditor(context, attrs) {
 
+    private var locationIdx = 0
+    private var imageIdx = 0
+
     init {
         setEditorFontSize(13)
     }
@@ -33,9 +36,6 @@ class CustomRichEditor @JvmOverloads constructor(
     fun setParentScrollView(parentScroll: NestedScrollView) {
         parentScrollView = parentScroll
     }
-
-    private var locationIdx = 0
-    private var imageIdx = 0
 
     fun insertImageC(uri: String, alt: String, width: Int){
         exec("javascript:RE.prepareInsert();")

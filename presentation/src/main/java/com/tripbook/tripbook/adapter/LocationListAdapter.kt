@@ -1,7 +1,10 @@
 package com.tripbook.tripbook.adapter
 
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,11 +17,36 @@ class LocationListAdapter(val itemClickListener: (Int) -> Unit) :
 
     private var selectedPosition: Int = -1
     private var lastSelectedPosition: Int = -1
+    private var startIdx = -1
+    private var endIdx = 0
+    var keyword: String = ""
 
-    class LocationListViewHolder(private val itemBinding: LocationListItemBinding) :
+
+    inner class LocationListViewHolder(
+        private val itemBinding: LocationListItemBinding
+    ) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(item: Location) {
-            itemBinding.location.text = item.place_name
+            itemBinding.location.setText(item.place_name)
+            startIdx = itemBinding.location.text.indexOf(keyword)
+            endIdx = startIdx + keyword.length
+
+            if (startIdx != -1) {
+                val colorSpan = ForegroundColorSpan(
+                    ContextCompat.getColor(
+                        itemBinding.root.context,
+                        R.color.p_50
+                    )
+                )
+                itemBinding.location.text.setSpan(
+                    colorSpan,
+                    startIdx,
+                    endIdx,
+                    Spanned.SPAN_INCLUSIVE_INCLUSIVE
+                )
+            }
+            startIdx = -1
+            endIdx = 0
         }
     }
 

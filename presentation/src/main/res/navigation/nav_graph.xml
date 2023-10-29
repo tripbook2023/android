@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_loginFragment_to_profile"
             app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_loginFragment_to_travelNews"
+            app:destination="@id/travel_news" />
     </fragment>
 
 </navigation>

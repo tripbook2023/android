@@ -9,6 +9,7 @@ import com.tripbook.libs.network.di.qualifier.MemberServiceScope
 import com.tripbook.libs.network.di.qualifier.NoAuthNetworkQualifier
 import com.tripbook.libs.network.di.qualifier.NoAuthNetworkQualifierNoAgent
 import com.tripbook.libs.network.di.qualifier.TokenServiceScope
+import com.tripbook.libs.network.di.qualifier.TripNewsServiceScope
 import com.tripbook.libs.network.interceptor.TokenInterceptor
 import com.tripbook.libs.network.interceptor.UserAgentInterceptor
 import com.tripbook.libs.network.service.TokenService
@@ -41,7 +42,7 @@ object NetworkModule {
     @NoAuthNetworkQualifier
     fun providesNoAuthOkhttpClient(): OkHttpClient = getBaseOkhttpBuilder()
         .addInterceptor(UserAgentInterceptor())
-        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
         .build()
 
     @Provides
@@ -58,11 +59,12 @@ object NetworkModule {
         tokenService: TokenService,
         dataStoreManager: TokenDataStore,
     ): OkHttpClient = getBaseOkhttpBuilder()
+        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
         .addInterceptor(UserAgentInterceptor())
         .addInterceptor(
             TokenInterceptor(
                 tokenService,
-                dataStoreManager,
+                dataStoreManager
             )
         )
         .build()
@@ -97,9 +99,21 @@ object NetworkModule {
     @MemberServiceScope
     fun providesMemberRetrofit(
         moshi: Moshi,
-        @NoAuthNetworkQualifierNoAgent client: OkHttpClient
+        @NoAuthNetworkQualifier client: OkHttpClient
     ): Retrofit = Retrofit.Builder()
         .baseUrl("$BASE_URL/member/")
+        .client(client)
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .build()
+
+    @Provides
+    @Singleton
+    @TripNewsServiceScope
+    fun providesTripNewsRetrofit(
+        moshi: Moshi,
+        @AuthNetworkQualifier client: OkHttpClient
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl("$BASE_URL/")
         .client(client)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
