@@ -1,4 +1,4 @@
-package com.tripbook.tripbook.Utils
+package com.tripbook.tripbook.utils
 
 import android.content.ContentResolver
 import android.content.ContentValues
