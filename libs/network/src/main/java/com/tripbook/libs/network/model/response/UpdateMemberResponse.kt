@@ -8,7 +8,7 @@ data class UpdateMemberResponse (
     @Json(name = "accessToken")
     val accessToken: String,
     @Json(name = "refreshToken")
-    val refreshToken: String?,
+    val refreshToken: String,
     @Json(name = "status")
     val status: String?,
     @Json(name = "email")

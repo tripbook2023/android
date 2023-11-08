@@ -16,6 +16,6 @@ fun MemberResponse.toMemberInfo() = MemberInfo(
     termsOfPrivacy = termsOfPrivacy,
     termsOfLocation = termsOfLocation,
     marketingConsent = marketingConsent,
-    point = point,
+    point = point ?: 0,
     status = status
 )
