@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.lifecycle.viewModelScope
 import com.tripbook.base.BaseViewModel
 import com.tripbook.tripbook.R
-import com.tripbook.tripbook.Utils.getImagePathFromURI
+import com.tripbook.tripbook.utils.getImagePathFromURI
 import com.tripbook.tripbook.domain.model.Location
 import com.tripbook.tripbook.domain.usecase.GetLocationUseCase
 import com.tripbook.tripbook.domain.usecase.SaveTripNewsUseCase
@@ -23,6 +23,7 @@ import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
+@Suppress("UNUSED")
 class NewsAddViewModel @Inject constructor(
     private val saveTripNewsUseCase: SaveTripNewsUseCase,
     private val locationUseCase: GetLocationUseCase
@@ -80,9 +81,9 @@ class NewsAddViewModel @Inject constructor(
     private val _tempSaveList = MutableStateFlow<List<Location>>(listOf()) //  Location -> TempSave
     val tempSaveList: StateFlow<List<Location>> get() = _tempSaveList
 
-    fun deleteTempSave(pos: Int) {
-        // 해당 위치의 아이템 삭제
-    }
+//    fun deleteTempSave(pos: Int) {
+//        // 해당 위치의 아이템 삭제
+//    }
 
     // 위치 검색 리스트 관련
     private val _locationListIndex = MutableStateFlow(-1)

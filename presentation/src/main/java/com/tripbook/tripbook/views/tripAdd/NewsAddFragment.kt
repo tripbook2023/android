@@ -1,6 +1,5 @@
 package com.tripbook.tripbook.views.tripAdd
 
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -11,11 +10,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
-import com.tripbook.tripbook.Utils.convertPxToDp
+import com.tripbook.tripbook.utils.convertPxToDp
 import com.tripbook.tripbook.databinding.FragmentNewsAddBinding
 import com.tripbook.tripbook.viewmodel.NewsAddViewModel
 import jp.wasabeef.richeditor.RichEditor
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 
 class NewsAddFragment :
@@ -180,7 +180,7 @@ class NewsAddFragment :
             viewModel.setTitleLength(text!!.length)
         }
         binding.mainEditor.setOnTextChangeListener {
-            Log.d("텍스트 리스너", it.length.toString() + ": " + it)
+            Timber.tag("텍스트 리스너").d("${it.length} : $it")
             val regex = Regex("<[^>]*>?")
             val contents = regex.replace(it, "").replace("&nbsp;", " ")
             viewModel.setTextLength(contents.length)
