@@ -3,7 +3,6 @@ package com.tripbook.tripbook.viewmodel
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.auth0.android.auth0.BuildConfig
 import com.tripbook.base.BaseViewModel
 import com.tripbook.tripbook.domain.model.MemberInfo
 import com.tripbook.tripbook.domain.usecase.MemberUseCase
@@ -14,7 +13,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
 
@@ -48,30 +46,20 @@ class InfoViewModel @Inject constructor(
         _memberInfo.emit(it)
 
         _nickname.value = it?.name
-        _email.value = it?.name
-
-        Log.d("profile_name", "name" + it?.name)
-        Log.d("profile_email", "email" + it?.email)
-        Log.d("profile_uri", "email" + it?.profile)
+        _email.value = it?.email
 
         val profileUri: Uri? = it?.profile?.let { Uri.parse(it) }
         _profileUri.emit(profileUri)
 
     }.launchIn(viewModelScope)
 
-    fun setName (name :String) {
-        _nickname.value = name
-    }
-
-
-    fun updateProfile(): Flow<Boolean> {
+    fun updateProfile(name: String, imgFile: String?): Flow<Boolean> {
         val imageFile: File? = if (profileUri.value == null || profileDefault.value) {
             null
         } else {
-            File(profilePath.value!!)
+            File(imgFile!!)
         }
 
-        val nickname = memberInfo.value?.name ?: ""
         val gender = memberInfo.value?.gender ?: ""
         val serviceChecked = memberInfo.value?.termsOfService ?: false
         val personalInfoChecked = memberInfo.value?.termsOfPrivacy ?: false
@@ -79,8 +67,17 @@ class InfoViewModel @Inject constructor(
         val marketingChecked = memberInfo.value?.marketingConsent ?: false
         val birth = memberInfo.value?.birth ?: ""
 
+        Log.d("profile change", "nickname::" + name)
+        Log.d("profile change", "imageFile::" + imageFile)
+        Log.d("profile change", "gender::" + gender)
+        Log.d("profile change", "serviceChecked::" + serviceChecked)
+        Log.d("profile change", "personalInfoChecked::" + personalInfoChecked)
+        Log.d("profile change", "locationChecked::" + locationChecked)
+        Log.d("profile change", "marketingChecked::" + marketingChecked)
+        Log.d("profile change", "birth::" + birth)
+
         return updateMemberUseCase(
-            nickname,
+            name,
             imageFile,
             serviceChecked,
             personalInfoChecked,

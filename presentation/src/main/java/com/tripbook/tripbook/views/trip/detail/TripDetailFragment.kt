@@ -1,40 +1,87 @@
+package com.tripbook.tripbook.views.trip.detail
+
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentTripDetailBinding
-import com.tripbook.tripbook.viewmodel.LoginViewModel
-import com.tripbook.tripbook.views.trip.detail.TripDetailRecyclerViewAdapter
+import com.tripbook.tripbook.domain.model.Image
+import com.tripbook.tripbook.viewmodel.ArticleViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class TripDetailFragment :
-    BaseFragment<FragmentTripDetailBinding, LoginViewModel>(R.layout.fragment_trip_detail) {
-    override val viewModel: LoginViewModel by activityViewModels()
+    BaseFragment<FragmentTripDetailBinding, ArticleViewModel>(R.layout.fragment_trip_detail) {
+    override val viewModel: ArticleViewModel by activityViewModels()
 
     override fun init() {
+        binding.viewModel = viewModel
+
         val binding = binding
+
+        //여행소식 상세보기 api
+        viewLifecycleOwner.lifecycleScope.launch {
+            val articleId: Long = 19 //test용
+
+            viewModel.getArticleDetail(articleId)
+
+            viewModel.articleDetailInfo.collect {
+
+                viewModel.content.onEach { content ->
+                    val webView = binding.webView
+
+                    if (!content.isNullOrBlank()) {
+                        val modifiedContent =  replaceImagePlaceholders(content, it?.imageList.orEmpty())
+                        Log.d("modifiedContent", modifiedContent)
+                        webView.visibility = View.VISIBLE
+                        webView.loadDataWithBaseURL(null, modifiedContent, "text/html", "UTF-8", null)
+
+                    }
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
+            }
+
+        }
+
+        var isLiked = false
+
+        //좋아요
+        binding.like.setOnClickListener {
+
+            val articleId: Long = 19 //test용
+
+            if(isLiked) {
+                viewModel.likeArticle(articleId)
+
+                val currentHeartNum = viewModel.heartNum.value
+                if (currentHeartNum != null) {
+                    viewModel.setHeartNum(currentHeartNum - 1)
+                }
+
+                binding.like.clearColorFilter()
+                isLiked = false
+            } else {
+                viewModel.likeArticle(articleId)
+
+                var likeColor = ContextCompat.getColor(requireContext(), R.color.tripBook_main)
+
+                val currentHeartNum = viewModel.heartNum.value
+                if (currentHeartNum != null) {
+                    viewModel.setHeartNum(currentHeartNum + 1)
+                }
+                binding.like.setColorFilter(likeColor)
+                isLiked = true
+
+            }
+        }
 
         with(binding) {
             viewModel = this@TripDetailFragment.viewModel
-            val items = ArrayList<String>()
-
-            //서버에서 가져온 아티클 데이터 기반으로 수정하기
-
-            for (i in 1..4) {
-                items.add("$i")
-            }
-
-            val recyclerView: RecyclerView = rv
-            val recyclerViewAdapter = TripDetailRecyclerViewAdapter(items)
-
-            recyclerView.apply {
-                layoutManager = LinearLayoutManager(context)
-                adapter = recyclerViewAdapter
-            }
 
             val fadeInAnim = AnimationUtils.loadAnimation(
                 requireContext(),
@@ -45,33 +92,6 @@ class TripDetailFragment :
                 com.tripbook.tripbook.core.design.R.anim.trip_detail_fade_out
             )
 
-            var isLiked = false
-
-            //좋아요
-            like.setOnClickListener {
-                //아티클id 전달
-
-                //색상 변경 (색 x -> 주황색, 색 o -> 다시 색 없애기)
-                //좋아요 취소도 다 서버로?
-
-                if(isLiked) { //이미 좋아요 O
-                    //viewModel.likeArticle(ArticleId) //아티클id 보내주면서 라이크 api 호출
-                    like.clearColorFilter()
-                    isLiked = false
-                } else {
-                    //viewModel.likeArticle(ArticleId) //아티클id 보내주면서 라이크 api 호출
-
-                    val likeColor = ContextCompat.getColor(requireContext(), R.color.tripBook_main)
-
-                    like.setColorFilter(likeColor)
-                    isLiked = true
-
-                    //서버에서 가져온 상세보기 중 좋아요 수 넣어주기
-
-                }
-            }
-
-
             val appBar = appBarLayout
             val bottomBar = tripDetailBottom
             val sideBar = sideProfile
@@ -81,6 +101,7 @@ class TripDetailFragment :
 
             var isViewsVisible = false
 
+            //appbar 관련 이벤트
             appBar.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout, verticalOffset ->
 
                 val totalScroll =
@@ -133,6 +154,21 @@ class TripDetailFragment :
                     icnDefault.colorFilter = null
                 }
             })
-        }
+        } //binding
     }
+
+    private fun replaceImagePlaceholders(content: String, imageList: List<Image>): String {
+
+        var modifiedContent = content
+
+        imageList.forEachIndexed { index, imageItem ->
+            val imageUrl = imageItem.url
+            val placeholder = "id=\"image$index\""
+            modifiedContent = modifiedContent.replace(placeholder, "src=\"$imageUrl\"")
+        }
+
+        return modifiedContent
+    }
+
+
 }

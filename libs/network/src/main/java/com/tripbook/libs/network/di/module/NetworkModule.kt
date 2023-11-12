@@ -149,7 +149,7 @@ object NetworkModule {
     @ArticleServiceScope
     fun providesArticleRetrofit(
         moshi: Moshi,
-        @NoAuthNetworkQualifierNoAgent client: OkHttpClient
+        @AuthNetworkQualifier client: OkHttpClient
     ): Retrofit = Retrofit.Builder()
         .baseUrl("$BASE_URL/articles/")
         .client(client)

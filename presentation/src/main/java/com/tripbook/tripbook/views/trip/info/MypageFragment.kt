@@ -1,7 +1,6 @@
 package com.tripbook.tripbook.views.trip.info
 
 
-import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,18 +18,16 @@ class MypageFragment : BaseFragment<FragmentMypageBinding, InfoViewModel>(R.layo
     override val viewModel : InfoViewModel by activityViewModels()
 
     override fun init() {
+        binding.viewModel = viewModel
+
         val imageView = binding.profile
 
         //회원 정보 가져오기
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getMemberInfo()
 
-
             viewModel.memberInfo.collect { memberInfo ->
                 if (memberInfo != null) {
-
-                    binding.nickname.text = memberInfo.name
-                    binding.email.text = memberInfo.email
 
                     val imageUri = memberInfo.profile
                     Glide.with(this@MypageFragment)
@@ -52,6 +49,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding, InfoViewModel>(R.layo
         //1:1 문의
         binding.askDetail.setOnClickListener {
             findNavController().navigate(R.id.action_mypageFragment_to_askFragment)
+
         }
 
         //로그아웃

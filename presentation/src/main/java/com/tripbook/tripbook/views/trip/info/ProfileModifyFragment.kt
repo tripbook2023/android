@@ -1,6 +1,10 @@
 package com.tripbook.tripbook.views.trip.info
 
+import android.database.Cursor
+import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -15,7 +19,6 @@ import com.tripbook.tripbook.viewmodel.InfoViewModel
 import com.tripbook.tripbook.viewmodel.LoginViewModel
 import com.tripbook.tripbook.views.login.profile.ProfileDialogFragment
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class ProfileModifyFragment : BaseFragment<FragmentProfileModifyBinding, LoginViewModel>(R.layout.fragment_profile_modify) {
 
@@ -40,14 +43,23 @@ class ProfileModifyFragment : BaseFragment<FragmentProfileModifyBinding, LoginVi
 
     private fun updateProfile() {
         viewLifecycleOwner.lifecycleScope.launch {
-            infoviewModel.updateProfile().collect {
+
+            val name = binding.nickname.text.toString()
+            val imgFile  = viewModel.profileUri.value
+            val fullPath = imgFile?.let { getRealPathFromURI(it) }
+
+            Log.d("updateProfileMain", "name::" + name)
+            Log.d("updateProfileMain", "fullPath::" + fullPath)
+
+
+            infoviewModel.updateProfile(name, fullPath).collect {
                 if (it) {
                     //내정보로 다시 돌아가기
-                    Timber.tag("updateProfile").d("프로필 변경 성공")
-                    // findNavController().navigate(R.id.action_additionalFragment_to_signUpSuccessFragment)
+                    Log.d("updateProfile", "프로필 변경 성공")
+                    //findNavController().navigate(R.id.action_additionalFragment_to_signUpSuccessFragment)
                 } else {
                     // 프로필 변경 실패
-                    Timber.tag("error updateProfile").d("프로필 변경 실패")
+                    Log.d("error updateProfile", "프로필 변경 실패")
                 }
             }
         }
@@ -91,6 +103,23 @@ class ProfileModifyFragment : BaseFragment<FragmentProfileModifyBinding, LoginVi
             }
         }
     }
+
+
+    private fun getRealPathFromURI(contentURI: Uri): String? {
+        val result: String?
+        val cursor: Cursor? = requireContext().contentResolver.query(contentURI, null, null, null, null)
+        if (cursor == null) {
+            result = contentURI.path
+        } else {
+            cursor.moveToFirst()
+            val idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+            result = cursor.getString(idx)
+            cursor.close()
+        }
+        return result
+    }
+
+
 
 
 }
