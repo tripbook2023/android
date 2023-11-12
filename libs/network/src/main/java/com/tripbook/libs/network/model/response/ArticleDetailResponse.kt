@@ -33,11 +33,16 @@ data class ImageResponse(
     val url: String
 )
 
+data class ThumbnailResponse(
+    val id: Long,
+    val url: String
+)
+
 data class CommentResponse(
     val id: Long,
     val content: String,
     val author: MemberSimpleDto,
-    val childList: List<CommentResponse>,
+    val childList: String,
     val createdAt: String,
     val updatedAt: String
 )

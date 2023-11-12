@@ -148,7 +148,7 @@
                 android:id="@+id/ask_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 android:contentDescription="@null"
                 android:src="@drawable/icn_next_18"
                 app:layout_constraintEnd_toEndOf="parent" />

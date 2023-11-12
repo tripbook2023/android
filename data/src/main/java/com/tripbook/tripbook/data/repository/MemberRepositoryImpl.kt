@@ -1,6 +1,7 @@
 package com.tripbook.tripbook.data.repository
 
 
+import android.util.Log
 import com.tripbook.database.TokenDataStore
 import com.tripbook.database.TokenEntity
 import com.tripbook.libs.network.NetworkResult
@@ -71,7 +72,9 @@ class MemberRepositoryImpl @Inject constructor(
         val birthBody = birth.toRequestBody("text/plain".toMediaTypeOrNull())
 
         val fileBody = file?.asRequestBody("image/jpeg".toMediaTypeOrNull())
-        val filePart = fileBody?.let { MultipartBody.Part.createFormData("photo", "photo.jpg", it) }
+        val filePart = fileBody?.let { MultipartBody.Part.createFormData("imageFile", "photo.jpg", it) }
+
+        Log.d("profile api", "filePart:::" + filePart)
 
         memberService.updateMember(
             filePart,
@@ -93,7 +96,9 @@ class MemberRepositoryImpl @Inject constructor(
                         it.value.accessToken,
                         it.value.refreshToken
                     )
-                )
+                ).collect {
+
+                }
                 true
             }
             else -> run {
@@ -102,6 +107,5 @@ class MemberRepositoryImpl @Inject constructor(
             }
         }
     }
-
 
 }

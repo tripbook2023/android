@@ -29,6 +29,65 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
 
 
     override fun init() {
+        binding.viewModel = viewModel
+
+        val binding = binding
+
+        //여행소식 상세보기 api
+        viewLifecycleOwner.lifecycleScope.launch {
+            val articleId: Long = 19 //test용
+
+            viewModel.getArticleDetail(articleId)
+
+            viewModel.articleDetailInfo.collect {
+
+                viewModel.content.onEach { content ->
+                    val webView = binding.webView
+
+                    if (!content.isNullOrBlank()) {
+                        val modifiedContent =  replaceImagePlaceholders(content, it?.imageList.orEmpty())
+                        Log.d("modifiedContent", modifiedContent)
+                        webView.visibility = View.VISIBLE
+                        webView.loadDataWithBaseURL(null, modifiedContent, "text/html", "UTF-8", null)
+
+                    }
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
+            }
+
+        }
+
+        var isLiked = false
+
+        //좋아요
+        binding.like.setOnClickListener {
+
+            val articleId: Long = 19 //test용
+
+            if(isLiked) {
+                viewModel.likeArticle(articleId)
+
+                val currentHeartNum = viewModel.heartNum.value
+                if (currentHeartNum != null) {
+                    viewModel.setHeartNum(currentHeartNum - 1)
+                }
+
+                binding.like.clearColorFilter()
+                isLiked = false
+            } else {
+                viewModel.likeArticle(articleId)
+
+                var likeColor = ContextCompat.getColor(requireContext(), R.color.tripBook_main)
+
+                val currentHeartNum = viewModel.heartNum.value
+                if (currentHeartNum != null) {
+                    viewModel.setHeartNum(currentHeartNum + 1)
+                }
+                binding.like.setColorFilter(likeColor)
+                isLiked = true
+
+            }
+        }
+
         with(binding) {
             Log.d("TRIPBOOK", "DETAIL SCREEN : ${args.articleId}")
             viewModel = this@TripDetailFragment.viewModel
@@ -57,33 +116,6 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
                 com.tripbook.tripbook.core.design.R.anim.trip_detail_fade_out
             )
 
-            var isLiked = false
-
-            //좋아요
-            like.setOnClickListener {
-                //아티클id 전달
-
-                //색상 변경 (색 x -> 주황색, 색 o -> 다시 색 없애기)
-                //좋아요 취소도 다 서버로?
-
-                if(isLiked) { //이미 좋아요 O
-                    //viewModel.likeArticle(ArticleId) //아티클id 보내주면서 라이크 api 호출
-                    like.clearColorFilter()
-                    isLiked = false
-                } else {
-                    //viewModel.likeArticle(ArticleId) //아티클id 보내주면서 라이크 api 호출
-
-                    val likeColor = ContextCompat.getColor(requireContext(), R.color.tripBook_main)
-
-                    like.setColorFilter(likeColor)
-                    isLiked = true
-
-                    //서버에서 가져온 상세보기 중 좋아요 수 넣어주기
-
-                }
-            }
-
-
             val appBar = appBarLayout
             val bottomBar = tripDetailBottom
             val sideBar = sideProfile
@@ -93,7 +125,8 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
 
             var isViewsVisible = false
 
-            appBar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            //appbar 관련 이벤트
+             appBar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
 
                 val totalScroll =
                     Math.abs(verticalOffset)
@@ -145,7 +178,22 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
                     icnBefore.colorFilter = null
                     icnDefault.colorFilter = null
                 }
-            }
-        }
+            })
+        } //binding
     }
+
+    private fun replaceImagePlaceholders(content: String, imageList: List<Image>): String {
+
+        var modifiedContent = content
+
+        imageList.forEachIndexed { index, imageItem ->
+            val imageUrl = imageItem.url
+            val placeholder = "id=\"image$index\""
+            modifiedContent = modifiedContent.replace(placeholder, "src=\"$imageUrl\"")
+        }
+
+        return modifiedContent
+    }
+
+
 }

@@ -43,5 +43,7 @@ class MypageFragment :
                 MypageFragmentDirections.actionMypageFragmentToLogoutFragment()
             )
         }
+
+
     }
 }

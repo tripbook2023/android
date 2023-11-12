@@ -24,6 +24,11 @@ data class MemberSimple(
     val role: String
 )
 
+data class Thumbnail(
+    val id: Long,
+    val url: String
+)
+
 data class Image(
     val id: Long,
     val url: String
@@ -33,7 +38,7 @@ data class Comment(
     val id: Long,
     val content: String,
     val author: MemberSimple,
-    val childList: List<Any>, //여기 댓글 추후 수정해야 됨
+    val childList: String, //여기 댓글 추후 수정해야 됨
     val createdAt: String,
     val updatedAt: String
 )

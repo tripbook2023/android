@@ -74,6 +74,7 @@
     <string name="home">홈</string>
     <string name="add">등록</string>
     <string name="my_profile">내 정보</string>
+
     <string name="additional_birth_hint">YYYY-DD-MM</string>
     <string name="additional_birth_text">%d-%02d-%02d</string>
     <!-- TODO: Remove or change this placeholder text -->

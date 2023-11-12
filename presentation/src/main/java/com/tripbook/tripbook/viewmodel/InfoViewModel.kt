@@ -2,6 +2,7 @@ package com.tripbook.tripbook.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.viewModelScope
+import com.auth0.android.auth0.BuildConfig
 import com.tripbook.base.BaseViewModel
 import com.tripbook.tripbook.domain.model.MemberInfo
 import com.tripbook.tripbook.domain.usecase.LogoutUseCase
@@ -67,14 +68,24 @@ class InfoViewModel @Inject constructor(
 
     private val profileDefault = MutableStateFlow(false)
 
-    fun updateProfile(): Flow<Boolean> {
+    fun getMemberInfo() = memberUseCase().onEach {
+        _memberInfo.emit(it)
+
+        _nickname.value = it?.name
+        _email.value = it?.email
+
+        val profileUri: Uri? = it?.profile?.let { Uri.parse(it) }
+        _profileUri.emit(profileUri)
+
+    }.launchIn(viewModelScope)
+
+    fun updateProfile(name: String, imgFile: String?): Flow<Boolean> {
         val imageFile: File? = if (profileUri.value == null || profileDefault.value) {
             null
         } else {
-            File(profilePath.value!!)
+            File(imgFile!!)
         }
 
-        val nickname = memberInfo.value?.name ?: ""
         val gender = memberInfo.value?.gender ?: ""
         val serviceChecked = memberInfo.value?.termsOfService ?: false
         val personalInfoChecked = memberInfo.value?.termsOfPrivacy ?: false
@@ -83,7 +94,7 @@ class InfoViewModel @Inject constructor(
         val birth = memberInfo.value?.birth ?: ""
 
         return updateMemberUseCase(
-            nickname,
+            name,
             imageFile,
             serviceChecked,
             personalInfoChecked,
