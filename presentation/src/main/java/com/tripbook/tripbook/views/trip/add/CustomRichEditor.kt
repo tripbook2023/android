@@ -1,4 +1,4 @@
-package com.tripbook.tripbook.views.tripAdd
+package com.tripbook.tripbook.views.trip.add
 
 import android.content.Context
 import android.util.AttributeSet
@@ -10,8 +10,8 @@ class CustomRichEditor @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : RichEditor(context, attrs) {
 
-    private var locationIdx = 0
-    private var imageIdx = 0
+    var locationIdx = 0
+    var imageIdx = 0
 
     init {
         setEditorFontSize(13)

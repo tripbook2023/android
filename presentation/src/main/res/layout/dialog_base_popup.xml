@@ -11,7 +11,7 @@
 
         <variable
             name="baseDialog"
-            type="com.tripbook.tripbook.views.tripAdd.DialogItem" />
+            type="com.tripbook.tripbook.views.trip.add.DialogItem" />
     </data>
 
     <LinearLayout

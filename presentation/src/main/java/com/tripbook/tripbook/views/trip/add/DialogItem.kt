@@ -1,4 +1,4 @@
-package com.tripbook.tripbook.views.tripAdd
+package com.tripbook.tripbook.views.trip.add
 
 data class DialogItem (
     val title: String,

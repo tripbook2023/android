@@ -1,5 +1,7 @@
-package com.tripbook.tripbook.views.tripAdd
+package com.tripbook.tripbook.views.trip.add
 
+import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -8,14 +10,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
-import com.tripbook.tripbook.utils.convertPxToDp
 import com.tripbook.tripbook.databinding.FragmentNewsAddBinding
+import com.tripbook.tripbook.utils.convertPxToDp
 import com.tripbook.tripbook.viewmodel.NewsAddViewModel
 import jp.wasabeef.richeditor.RichEditor
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 
 class NewsAddFragment :
@@ -36,16 +39,49 @@ class NewsAddFragment :
                 for (uri in uris) {
                     val display = requireContext().resources.displayMetrics
                     val deviceWidth = display.widthPixels
-                    binding.mainEditor.insertImageC(
-                        uri.toString(),
-                        "",
-                        (requireContext().convertPxToDp(deviceWidth) * 0.9).toInt()
-                    )
                     viewModel.addImage(uri.toString())
+                    uploadImage(uri, deviceWidth)
                 }
             }
         }
 
+    private fun uploadImage(uri: Uri, deviceWidth: Int){
+        val storageRef = Firebase.storage.reference
+        val ref = storageRef.child("images/${uri.lastPathSegment}")
+        val uploadTask = ref.putFile(uri)
+//        val urlTask = uploadTask
+
+        // Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener {
+            Toast.makeText(requireContext(), "이미지 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
+        }.addOnSuccessListener { taskSnapshot ->
+            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+            // 이미지 크기 ~ 5MB
+            if(taskSnapshot.metadata!!.sizeBytes > 5000000 ){
+                Toast.makeText(requireContext(), "5MB 이하의 이미지만 첨부 가능합니다.", Toast.LENGTH_SHORT).show()
+            } // else
+        }.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
+                }
+            }
+            ref.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val downloadUri = task.result
+                binding.mainEditor.insertImageC(
+                    downloadUri.toString(),
+                    "",
+                    (requireContext().convertPxToDp(deviceWidth) * 0.9).toInt()
+                )
+            } else {
+                Toast.makeText(requireContext(), "이미지 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+    }
     override fun init() {
         binding.viewModel = viewModel
         binding.mainEditor.setParentScrollView(binding.scrollView)
@@ -63,6 +99,7 @@ class NewsAddFragment :
                     viewModel.setTextOptions(binding.textOptionsBold, false)
                 }
             }
+            addJavascriptInterface(viewModel.JavaInterface(), "android")
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -85,6 +122,24 @@ class NewsAddFragment :
                     when (status) {
                         NewsAddViewModel.UiStatus.NEWS_ADD -> {
                             viewLifecycleOwner.lifecycleScope.launch {
+                                // 이미지 테두리 없애기
+                                val imageProcessing = launch{
+                                    for(idx in 0 until binding.mainEditor.imageIdx){
+                                        val script = "javascript:RE.deleteImgBorder(${idx})"
+                                        binding.mainEditor.evaluateJavascript(script){}
+                                    }
+                                }
+                                imageProcessing.join()
+
+                                // 로케이션 태그 삭제버튼 없애기
+                                val locationProcessing = launch{
+                                    for(idx in 0 until binding.mainEditor.locationIdx){
+                                        val script = "javascript:RE.tagButtonInvisible(${idx})"
+                                        binding.mainEditor.evaluateJavascript(script){}
+                                    }
+                                }
+                                locationProcessing.join()
+
                                 viewModel.saveTripNews(
                                     binding.title.text.toString(),
                                     binding.mainEditor.html,
@@ -180,7 +235,7 @@ class NewsAddFragment :
             viewModel.setTitleLength(text!!.length)
         }
         binding.mainEditor.setOnTextChangeListener {
-            Timber.tag("텍스트 리스너").d("${it.length} : $it")
+            Log.d("텍스트 리스너","${it.length} : $it")
             val regex = Regex("<[^>]*>?")
             val contents = regex.replace(it, "").replace("&nbsp;", " ")
             viewModel.setTextLength(contents.length)

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.TempSaveItemBinding
-import com.tripbook.tripbook.views.tripAdd.TempSaveItem
+import com.tripbook.tripbook.views.trip.add.TempSaveItem
 
 class TempSaveAdapter(val onClickDelete: (Int) -> Unit, val itemClickListener: (Int) -> Unit) :
     ListAdapter<TempSaveItem, TempSaveAdapter.TempSaveViewHolder>(DiffUtil) {

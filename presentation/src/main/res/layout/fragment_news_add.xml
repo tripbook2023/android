@@ -157,7 +157,7 @@
                     </LinearLayout>
                 </FrameLayout>
 
-                <com.tripbook.tripbook.views.tripAdd.CustomRichEditor
+                <com.tripbook.tripbook.views.trip.add.CustomRichEditor
                     android:id="@+id/main_editor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

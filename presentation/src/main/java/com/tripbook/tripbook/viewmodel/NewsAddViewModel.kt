@@ -7,10 +7,10 @@ import android.widget.TextView
 import androidx.lifecycle.viewModelScope
 import com.tripbook.base.BaseViewModel
 import com.tripbook.tripbook.R
-import com.tripbook.tripbook.utils.getImagePathFromURI
 import com.tripbook.tripbook.domain.model.Location
 import com.tripbook.tripbook.domain.usecase.GetLocationUseCase
 import com.tripbook.tripbook.domain.usecase.SaveTripNewsUseCase
+import com.tripbook.tripbook.utils.getImagePathFromURI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
