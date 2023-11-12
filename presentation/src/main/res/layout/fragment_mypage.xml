@@ -41,7 +41,7 @@
                 android:id="@+id/button_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="@null"
                 android:src="@drawable/icn_bell_24" />
@@ -65,7 +65,7 @@
                 android:layout_marginVertical="25dp"
                 android:layout_marginStart="20dp"
                 android:background="@drawable/border_circleimageview"
-                app:imgURL="@{viewModel.profileUrl}"
+                app:profileImgUri="@{viewModel.profileUri}"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <LinearLayout
@@ -74,7 +74,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginEnd="20dp"
+                android:layout_gravity="center_vertical"
                 android:orientation="vertical"
                 app:layout_constraintStart_toEndOf="@id/profile"
                 app:layout_constraintTop_toBottomOf="@id/profile">
@@ -101,22 +101,14 @@
                     app:layout_constraintTop_toBottomOf="@id/nickname" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/btn_settimg_linear"
+            <ImageView
+                android:id="@+id/btn_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintStart_toEndOf="@id/profile"
-                app:layout_constraintTop_toBottomOf="@id/profile">
-
-                <ImageView
-                    android:id="@+id/btn_setting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icn_setting_24"
-                    app:tint="@color/white" />
-            </LinearLayout>
+                android:src="@drawable/icn_setting_24"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/basic_margin"
+                app:tint="@color/white" />
 
         </LinearLayout>
 
@@ -148,7 +140,7 @@
                 android:id="@+id/ask_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 android:contentDescription="@null"
                 android:src="@drawable/icn_next_18"
                 app:layout_constraintEnd_toEndOf="parent" />

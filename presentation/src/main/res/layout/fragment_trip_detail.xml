@@ -78,7 +78,7 @@
                             android:layout_height="wrap_content"
                             android:paddingVertical="12dp"
                             app:tint="@color/white"
-                            android:paddingStart="@dimen/margin_start"
+                            android:paddingStart="@dimen/basic_margin"
                             android:src="@drawable/icn_before_24" />
 
                         <ImageView

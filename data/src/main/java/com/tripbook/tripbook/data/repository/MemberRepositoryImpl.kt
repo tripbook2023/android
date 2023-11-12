@@ -1,8 +1,8 @@
 package com.tripbook.tripbook.data.repository
 
 
+import android.util.Log
 import com.tripbook.database.TokenDataStore
-import com.tripbook.database.TokenEntity
 import com.tripbook.libs.network.NetworkResult
 import com.tripbook.libs.network.safeApiCall
 import com.tripbook.libs.network.service.MemberService
@@ -59,6 +59,7 @@ class MemberRepositoryImpl @Inject constructor(
         gender: String,
         birth: String
     ): Flow<Boolean> = safeApiCall(Dispatchers.IO) {
+
         val nameBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
         val serviceTerms =
             termsOfService.toString().toRequestBody("text/plain".toMediaTypeOrNull())

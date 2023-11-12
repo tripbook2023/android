@@ -9,6 +9,11 @@
         <variable
             name="viewModel"
             type="com.tripbook.tripbook.viewmodel.LoginViewModel" />
+
+        <!-- 현재 사용자의 프로필 사진과 닉네임 가져오기 위해 사용 -->
+        <variable
+            name="infoViewModel"
+            type="com.tripbook.tripbook.viewmodel.InfoViewModel" />
     </data>
 
 
@@ -70,9 +75,8 @@
                 android:layout_marginVertical="25dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="0dp"
-                app:imgUri="@{viewModel.profileUri}"
-                android:background="@drawable/border_circleimageview"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:profileImgUri="@{infoViewModel.profileUri}"
+                android:background="@drawable/border_circleimageview"/>
 
         </LinearLayout>
 
@@ -84,6 +88,7 @@
             android:layout_marginTop="40dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:text="@{infoViewModel.nickname}"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:theme="@style/EditTextStyle"

@@ -1,9 +1,7 @@
 package com.tripbook.tripbook.views.trip.detail
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.TripDetailItemBinding
 
 class TripDetailRecyclerViewAdapter(private val items: ArrayList<String>) :
@@ -32,7 +30,7 @@ class TripDetailRecyclerViewAdapter(private val items: ArrayList<String>) :
             binding.subTitle.text = "소제목 $item"
             binding.mainText.text = "본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문 $item"
             binding.locationImg.setImageResource(com.tripbook.tripbook.core.design.R.drawable.icn_location02_18)
-            binding.img.setImageResource(R.drawable.tripbook_image)
+            binding.img.setImageResource(com.tripbook.tripbook.core.design.R.drawable.tripbook_image)
         }
     }
 }
