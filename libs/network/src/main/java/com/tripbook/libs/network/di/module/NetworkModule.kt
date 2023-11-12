@@ -6,6 +6,7 @@ import com.tripbook.libs.network.di.qualifier.ArticleServiceScope
 import com.tripbook.libs.network.di.qualifier.AuthNetworkQualifier
 import com.tripbook.libs.network.di.qualifier.AuthServiceScope
 import com.tripbook.libs.network.di.qualifier.LocationServiceScope
+import com.tripbook.libs.network.di.qualifier.MemberNoAuthServiceScope
 import com.tripbook.libs.network.di.qualifier.MemberServiceScope
 import com.tripbook.libs.network.di.qualifier.NoAuthNetworkQualifier
 import com.tripbook.libs.network.di.qualifier.NoAuthNetworkQualifierNoAgent
@@ -97,7 +98,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    @MemberServiceScope //NoAuth로 변경
+    @MemberNoAuthServiceScope //NoAuth로 변경
     fun providesMemberNoAuthRetrofit(
         moshi: Moshi,
         @NoAuthNetworkQualifier client: OkHttpClient

@@ -42,14 +42,33 @@
     <string name="info_profile_title">프로필 수정</string>
     <string name="info_profile_confirm">확인</string>
     <string name="info_ask">서비스에 대한 궁금한 점이나 의견이 있으신가요?</string>
-    <string name="info_ask2">문의사항에 대한 답변은 2-3일 정도 소요될 수 있습니다.</string>
+    <string name="info_ask2">문의사항에 대한 답변은 2–3일 정도 소요될 수 있습니다.</string>
     <string name="info_ask3">의견 보내기</string>
     <string name="info_logout">로그아웃 되었습니다.</string>
     <string name="info_logout2">다음에 또 만나요!</string>
 
+    <string name="news_add_title_hint">제목을 입력해주세요</string>
+    <string name="news_add_editText_hint">최소 800자 이상의 글자수를 작성해주세요</string>
+    <string name="news_add_temp_save">임시저장</string>
+    <string name="news_add_pic_add">사진을 등록해주세요</string>
+    <string name="news_add_title_length">/30</string>
+    <string name="news_add_button_location">여행지 선택</string>
+    <string name="news_add_location_text">여행지를 검색해주세요</string>
+    <string name="text_options_title">제목</string>
+    <string name="text_options_subtitle">소제목</string>
+    <string name="text_options_maintext">본문</string>
+    <string name="text_options_bold">B</string>
+    <string name="temp_save_label">임시저장 목록</string>
+    <string name="temp_save_button">선택</string>
+    <string name="temp_save_list">임시%d</string>
+    <string name="check">확인</string>
+    <string name="temp_save_popup_title">임시저장 되었습니다!</string>
+    <string name="temp_save_popup_content">PC 및 다른 기기에서도 이어서\n작성이 가능합니다.</string>
+    <string name="temp_save_delete">삭제하시겠습니까?</string>
+    <string name="temp_save_delete_button">삭제하기</string>
+    <string name="news_add_title">여행소식 작성</string>
+    <string name="news_add_button">등록</string>
 
-
-    <string name="news_add_characters"></string>
     <string name="additional_birth_hint">YYYY-DD-MM</string>
     <string name="additional_birth_text">%d-%02d-%02d</string>
     <!-- TODO: Remove or change this placeholder text -->

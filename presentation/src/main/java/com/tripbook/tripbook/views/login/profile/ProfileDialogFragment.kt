@@ -2,7 +2,6 @@ package com.tripbook.tripbook.views.login.profile
 
 import android.content.ContentResolver
 import android.net.Uri
-import android.util.Log
 import android.view.Gravity
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -10,10 +9,11 @@ import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.fragment.app.activityViewModels
 import com.tripbook.base.BaseDialogFragment
 import com.tripbook.tripbook.R
-import com.tripbook.tripbook.Utils.createImageFile
-import com.tripbook.tripbook.Utils.getImagePathFromURI
+import com.tripbook.tripbook.utils.createImageFile
+import com.tripbook.tripbook.utils.getImagePathFromURI
 import com.tripbook.tripbook.databinding.FragmentProfileDialogBinding
 import com.tripbook.tripbook.viewmodel.LoginViewModel
+import timber.log.Timber
 
 
 class ProfileDialogFragment :
@@ -23,11 +23,11 @@ class ProfileDialogFragment :
     private lateinit var photoUri: Uri
     private val galleryLauncher = registerForActivityResult(PickVisualMedia()) { uri ->
         uri?.let {
-            Log.d("Photo Picker Uri", uri.toString())
+            Timber.tag("Photo Picker Uri").d(uri.toString())
             val fullPath = requireContext().getImagePathFromURI(uri)
             viewModel.setProfileUri(uri, fullPath, false)
         } ?: {
-            Log.d("Photo Picker", "No Media selected")
+            Timber.tag("Photo Picker").d("No Media selected")
         }
         dismiss()
     }
@@ -38,7 +38,7 @@ class ProfileDialogFragment :
                 val fullPath = requireContext().getImagePathFromURI(photoUri)
                 viewModel.setProfileUri(photoUri, fullPath, false)
             } else {
-                Log.d("cameraLauncher", "Failed")
+                Timber.tag("cameraLauncher").d("Failed")
             }
             dismiss()
         }

@@ -1,7 +1,6 @@
 package com.tripbook.libs.network.service
 
 import com.tripbook.libs.network.model.response.MemberResponse
-import com.tripbook.libs.network.model.response.SignUpResponse
 import com.tripbook.libs.network.model.response.UnitResponse
 import com.tripbook.libs.network.model.response.UpdateMemberResponse
 import okhttp3.MultipartBody
@@ -14,12 +13,6 @@ import retrofit2.http.PartMap
 import retrofit2.http.Query
 
 interface MemberService {
-    @Multipart
-    @POST("signup")
-    suspend fun signUp(
-        @Part file: MultipartBody.Part?,
-        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>
-    ): SignUpResponse
 
     @GET("nickname/validate")
     suspend fun validateNickname(

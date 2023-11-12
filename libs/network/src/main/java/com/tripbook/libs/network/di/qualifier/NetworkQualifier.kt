@@ -24,6 +24,10 @@ annotation class MemberServiceScope
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
+annotation class MemberNoAuthServiceScope
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
 annotation class TokenServiceScope
 
 @Qualifier
