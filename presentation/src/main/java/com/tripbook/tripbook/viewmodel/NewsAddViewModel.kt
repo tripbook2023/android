@@ -1,6 +1,5 @@
 package com.tripbook.tripbook.viewmodel
 
-import android.content.Context
 import android.net.Uri
 import android.webkit.JavascriptInterface
 import android.widget.TextView
@@ -10,7 +9,6 @@ import com.tripbook.tripbook.R
 import com.tripbook.tripbook.domain.model.Location
 import com.tripbook.tripbook.domain.usecase.GetLocationUseCase
 import com.tripbook.tripbook.domain.usecase.SaveTripNewsUseCase
-import com.tripbook.tripbook.utils.getImagePathFromURI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -185,21 +183,8 @@ class NewsAddViewModel @Inject constructor(
         }
     }
 
-    fun saveTripNews(title: String, content: String, context: Context): Flow<Boolean> {
-        val fileList: MutableList<File> = mutableListOf()
-
-        imageList.value.map { item ->
-            item?.let { uri ->
-                val path: String? = context.getImagePathFromURI(Uri.parse(uri))
-                path?.let { File(path) }
-            }?.let { file -> fileList.add(file) }
-        }
-
-        val thumbNailFile =
-            thumbNailUri.value?.let { context.getImagePathFromURI(it) }?.let { File(it) }
-
+    fun saveTripNews(title: String, content: String, fileList: List<File>, thumbNailFile: File?): Flow<Boolean> {
         return saveTripNewsUseCase(
-            context,
             title,
             content,
             thumbNailFile!!,

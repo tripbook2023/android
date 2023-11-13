@@ -1,7 +1,6 @@
 package com.tripbook.tripbook.views.trip.add
 
 import android.net.Uri
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -16,9 +15,12 @@ import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentNewsAddBinding
 import com.tripbook.tripbook.utils.convertPxToDp
+import com.tripbook.tripbook.utils.getImagePathFromURI
 import com.tripbook.tripbook.viewmodel.NewsAddViewModel
 import jp.wasabeef.richeditor.RichEditor
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.io.File
 
 
 class NewsAddFragment :
@@ -140,10 +142,25 @@ class NewsAddFragment :
                                 }
                                 locationProcessing.join()
 
+                                val fileList: MutableList<File> = mutableListOf()
+
+                                viewModel.imageList.value.map { item ->
+                                    item?.let { uri ->
+                                        val path: String? = requireContext().getImagePathFromURI(Uri.parse(uri))
+                                        path?.let { File(path) }
+                                    }?.let { file -> fileList.add(file) }
+                                }
+
+                                val thumbnailFile = viewModel.thumbNailUri.value?.let { uri ->
+                                    requireContext().getImagePathFromURI(uri)
+                                        ?.let { path -> File(path) }
+                                }
+
                                 viewModel.saveTripNews(
                                     binding.title.text.toString(),
                                     binding.mainEditor.html,
-                                    requireContext()
+                                    fileList,
+                                    thumbnailFile
                                 ).collect{
                                     if(it){
                                         // 여행소식 등록 성공
@@ -235,7 +252,7 @@ class NewsAddFragment :
             viewModel.setTitleLength(text!!.length)
         }
         binding.mainEditor.setOnTextChangeListener {
-            Log.d("텍스트 리스너","${it.length} : $it")
+            Timber.tag("텍스트 리스너").d("${it.length} : $it")
             val regex = Regex("<[^>]*>?")
             val contents = regex.replace(it, "").replace("&nbsp;", " ")
             viewModel.setTextLength(contents.length)

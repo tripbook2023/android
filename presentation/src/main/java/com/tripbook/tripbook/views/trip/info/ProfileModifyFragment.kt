@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentProfileModifyBinding
+import com.tripbook.tripbook.utils.getImagePathFromURI
 import com.tripbook.tripbook.viewmodel.InfoViewModel
 import com.tripbook.tripbook.viewmodel.LoginViewModel
 import com.tripbook.tripbook.views.login.profile.ProfileDialogFragment
@@ -47,7 +48,10 @@ class ProfileModifyFragment :
 
     private fun updateProfile() {
         viewLifecycleOwner.lifecycleScope.launch {
-            infoviewModel.updateProfile(requireContext()).collect {
+            val imagePath = viewModel.profileUri.value?.let {
+                requireContext().getImagePathFromURI(it)
+            }
+            infoviewModel.updateProfile(imagePath).collect {
                 if (it) {
                     //내정보로 다시 돌아가기
                     Timber.tag("updateProfile").d("프로필 변경 성공")
