@@ -9,4 +9,5 @@ plugins {
     alias(libs.plugins.banManes) apply false
     alias(libs.plugins.littleRobots) apply false
     alias(libs.plugins.gms) apply false
+    alias(libs.plugins.safeargs) apply false
 }

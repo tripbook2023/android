@@ -2,7 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/loginFragment"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <include app:graph = "@navigation/profile"/>
     <include app:graph = "@navigation/travel_news"/>
@@ -21,6 +22,23 @@
         <action
             android:id="@+id/action_loginFragment_to_nav_info"
             app:destination="@id/nav_info" />
+        <action
+            android:id="@+id/action_loginFragment_to_newsMainFragment"
+            app:destination="@id/newsMainFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/newsMainFragment"
+        android:name="com.tripbook.tripbook.views.main.NewsMainFragment"
+        android:label="NewsMainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_newsMainFragment_to_tripDetailFragment"
+            app:destination="@id/tripDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tripDetailFragment"
+        android:name="TripDetailFragment"
+        android:label="TripDetailFragment"
+        tools:layout="@layout/fragment_trip_detail"/>
 
 </navigation>

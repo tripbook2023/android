@@ -1,7 +1,7 @@
 [versions]
 # Plugin Version
 kotlin = "1.8.10"
-androidGradlePlugin = "8.0.0"
+androidGradlePlugin = "8.0.2"
 minSDK = "24"
 targetSDK = "33"
 versionCode = "1"
@@ -9,24 +9,24 @@ versionName = "1.0.0"
 buildTools = "33.0.2"
 
 # AndroidX
-core-ktx = "1.10.0"
+core-ktx = "1.12.0"
 appcompat = "1.6.1"
-material = "1.8.0"
+material = "1.10.0"
 constraintlayout = "2.1.4"
-activity = "1.6.0"
-fragment = "1.5.5"
-navigation = "2.5.3"
+activity = "1.8.0"
+fragment = "1.6.2"
+navigation = "2.7.5"
 datastore = "1.0.0"
 
 # Firebase
 gms = "4.3.15"
-firebase-bom = "32.1.1"
+firebase-bom = "32.5.0"
 
 # Timber
 timber = "5.0.1"
 
 # Kotlinx
-coroutine = "1.6.4"
+coroutine = "1.7.1"
 
 #Test
 junit = "4.13.2"
@@ -68,6 +68,7 @@ banManes = { id = "com.github.ben-manes.versions", version.ref = "banManes" }
 littleRobots = { id = "nl.littlerobots.version-catalog-update", version.ref = "little-robots" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 gms = { id = "com.google.gms.google-services", version.ref = "gms" }
+safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation"}
 
 [libraries]
 # AndroidX

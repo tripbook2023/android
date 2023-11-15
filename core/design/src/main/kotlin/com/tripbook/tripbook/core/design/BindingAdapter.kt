@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 
+@Suppress("UNUSED")
 object BindingAdapter {
 
     @JvmStatic
@@ -35,6 +36,14 @@ object BindingAdapter {
     fun setTitleImageUri(imageView: ImageView, uri: Uri?) {
         Glide.with(imageView.context)
             .load(uri)
+            .into(imageView)
+    }
+
+    @JvmStatic
+    @BindingAdapter("imgURL")
+    fun setImageWithString(imageView: ImageView, urlString: String) {
+        Glide.with(imageView.context)
+            .load(urlString)
             .into(imageView)
     }
 

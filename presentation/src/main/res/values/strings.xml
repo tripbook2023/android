@@ -69,8 +69,13 @@
     <string name="news_add_title">여행소식 작성</string>
     <string name="news_add_button">등록</string>
 
+    <!--  news main  -->
+    <string name="home">홈</string>
+    <string name="add">등록</string>
+    <string name="my_profile">내 정보</string>
     <string name="additional_birth_hint">YYYY-DD-MM</string>
     <string name="additional_birth_text">%d-%02d-%02d</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="trip_news_main">여행소식</string>
 </resources>

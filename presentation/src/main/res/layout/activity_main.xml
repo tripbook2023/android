@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <variable
+            name="isBottomVisible"
+            type="Boolean" />
+        <import type="android.view.View"/>
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -10,11 +16,25 @@
         <!--화면 확인용-->
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:name="androidx.navigation.fragment.NavHostFragment"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bar_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/menu_bottom"
+            android:visibility="@{isBottomVisible ? View.VISIBLE : View.GONE}"
+            />
 
 <!--    <Button-->
 <!--        android:id="@+id/button_login"-->

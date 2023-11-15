@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.android.application)
     id("com.tripbook.hilt")
     id("com.google.gms.google-services")
+    id("androidx.navigation.safeargs.kotlin")
+    kotlin("kapt")
 }
 
 android {
@@ -31,6 +33,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        //noinspection DataBindingWithoutKapt
         dataBinding = true
     }
 

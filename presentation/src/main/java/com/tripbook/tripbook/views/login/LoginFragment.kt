@@ -33,7 +33,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
         requireContext().loginWithBrowser(auth0) {token->
             viewModel.validateToken(token).start()
         }
-
     }
 
     private fun collectProperties() {
@@ -46,8 +45,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
                                 .navigate(R.id.action_loginFragment_to_profile)
 
                             UserLoginStatus.STATUS_NORMAL -> {
-                                // TODO : 여기서 바로 메인 화면으로 넘어갈 수 있도록
-                                findNavController().navigate(R.id.action_loginFragment_to_nav_info)
+                                val action = LoginFragmentDirections.actionLoginFragmentToNewsMainFragment()
+                                findNavController().navigate(action)
                             }
                         }
                     }
