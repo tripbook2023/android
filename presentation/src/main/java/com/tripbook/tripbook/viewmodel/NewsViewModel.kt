@@ -27,7 +27,7 @@ class NewsViewModel @Inject constructor(
     val articleList: StateFlow<List<ArticleDetail>>
         get() = _articleList
 
-    private val keyword: MutableStateFlow<String> = MutableStateFlow("") // USE in XML
+    val keyword: MutableStateFlow<String> = MutableStateFlow("") // USE in XML
     private val searchedData: StateFlow<String>
         get() = keyword.debounce(800)
             .distinctUntilChanged()

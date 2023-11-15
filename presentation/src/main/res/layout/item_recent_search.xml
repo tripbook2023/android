@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="제주도 제주시 한림읍"
+        android:fontFamily="@font/suit_medium"
+        android:textColor="@color/gray_G_80"
+        android:paddingVertical="16dp"
+        android:paddingHorizontal="20dp"
+        app:drawableEndCompat="@drawable/icn_cancel_14"
+        />
+</layout>
