@@ -69,8 +69,6 @@
     <string name="news_add_title">여행소식 작성</string>
     <string name="news_add_button">등록</string>
 
-
-    <string name="news_add_characters"></string>
     <string name="additional_birth_hint">YYYY-DD-MM</string>
     <string name="additional_birth_text">%d-%02d-%02d</string>
     <!-- TODO: Remove or change this placeholder text -->
