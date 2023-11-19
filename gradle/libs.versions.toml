@@ -95,6 +95,7 @@ coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-androi
 # Firebase
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage-ktx"}
 
 # Test
 junit = { group = "junit", name = "junit", version.ref = "junit" }

@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingVertical="10dp"
-                android:paddingStart="@dimen/margin_start"
+                android:paddingStart="@dimen/basic_margin"
                 android:src="@drawable/icn_before_24" />
 
             <Space
@@ -62,7 +62,7 @@
                 style="@style/ButtonSolidStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_start"
+                android:layout_marginEnd="@dimen/basic_margin"
                 android:enabled="@{viewModel.allConditionSatisfied}"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
@@ -98,7 +98,7 @@
                         android:contentDescription="@null"
                         android:scaleType="fitXY"
                         android:tintMode="src_atop"
-                        app:imageUrl="@{viewModel.thumbNailUri}"
+                        app:imgUri="@{viewModel.thumbNailUri}"
                         app:tint="#80000000" />
 
                     <TextView
@@ -121,7 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:layout_marginHorizontal="@dimen/margin_start"
+                        android:layout_marginHorizontal="@dimen/basic_margin"
                         android:layout_marginBottom="38dp"
                         android:background="@null"
                         android:hint="@string/news_add_title_hint"
@@ -157,7 +157,7 @@
                     </LinearLayout>
                 </FrameLayout>
 
-                <com.tripbook.tripbook.views.tripAdd.CustomRichEditor
+                <com.tripbook.tripbook.views.trip.add.CustomRichEditor
                     android:id="@+id/main_editor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
