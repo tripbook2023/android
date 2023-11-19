@@ -27,7 +27,7 @@ class NicknameFragment :
 
     private fun addNicknameTextWatcher() {
         binding.nickname.doOnTextChanged { text, _, _, _ ->
-            viewModel.setNicknameValid(binding.nickname.isNicknameValid(text!!))
+            viewModel.setNicknameValid(text?.let { binding.nickname.isNicknameValid(it) })
         }
     }
 

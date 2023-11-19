@@ -46,7 +46,7 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
 
                     if (!content.isNullOrBlank()) {
                         val modifiedContent =  replaceImagePlaceholders(content, it?.imageList.orEmpty())
-                        Log.d("modifiedContent", modifiedContent)
+
                         webView.visibility = View.VISIBLE
                         webView.loadDataWithBaseURL(null, modifiedContent, "text/html", "UTF-8", null)
 
@@ -132,52 +132,27 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
                     Math.abs(verticalOffset)
                         .toFloat() / appBarLayout.totalScrollRange.toFloat() // 백분율로 계산하기
 
-                val navScroll = 0.2f
-                val toolBarHide = 0.5f
-                val toolBarScroll = 0.95f
-
-                if (totalScroll >= navScroll) {
-                    if (!isViewsVisible) {
-                        // 본문 내용 보일 때
-                        isViewsVisible = true
-                        bottomBar.startAnimation(fadeInAnim)
-                        sideBar.startAnimation(fadeInAnim)
-                        bottomBar.visibility = View.VISIBLE
-                        sideBar.visibility = View.VISIBLE
-                    }
+                if(totalScroll > 0.5) {
+                    sideBar.visibility = View.GONE
+                    //sideBar.startAnimation(fadeOutAnim)
                 } else {
-                    if (isViewsVisible) {
-                        isViewsVisible = false
-                        bottomBar.startAnimation(fadeOutAnim)
-                        sideBar.startAnimation(fadeOutAnim)
-                        bottomBar.visibility = View.GONE
-                        sideBar.visibility = View.GONE
-                    }
+                    sideBar.visibility = View.VISIBLE
+                    //sideBar.startAnimation(fadeInAnim)
                 }
 
-                if (totalScroll in toolBarHide..toolBarScroll) {
-                    toolBar.visibility = View.GONE
-                } else {
+                if (verticalOffset == 0) {
                     toolBar.visibility = View.VISIBLE
-                }
-
-                if (totalScroll >= toolBarScroll) {
-                    icnBefore.setColorFilter(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.black
-                        )
-                    )
-                    icnDefault.setColorFilter(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.black
-                        )
-                    )
-                } else {
                     icnBefore.colorFilter = null
                     icnDefault.colorFilter = null
+                } else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange) {
+                    toolBar.visibility = View.VISIBLE
+                    icnBefore.setColorFilter(ContextCompat.getColor(requireContext(),R.color.black))
+                    icnDefault.setColorFilter(ContextCompat.getColor(requireContext(),R.color.black))
+                } else {
+                    toolBar.visibility = View.GONE
                 }
+
+
             })
         } //binding
     }

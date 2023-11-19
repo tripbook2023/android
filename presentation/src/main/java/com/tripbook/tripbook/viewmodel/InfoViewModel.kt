@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -60,6 +61,9 @@ class InfoViewModel @Inject constructor(
     private val _version: MutableStateFlow<String?> = MutableStateFlow(null)
     val version: StateFlow<String?> = _version
 
+    fun setVersion(ver: String){
+        _version.value = ver
+    }
     // 프로필 사진
     private val _profileUri = MutableStateFlow<Uri?>(null)
     val profileUri: StateFlow<Uri?> = _profileUri
@@ -68,24 +72,27 @@ class InfoViewModel @Inject constructor(
 
     private val profileDefault = MutableStateFlow(false)
 
-    fun getMemberInfo() = memberUseCase().onEach {
-        _memberInfo.emit(it)
+    fun getMemberInformation(){
+        viewModelScope.launch{
+            memberUseCase().collect{
+                _memberInfo.value = it
+                it?.let{
+                    _nickname.value = it.name
+                    _email.value= it.email
+                    _profileUri.value = Uri.parse(it.profile)
+                }
+            }
+        }
+    }
 
-        _nickname.value = it?.name
-        _email.value = it?.email
 
-        val profileUri: Uri? = it?.profile?.let { Uri.parse(it) }
-        _profileUri.emit(profileUri)
-
-    }.launchIn(viewModelScope)
-
-    fun updateProfile(name: String, imgFile: String?): Flow<Boolean> {
+    fun updateProfile(path: String?): Flow<Boolean> {
         val imageFile: File? = if (profileUri.value == null || profileDefault.value) {
             null
         } else {
-            File(imgFile!!)
+            File(path)
         }
-
+        val nickname = memberInfo.value?.name ?: ""
         val gender = memberInfo.value?.gender ?: ""
         val serviceChecked = memberInfo.value?.termsOfService ?: false
         val personalInfoChecked = memberInfo.value?.termsOfPrivacy ?: false
@@ -94,7 +101,7 @@ class InfoViewModel @Inject constructor(
         val birth = memberInfo.value?.birth ?: ""
 
         return updateMemberUseCase(
-            name,
+            nickname,
             imageFile,
             serviceChecked,
             personalInfoChecked,

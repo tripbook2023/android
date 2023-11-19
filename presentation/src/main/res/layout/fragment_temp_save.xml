@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:paddingHorizontal="@dimen/margin_start" />
+                android:paddingHorizontal="@dimen/basic_margin" />
 
 
         </LinearLayout>
@@ -63,7 +63,7 @@
             style="@style/ButtonSolidStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_start"
+            android:layout_marginHorizontal="@dimen/basic_margin"
             android:layout_marginBottom="56dp"
             android:enabled="@{viewModel.locationListIndex >= 0}"
             android:paddingHorizontal="14dp"

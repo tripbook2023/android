@@ -22,6 +22,9 @@ class MypageFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             binding.version.text = getString(R.string.version_name, BuildConfig.VERSION_NAME)
         }
+        viewModel.getMemberInformation()
+        viewModel.setVersion("버전정보 v" + BuildConfig.VERSION_NAME)
+
 
         //설정 -> 프로필 수정
         binding.btnSetting.setOnClickListener {

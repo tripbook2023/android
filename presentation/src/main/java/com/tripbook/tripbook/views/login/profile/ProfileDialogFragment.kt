@@ -9,9 +9,9 @@ import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.fragment.app.activityViewModels
 import com.tripbook.base.BaseDialogFragment
 import com.tripbook.tripbook.R
+import com.tripbook.tripbook.databinding.FragmentProfileDialogBinding
 import com.tripbook.tripbook.utils.createImageFile
 import com.tripbook.tripbook.utils.getImagePathFromURI
-import com.tripbook.tripbook.databinding.FragmentProfileDialogBinding
 import com.tripbook.tripbook.viewmodel.LoginViewModel
 import timber.log.Timber
 
@@ -20,6 +20,7 @@ class ProfileDialogFragment :
     BaseDialogFragment<FragmentProfileDialogBinding, LoginViewModel>(R.layout.fragment_profile_dialog) {
 
     override val viewModel: LoginViewModel by activityViewModels()
+
     private lateinit var photoUri: Uri
     private val galleryLauncher = registerForActivityResult(PickVisualMedia()) { uri ->
         uri?.let {
@@ -64,9 +65,9 @@ class ProfileDialogFragment :
         binding.basicImage.setOnClickListener {
             val uri: Uri = Uri.Builder()
                 .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-                .authority(resources.getResourcePackageName(R.drawable.tripbook_image))
-                .appendPath(resources.getResourceTypeName(R.drawable.tripbook_image))
-                .appendPath(resources.getResourceEntryName(R.drawable.tripbook_image))
+                .authority(resources.getResourcePackageName(com.tripbook.tripbook.core.design.R.drawable.tripbook_image))
+                .appendPath(resources.getResourceTypeName(com.tripbook.tripbook.core.design.R.drawable.tripbook_image))
+                .appendPath(resources.getResourceEntryName(com.tripbook.tripbook.core.design.R.drawable.tripbook_image))
                 .build()
             val fullPath = requireContext().getImagePathFromURI(uri)
             viewModel.setProfileUri(uri, fullPath, true)

@@ -1,7 +1,5 @@
 package com.tripbook.tripbook.data.repository
 
-import android.content.Context
-import android.util.Log
 import com.tripbook.libs.network.NetworkResult
 import com.tripbook.libs.network.safeApiCall
 import com.tripbook.libs.network.service.TripNewsService
@@ -14,6 +12,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
@@ -23,7 +22,6 @@ class TripNewsRepositoryImpl @Inject constructor(
 ) : TripNewsRepository {
 
     override fun saveTripNews(
-        context: Context,
         title: String,
         content: String,
         thumbnail: File,
@@ -67,16 +65,14 @@ class TripNewsRepositoryImpl @Inject constructor(
     }.map {
         when (it) {
             is NetworkResult.Success -> {
-                Log.d("TripNewsAdd Success", it.value.id.toString())
-                Log.d("title", it.value.title)
-                Log.d("thumbnail", it.value.thumbnail.toString())
-                Log.d("tagList", it.value.tagList.toString())
-                Log.d("ImageList", it.value.imageList.toString())
+                Timber.tag("thumbnail").d(it.value.thumbnail.toString())
+                Timber.tag("tagList").d(it.value.tagList.toString())
+                Timber.tag("ImageList").d(it.value.imageList.toString())
                 true
             }
 
             else -> {
-                Log.d("TripNewsAdd Failure", it.toString())
+                Timber.tag("TripNewsAdd Failure").d(it.toString())
                 false
             }
         }
