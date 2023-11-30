@@ -10,17 +10,17 @@ import retrofit2.http.Query
 
 interface TripArticlesService {
 
-    @POST("{articleId}/like")
+    @POST("articles/{articleId}/like")
     suspend fun likeArticle(
         @Path("articleId") articledId: Long
     ): LikeArticleResponse
 
-    @GET("{articleId}")
+    @GET("articles/{articleId}")
     suspend fun getArticleDetail(
         @Path("articleId") articledId: Long
     ) : ArticleDetailResponse
 
-    @GET
+    @GET("articles")
     suspend fun getArticleList(
         @Query("word") word: String,
         @Query("page") page: Int,

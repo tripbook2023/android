@@ -8,4 +8,6 @@ interface AuthRepository {
     fun validateToken(token: String): Flow<UserAuth?>
 
     suspend fun setCurrentToken(accessToken: String, refreshToken: String)
+
+    suspend fun clearToken()
 }

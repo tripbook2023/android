@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebViewClient
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentAskBinding
@@ -36,6 +37,9 @@ class AskFragment : BaseFragment<FragmentAskBinding, InfoViewModel>(R.layout.fra
             }
         }
 
+        binding.buttonBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         binding.completeButton.setOnClickListener {
             webView.visibility = View.VISIBLE

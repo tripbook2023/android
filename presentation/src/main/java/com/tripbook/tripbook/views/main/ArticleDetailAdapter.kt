@@ -9,7 +9,7 @@ import com.tripbook.tripbook.databinding.ItemMainCardBinding
 import com.tripbook.tripbook.domain.model.ArticleDetail
 
 class ArticleDetailAdapter(
-    private val onItemClicked: (ArticleDetail) -> Unit
+    private val onItemClicked: (Long) -> Unit
 ) : ListAdapter<ArticleDetail, ArticleDetailAdapter.ViewHolder>(itemComparator) {
     private companion object {
         val itemComparator = object : DiffUtil.ItemCallback<ArticleDetail>() {
@@ -24,7 +24,9 @@ class ArticleDetailAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(ItemMainCardBinding.inflate(LayoutInflater.from(parent.context), parent, false), onItemClicked = onItemClicked)
+        ViewHolder(ItemMainCardBinding.inflate(LayoutInflater.from(parent.context), parent, false), onItemClicked = {
+            onItemClicked(it.id)
+        })
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(currentList[position])

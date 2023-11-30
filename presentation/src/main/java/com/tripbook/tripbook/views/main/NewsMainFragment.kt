@@ -19,7 +19,9 @@ class NewsMainFragment : BaseFragment<FragmentMainBinding, NewsViewModel>(R.layo
 
     private val articleAdapter by lazy {
         ArticleDetailAdapter {
-            findNavController().navigate(NewsMainFragmentDirections.actionNewsMainFragmentToTripDetailFragment())
+            findNavController().navigate(NewsMainFragmentDirections.actionNewsMainFragmentToTripDetailFragment(
+                articleId = it
+            ))
         }
     }
 

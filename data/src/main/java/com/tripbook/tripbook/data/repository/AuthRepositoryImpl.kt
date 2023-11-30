@@ -35,4 +35,8 @@ class AuthRepositoryImpl @Inject constructor(
             TokenEntity(accessToken, refreshToken)
         ).collect()
     }
+
+    override suspend fun clearToken() {
+        dataStore.setToken(null).collect()
+    }
 }

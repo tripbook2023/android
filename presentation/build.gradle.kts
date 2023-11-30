@@ -35,9 +35,13 @@ android {
         viewBinding = true
         //noinspection DataBindingWithoutKapt
         dataBinding = true
+        buildConfig = true
     }
 
     buildTypes {
+        debug {
+            isMinifyEnabled = false
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")

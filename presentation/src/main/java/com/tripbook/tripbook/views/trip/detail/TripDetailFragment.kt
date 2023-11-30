@@ -1,24 +1,36 @@
+package com.tripbook.tripbook.views.trip.detail
+
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentTripDetailBinding
-import com.tripbook.tripbook.viewmodel.LoginViewModel
-import com.tripbook.tripbook.views.trip.detail.TripDetailRecyclerViewAdapter
+import com.tripbook.tripbook.viewmodel.TripDetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class TripDetailFragment :
-    BaseFragment<FragmentTripDetailBinding, LoginViewModel>(R.layout.fragment_trip_detail) {
-    override val viewModel: LoginViewModel by activityViewModels()
+@AndroidEntryPoint
+class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailViewModel>(R.layout.fragment_trip_detail) {
+
+    @Inject
+    lateinit var detailFactory: TripDetailViewModel.DetailAssistedFactory
+
+    private val args by navArgs<TripDetailFragmentArgs>()
+
+    override val viewModel: TripDetailViewModel by viewModels {
+        TripDetailViewModel.provideFactory(detailFactory, args.articleId)
+    }
+
 
     override fun init() {
-        val binding = binding
-
         with(binding) {
+            Log.d("TRIPBOOK", "DETAIL SCREEN : ${args.articleId}")
             viewModel = this@TripDetailFragment.viewModel
             val items = ArrayList<String>()
 
@@ -81,10 +93,11 @@ class TripDetailFragment :
 
             var isViewsVisible = false
 
-            appBar.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            appBar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
 
                 val totalScroll =
-                    Math.abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange.toFloat() // 백분율로 계산하기
+                    Math.abs(verticalOffset)
+                        .toFloat() / appBarLayout.totalScrollRange.toFloat() // 백분율로 계산하기
 
                 val navScroll = 0.2f
                 val toolBarHide = 0.5f
@@ -132,7 +145,7 @@ class TripDetailFragment :
                     icnBefore.colorFilter = null
                     icnDefault.colorFilter = null
                 }
-            })
+            }
         }
     }
 }

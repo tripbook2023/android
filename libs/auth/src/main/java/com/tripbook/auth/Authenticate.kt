@@ -7,6 +7,8 @@ import com.auth0.android.authentication.AuthenticationException
 import com.auth0.android.callback.Callback
 import com.auth0.android.provider.WebAuthProvider
 import com.auth0.android.result.Credentials
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
 
 fun Context.loginWithBrowser(account: Auth0, onLoginCompleted: (String) -> Unit) {
     WebAuthProvider.login(account)
@@ -26,18 +28,19 @@ fun Context.loginWithBrowser(account: Auth0, onLoginCompleted: (String) -> Unit)
 }
 
 @Suppress("UNUSED")
-fun Context.logout(account: Auth0) {
-    WebAuthProvider.login(account)
+fun Context.logout(account: Auth0) =
+    callbackFlow {
+        WebAuthProvider.logout(account)
         .withScheme("demo")
-        .withScheme("openid profile email")
-        .start(this, object : Callback<Credentials, AuthenticationException> {
+        .start(this@logout, callback = object : Callback<Void?, AuthenticationException> {
             override fun onFailure(error: AuthenticationException) {
                 error.printStackTrace()
+                trySend(false)
             }
 
-            override fun onSuccess(result: Credentials) {
-                val accessToken = result.accessToken
-                Log.d("MyTag", accessToken)
+            override fun onSuccess(result: Void?) {
+                trySend(true)
             }
         })
-}
+        awaitClose()
+    }

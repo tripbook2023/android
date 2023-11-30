@@ -5,26 +5,27 @@
     app:startDestination="@id/loginFragment"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <include app:graph = "@navigation/profile"/>
-    <include app:graph = "@navigation/travel_news"/>
+    <include
+        android:id="@+id/navigation_profile"
+        app:graph="@navigation/profile"/>
 
-    <include app:graph = "@navigation/nav_info"/>
+    <include
+        android:id="@+id/navigation_info"
+        app:graph="@navigation/nav_info"/>
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.tripbook.tripbook.views.login.LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_profile"
-            app:destination="@id/profile" />
-        <action
-            android:id="@+id/action_loginFragment_to_travelNews"
-            app:destination="@id/travel_news" />
-        <action
-            android:id="@+id/action_loginFragment_to_nav_info"
-            app:destination="@id/nav_info" />
+            app:destination="@id/navigation_profile"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_newsMainFragment"
-            app:destination="@id/newsMainFragment" />
+            app:destination="@id/newsMainFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/newsMainFragment"
@@ -37,8 +38,23 @@
     </fragment>
     <fragment
         android:id="@+id/tripDetailFragment"
-        android:name="TripDetailFragment"
+        android:name="com.tripbook.tripbook.views.trip.detail.TripDetailFragment"
         android:label="TripDetailFragment"
-        tools:layout="@layout/fragment_trip_detail"/>
+        tools:layout="@layout/fragment_trip_detail">
+        <argument
+            android:name="articleId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsAddFragment"
+        android:name="com.tripbook.tripbook.views.tripAdd.NewsAddFragment"
+        android:label="NewsAddFragment"
+        tools:layout="@layout/fragment_news_add"/>
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true" />
 
 </navigation>

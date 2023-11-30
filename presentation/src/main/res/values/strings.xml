@@ -68,6 +68,7 @@
     <string name="temp_save_delete_button">삭제하기</string>
     <string name="news_add_title">여행소식 작성</string>
     <string name="news_add_button">등록</string>
+    <string name="news_add_characters">/10,000</string>
 
     <!--  news main  -->
     <string name="home">홈</string>
@@ -82,4 +83,5 @@
     <string name="search_clear_all">전체삭제</string>
     <string name="search_keyword_hint">검색어를 입력하세요</string>
     <string name="search">검색</string>
+    <string name="version_name">버전정보 v %1$s</string>
 </resources>

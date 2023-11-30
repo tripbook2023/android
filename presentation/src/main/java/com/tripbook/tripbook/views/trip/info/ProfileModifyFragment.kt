@@ -8,6 +8,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentProfileModifyBinding
@@ -32,6 +33,10 @@ class ProfileModifyFragment : BaseFragment<FragmentProfileModifyBinding, LoginVi
             requestPermissionLauncher.launch(android.Manifest.permission.READ_MEDIA_IMAGES)
         }
 
+        binding.buttonBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.completeButton.setOnClickListener {
             duplicateCheck()
             updateProfile()
@@ -44,7 +49,7 @@ class ProfileModifyFragment : BaseFragment<FragmentProfileModifyBinding, LoginVi
                 if (it) {
                     //내정보로 다시 돌아가기
                     Timber.tag("updateProfile").d("프로필 변경 성공")
-                    // findNavController().navigate(R.id.action_additionalFragment_to_signUpSuccessFragment)
+                    findNavController().popBackStack()
                 } else {
                     // 프로필 변경 실패
                     Timber.tag("error updateProfile").d("프로필 변경 실패")

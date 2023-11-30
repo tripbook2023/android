@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 
@@ -44,6 +45,7 @@ object BindingAdapter {
     fun setImageWithString(imageView: ImageView, urlString: String) {
         Glide.with(imageView.context)
             .load(urlString)
+            .placeholder(R.drawable.icn_pic_36)
             .into(imageView)
     }
 
@@ -54,5 +56,11 @@ object BindingAdapter {
             it.bottomMargin = dimen.toInt()
             view.layoutParams = it
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:tint")
+    fun setImageViewColor(imageView: ImageView, @ColorInt color: Int) {
+        imageView.setColorFilter(color)
     }
 }

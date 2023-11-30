@@ -30,7 +30,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL = "http://13.124.98.251:9000"
+    private const val BASE_URL = "https://dev.tripbook.link"
     private const val KAKAO_MAP_URL = "https://dapi.kakao.com/"
     // FIXME: 서버 도메인 변경 시 같이 변경이 필요합니다!
 
@@ -149,9 +149,9 @@ object NetworkModule {
     @ArticleServiceScope
     fun providesArticleRetrofit(
         moshi: Moshi,
-        @NoAuthNetworkQualifierNoAgent client: OkHttpClient
+        @AuthNetworkQualifier client: OkHttpClient
     ): Retrofit = Retrofit.Builder()
-        .baseUrl("$BASE_URL/articles/")
+        .baseUrl("$BASE_URL/")
         .client(client)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()

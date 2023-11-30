@@ -23,5 +23,7 @@ class UpdateMemberUseCase @Inject constructor(
         marketingConsent,
         gender,
         birth
-    )
+    ).also {
+        memberRepository.getMember()
+    }
 }

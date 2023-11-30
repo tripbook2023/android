@@ -42,12 +42,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
                     it?.let { validated ->
                         when (validated) {
                             UserLoginStatus.STATUS_REQUIRED_AUTH -> findNavController()
-                                .navigate(R.id.action_loginFragment_to_profile)
+                                .navigate(
+                                    LoginFragmentDirections.actionLoginFragmentToNewsMainFragment()
+                                )
 
                             UserLoginStatus.STATUS_NORMAL -> {
                                 val action = LoginFragmentDirections.actionLoginFragmentToNewsMainFragment()
                                 findNavController().navigate(action)
                             }
+                        }.also {
+                            viewModel.clearStatus()
                         }
                     }
                 }

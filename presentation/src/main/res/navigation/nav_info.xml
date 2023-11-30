@@ -8,6 +8,7 @@
     <fragment
         android:id="@+id/mypageFragment"
         android:name="com.tripbook.tripbook.views.trip.info.MypageFragment"
+        android:label="MyPageFragment"
         tools:layout="@layout/fragment_mypage">
         <action
             android:id="@+id/action_mypageFragment_to_askFragment"
@@ -33,16 +34,7 @@
     <fragment
         android:id="@+id/logoutFragment"
         android:name="com.tripbook.tripbook.views.trip.info.LogoutFragment"
-        tools:layout="@layout/fragment_logout">
-        <action
-            android:id="@+id/action_logoutFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.tripbook.tripbook.views.login.LoginFragment">
-
-    </fragment>
+        tools:layout="@layout/fragment_logout"/>
 
 
 </navigation>

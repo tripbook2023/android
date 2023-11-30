@@ -22,7 +22,6 @@ class MemberNoAuthRepositoryImpl @Inject constructor(
     private val tokenDataStore: TokenDataStore
 ) : MemberNoAuthRepository {
 
-
     override fun signUp(
         name: String,
         email: String,

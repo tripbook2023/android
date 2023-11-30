@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.tripbook.tripbook.viewmodel.LoginViewModel" />
+            type="com.tripbook.tripbook.viewmodel.TripDetailViewModel" />
 
         <variable
             name="adapter"

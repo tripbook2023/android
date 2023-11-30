@@ -48,6 +48,4 @@ class TokenDataStoreImpl @Inject constructor(
             emit(false)
         }
     }
-
-
 }
