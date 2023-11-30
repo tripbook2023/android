@@ -11,6 +11,7 @@ class UpdateMemberUseCase @Inject constructor(
     operator fun invoke(
         name: String,
         file: File?,
+        profile : String,
         termsOfService: Boolean,
         termsOfPrivacy: Boolean,
         termsOfLocation: Boolean,
@@ -18,7 +19,7 @@ class UpdateMemberUseCase @Inject constructor(
         gender: String,
         birth: String
     ): Flow<Boolean> = memberRepository.updateMember(
-        name, file, termsOfService, termsOfPrivacy,
+        name, file, profile, termsOfService, termsOfPrivacy,
         termsOfLocation,
         marketingConsent,
         gender,

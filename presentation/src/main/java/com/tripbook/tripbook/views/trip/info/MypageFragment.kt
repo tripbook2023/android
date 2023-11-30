@@ -1,6 +1,7 @@
 package com.tripbook.tripbook.views.trip.info
 
 
+import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.auth0.android.auth0.BuildConfig
@@ -17,6 +18,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding, InfoViewModel>(R.layo
         viewModel.getMemberInformation()
         viewModel.setVersion("버전정보 v" + BuildConfig.VERSION_NAME)
 
+        Log.d("image", "image" + binding.profile.toString())
 
         //설정 -> 프로필 수정
         binding.btnSetting.setOnClickListener {

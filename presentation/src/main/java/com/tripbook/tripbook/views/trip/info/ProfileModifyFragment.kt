@@ -1,8 +1,10 @@
 package com.tripbook.tripbook.views.trip.info
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.widget.doOnTextChanged
+import androidx.navigation.fragment.findNavController
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.tripbook.base.BaseFragment
@@ -38,6 +40,7 @@ class ProfileModifyFragment :
 
         binding.completeButton.setOnClickListener {
             duplicateCheck()
+            updateProfile()
         }
     }
 
@@ -46,14 +49,15 @@ class ProfileModifyFragment :
             val imagePath = viewModel.profileUri.value?.let {
                 requireContext().getImagePathFromURI(it)
             }
-            infoviewModel.updateProfile(imagePath).collect {
+            val name = binding.nickname.text.toString()
+            infoviewModel.updateProfile(name, imagePath).collect {
                 if (it) {
                     //내정보로 다시 돌아가기
-                    Timber.tag("updateProfile").d("프로필 변경 성공")
-                    // findNavController().navigate(R.id.action_additionalFragment_to_signUpSuccessFragment)
+                    Log.d("updateProfile", "프로필 변경 성공")
+                     findNavController().navigate(R.id.action_profileModifyFragment_to_mypageFragment)
                 } else {
                     // 프로필 변경 실패
-                    Timber.tag("error updateProfile").d("프로필 변경 실패")
+                    Log.d("error updateProfile", "프로필 변경 실패")
                 }
             }
         }
@@ -70,8 +74,7 @@ class ProfileModifyFragment :
             viewModel.validateUserName(binding.nickname.text.toString()).collect {
                 if (it) {
                     // 중복되는 닉네임이 아니면 update하기!
-                    updateProfile()
-//                    viewModel.setNickname(binding.nickname.text.toString())
+                    viewModel.setNickname(binding.nickname.text.toString())
                 } else {
                     viewModel.setNicknameValid(binding.nickname.setError(resources.getString(R.string.nickname_duplicate_alert)))
                 }

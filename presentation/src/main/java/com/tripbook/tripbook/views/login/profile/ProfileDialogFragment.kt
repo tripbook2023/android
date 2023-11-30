@@ -2,6 +2,7 @@ package com.tripbook.tripbook.views.login.profile
 
 import android.content.ContentResolver
 import android.net.Uri
+import android.util.Log
 import android.view.Gravity
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -12,6 +13,7 @@ import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentProfileDialogBinding
 import com.tripbook.tripbook.utils.createImageFile
 import com.tripbook.tripbook.utils.getImagePathFromURI
+import com.tripbook.tripbook.viewmodel.InfoViewModel
 import com.tripbook.tripbook.viewmodel.LoginViewModel
 import timber.log.Timber
 
@@ -20,6 +22,7 @@ class ProfileDialogFragment :
     BaseDialogFragment<FragmentProfileDialogBinding, LoginViewModel>(R.layout.fragment_profile_dialog) {
 
     override val viewModel: LoginViewModel by activityViewModels()
+    private val infoviewModel: InfoViewModel by activityViewModels()
 
     private lateinit var photoUri: Uri
     private val galleryLauncher = registerForActivityResult(PickVisualMedia()) { uri ->
@@ -27,6 +30,9 @@ class ProfileDialogFragment :
             Timber.tag("Photo Picker Uri").d(uri.toString())
             val fullPath = requireContext().getImagePathFromURI(uri)
             viewModel.setProfileUri(uri, fullPath, false)
+            infoviewModel.setProfileUri(uri, fullPath, false)
+            Log.d("setProfileUri", "uri::::" + uri)
+            Log.d("setProfileUri", "fullPath::::" + fullPath)
         } ?: {
             Timber.tag("Photo Picker").d("No Media selected")
         }
@@ -52,6 +58,7 @@ class ProfileDialogFragment :
     override fun init() {
         binding.album.setOnClickListener {
             galleryLauncher.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+            Log.d("setProfileUri", "ImageOnly::::" + PickVisualMedia.ImageOnly)
         }
         binding.camera.setOnClickListener {
             requireContext().createImageFile().let { uri ->
@@ -71,6 +78,7 @@ class ProfileDialogFragment :
                 .build()
             val fullPath = requireContext().getImagePathFromURI(uri)
             viewModel.setProfileUri(uri, fullPath, true)
+            Log.d("setProfileUri", "fullPath::::" + fullPath)
             dismiss()
         }
         binding.cancelButton.setOnClickListener {

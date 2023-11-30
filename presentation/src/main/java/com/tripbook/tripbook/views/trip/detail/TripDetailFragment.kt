@@ -27,7 +27,7 @@ class TripDetailFragment :
 
         //여행소식 상세보기 api
         viewLifecycleOwner.lifecycleScope.launch {
-            val articleId: Long = 19 //test용
+            val articleId: Long = 42 //test용
 
             viewModel.getArticleDetail(articleId)
 

@@ -16,4 +16,6 @@ interface MemberNoAuthService {
         @Part file: MultipartBody.Part?,
         @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>
     ): SignUpResponse
+
+
 }
