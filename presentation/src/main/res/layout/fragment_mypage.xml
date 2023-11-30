@@ -65,7 +65,7 @@
                 android:layout_marginVertical="25dp"
                 android:layout_marginStart="20dp"
                 android:background="@drawable/border_circleimageview"
-                app:imgURL="@{viewModel.profileUrl}"
+                app:profileImgUri="@{viewModel.profileUri}"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <LinearLayout

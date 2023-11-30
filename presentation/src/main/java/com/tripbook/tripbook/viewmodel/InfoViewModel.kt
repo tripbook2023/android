@@ -1,9 +1,11 @@
 package com.tripbook.tripbook.viewmodel
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.auth0.android.auth0.BuildConfig
 import com.tripbook.base.BaseViewModel
+import com.tripbook.tripbook.R
 import com.tripbook.tripbook.domain.model.MemberInfo
 import com.tripbook.tripbook.domain.usecase.LogoutUseCase
 import com.tripbook.tripbook.domain.usecase.MemberUseCase
@@ -61,6 +63,16 @@ class InfoViewModel @Inject constructor(
     private val _version: MutableStateFlow<String?> = MutableStateFlow(null)
     val version: StateFlow<String?> = _version
 
+    fun setProfileUri(uri: Uri?, fullPath: String?, default: Boolean) {
+        uri?.let {
+            _profileUri.value = it
+        }
+        fullPath?.let {
+            profilePath.value = it
+        }
+        profileDefault.value = default
+    }
+
     fun setVersion(ver: String){
         _version.value = ver
     }
@@ -79,20 +91,25 @@ class InfoViewModel @Inject constructor(
                 it?.let{
                     _nickname.value = it.name
                     _email.value= it.email
-                    _profileUri.value = Uri.parse(it.profile)
+
+                    _profileUri.value = if (it.profile != null) {
+                        Uri.parse(it.profile)
+                    } else {
+                        Uri.parse("android.resource://com.tripbook.tripbook/" + R.drawable.tripbook_image)
+                    }
                 }
             }
         }
     }
 
-
-    fun updateProfile(path: String?): Flow<Boolean> {
+    fun updateProfile(name: String, path: String?): Flow<Boolean> {
         val imageFile: File? = if (profileUri.value == null || profileDefault.value) {
             null
         } else {
             File(path)
         }
-        val nickname = memberInfo.value?.name ?: ""
+
+        val profile = ""
         val gender = memberInfo.value?.gender ?: ""
         val serviceChecked = memberInfo.value?.termsOfService ?: false
         val personalInfoChecked = memberInfo.value?.termsOfPrivacy ?: false
@@ -100,9 +117,11 @@ class InfoViewModel @Inject constructor(
         val marketingChecked = memberInfo.value?.marketingConsent ?: false
         val birth = memberInfo.value?.birth ?: ""
 
+
         return updateMemberUseCase(
-            nickname,
+            name,
             imageFile,
+            profile,
             serviceChecked,
             personalInfoChecked,
             locationChecked,

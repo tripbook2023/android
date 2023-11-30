@@ -14,6 +14,7 @@ interface MemberRepository {
     fun updateMember(
         name: String,
         file: File?,
+        profile : String,
         termsOfService: Boolean,
         termsOfPrivacy: Boolean,
         termsOfLocation: Boolean,

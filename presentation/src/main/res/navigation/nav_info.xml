@@ -29,7 +29,9 @@
         android:id="@+id/profileModifyFragment"
         android:name="com.tripbook.tripbook.views.trip.info.ProfileModifyFragment"
         tools:layout="@layout/fragment_profile_modify">
-
+        <action
+            android:id="@+id/action_profileModifyFragment_to_mypageFragment"
+            app:destination="@id/mypageFragment" />
     </fragment>
     <fragment
         android:id="@+id/logoutFragment"

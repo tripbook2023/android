@@ -6,7 +6,7 @@
     app:startDestination="@id/newsAddFragment">
     <fragment
         android:id="@+id/newsAddFragment"
-        android:name="com.tripbook.tripbook.views.tripAdd.NewsAddFragment"
+        android:name="com.tripbook.tripbook.views.trip.add.NewsAddFragment"
         android:label="여행소식 작성"
         tools:layout="@layout/fragment_news_add" />
 </navigation>
