@@ -57,7 +57,7 @@
                         android:id="@+id/icn_main_default"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="316dp"
+                        android:layout_marginStart="316dp"
                         android:paddingVertical="12dp"
                         android:src="@drawable/icn_more_default_24"
                         app:tint="@color/white" />
@@ -151,15 +151,24 @@
                 </RelativeLayout>
             </androidx.core.widget.NestedScrollView>
 
-
-            <!-- 본문 내용 -->
-            <WebView
-                android:id="@+id/webView"
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/main_editor_scroll"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:visibility="visible"
+                app:layout_anchorGravity="start"
+                android:background="@color/gray_G_0"
                 app:layout_constraintBottom_toTopOf="@id/trip_detail_bottom"
-                app:layout_constraintTop_toBottomOf="@id/side_profile" />
+                app:layout_constraintTop_toBottomOf="@id/side_profile">
+
+                <!-- 본문 내용 -->
+                <com.tripbook.tripbook.views.trip.add.CustomRichEditor
+                    android:id="@+id/main_editor"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:visibility="visible"/>
+
+            </androidx.core.widget.NestedScrollView>
 
             <LinearLayout
                 android:id="@+id/trip_detail_bottom"

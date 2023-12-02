@@ -123,7 +123,6 @@
             app:marginBottom="@{viewModel.isKeyboardUp ? @dimen/button_bottom_up : @dimen/button_bottom_down}"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

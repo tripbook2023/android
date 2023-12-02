@@ -1,7 +1,6 @@
 package com.tripbook.tripbook.views.trip.info
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
@@ -15,8 +14,6 @@ import com.tripbook.tripbook.viewmodel.InfoViewModel
 import com.tripbook.tripbook.viewmodel.LoginViewModel
 import com.tripbook.tripbook.views.login.profile.ProfileDialogFragment
 import kotlinx.coroutines.launch
-import timber.log.Timber
-
 class ProfileModifyFragment :
     BaseFragment<FragmentProfileModifyBinding, LoginViewModel>(R.layout.fragment_profile_modify) {
 
@@ -31,7 +28,6 @@ class ProfileModifyFragment :
         addNicknameTextWatcher()
 
         binding.profile.setOnClickListener {
-            // 권한 관리는 회원가입 때 했으니까 바로 dialog 띄워도 될 듯!
             ProfileDialogFragment().show(
                 requireActivity().supportFragmentManager,
                 "Profile Fragment"
@@ -39,9 +35,17 @@ class ProfileModifyFragment :
         }
 
         binding.completeButton.setOnClickListener {
-            duplicateCheck()
+
+            infoviewModel.nickCheck(binding.nickname.text.toString())
+            val nickChk = infoviewModel.nicknameChecked.value
+
+            if (nickChk) { //기존 닉넴과 바뀐 닉넴 다를 때만 체크해줘도 update 에서 걸리는 듯 ? 백엔드 추후 문의
+                duplicateCheck()
+            }
+
             updateProfile()
         }
+
     }
 
     private fun updateProfile() {
@@ -53,11 +57,7 @@ class ProfileModifyFragment :
             infoviewModel.updateProfile(name, imagePath).collect {
                 if (it) {
                     //내정보로 다시 돌아가기
-                    Log.d("updateProfile", "프로필 변경 성공")
-                     findNavController().navigate(R.id.action_profileModifyFragment_to_mypageFragment)
-                } else {
-                    // 프로필 변경 실패
-                    Log.d("error updateProfile", "프로필 변경 실패")
+                    findNavController().navigate(R.id.action_profileModifyFragment_to_mypageFragment)
                 }
             }
         }
@@ -73,7 +73,6 @@ class ProfileModifyFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.validateUserName(binding.nickname.text.toString()).collect {
                 if (it) {
-                    // 중복되는 닉네임이 아니면 update하기!
                     viewModel.setNickname(binding.nickname.text.toString())
                 } else {
                     viewModel.setNicknameValid(binding.nickname.setError(resources.getString(R.string.nickname_duplicate_alert)))

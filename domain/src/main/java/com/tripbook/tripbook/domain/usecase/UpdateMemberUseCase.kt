@@ -11,7 +11,7 @@ class UpdateMemberUseCase @Inject constructor(
     operator fun invoke(
         name: String,
         file: File?,
-        profile : String,
+        profile : String?,
         termsOfService: Boolean,
         termsOfPrivacy: Boolean,
         termsOfLocation: Boolean,

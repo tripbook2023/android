@@ -2,7 +2,6 @@ package com.tripbook.tripbook.views.login.profile
 
 import android.content.ContentResolver
 import android.net.Uri
-import android.util.Log
 import android.view.Gravity
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,8 +30,6 @@ class ProfileDialogFragment :
             val fullPath = requireContext().getImagePathFromURI(uri)
             viewModel.setProfileUri(uri, fullPath, false)
             infoviewModel.setProfileUri(uri, fullPath, false)
-            Log.d("setProfileUri", "uri::::" + uri)
-            Log.d("setProfileUri", "fullPath::::" + fullPath)
         } ?: {
             Timber.tag("Photo Picker").d("No Media selected")
         }
@@ -44,6 +41,7 @@ class ProfileDialogFragment :
             if (isSuccess) {
                 val fullPath = requireContext().getImagePathFromURI(photoUri)
                 viewModel.setProfileUri(photoUri, fullPath, false)
+                infoviewModel.setProfileUri(photoUri, fullPath, false)
             } else {
                 Timber.tag("cameraLauncher").d("Failed")
             }
@@ -58,7 +56,6 @@ class ProfileDialogFragment :
     override fun init() {
         binding.album.setOnClickListener {
             galleryLauncher.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
-            Log.d("setProfileUri", "ImageOnly::::" + PickVisualMedia.ImageOnly)
         }
         binding.camera.setOnClickListener {
             requireContext().createImageFile().let { uri ->
@@ -78,7 +75,7 @@ class ProfileDialogFragment :
                 .build()
             val fullPath = requireContext().getImagePathFromURI(uri)
             viewModel.setProfileUri(uri, fullPath, true)
-            Log.d("setProfileUri", "fullPath::::" + fullPath)
+            infoviewModel.setProfileUri(uri, fullPath, true)
             dismiss()
         }
         binding.cancelButton.setOnClickListener {

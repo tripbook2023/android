@@ -1,7 +1,6 @@
 package com.tripbook.tripbook.viewmodel
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.tripbook.base.BaseViewModel
 import com.tripbook.tripbook.R
@@ -28,6 +27,9 @@ class InfoViewModel @Inject constructor(
     private val _nickname: MutableStateFlow<String?> = MutableStateFlow(null)
     val nickname: StateFlow<String?> = _nickname
 
+    private var _nicknameChecked = MutableStateFlow(false)
+    val nicknameChecked: StateFlow<Boolean> get() = _nicknameChecked
+
     private val _email: MutableStateFlow<String?> = MutableStateFlow(null)
     val email: StateFlow<String?> = _email
 
@@ -42,6 +44,7 @@ class InfoViewModel @Inject constructor(
             profilePath.value = it
         }
         profileDefault.value = default
+
     }
 
     fun setVersion(ver: String){
@@ -73,14 +76,23 @@ class InfoViewModel @Inject constructor(
         }
     }
 
+    fun nickCheck(nick : String) {
+        _nicknameChecked.value = _memberInfo.value?.name != nick
+    }
+
     fun updateProfile(name: String, path: String?): Flow<Boolean> {
-        val imageFile: File? = if (profileUri.value == null || profileDefault.value) {
+        val imageFile: File? = if (path == null) {
             null
         } else {
             File(path)
         }
 
-        val profile = ""
+        var profileChk : String? = null
+
+        if(profileDefault.value) { //true -> 프로필 이미지 따로 있음
+            profileChk = ""
+        }
+
         val gender = memberInfo.value?.gender ?: ""
         val serviceChecked = memberInfo.value?.termsOfService ?: false
         val personalInfoChecked = memberInfo.value?.termsOfPrivacy ?: false
@@ -88,18 +100,10 @@ class InfoViewModel @Inject constructor(
         val marketingChecked = memberInfo.value?.marketingConsent ?: false
         val birth = memberInfo.value?.birth ?: ""
 
-
-        Log.d("updateProfile", name)
-        Log.d("updateProfile", imageFile.toString())
-        if (path != null) {
-            Log.d("updateProfile", path)
-        }
-
-
         return updateMemberUseCase(
             name,
             imageFile,
-            profile,
+            profileChk,
             serviceChecked,
             personalInfoChecked,
             locationChecked,
