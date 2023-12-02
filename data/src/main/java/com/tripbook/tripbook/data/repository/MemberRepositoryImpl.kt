@@ -1,9 +1,6 @@
 package com.tripbook.tripbook.data.repository
 
 
-import android.util.Log
-import com.tripbook.database.TokenDataStore
-import com.tripbook.database.TokenEntity
 import com.tripbook.libs.network.NetworkResult
 import com.tripbook.libs.network.safeApiCall
 import com.tripbook.libs.network.service.MemberService
@@ -21,8 +18,7 @@ import java.io.File
 import javax.inject.Inject
 
 class MemberRepositoryImpl @Inject constructor(
-    private val memberService: MemberService,
-    private val tokenDataStore: TokenDataStore
+    private val memberService: MemberService
 ) : MemberRepository {
 
 
@@ -52,7 +48,7 @@ class MemberRepositoryImpl @Inject constructor(
     override fun updateMember (
         name: String,
         file: File?,
-        profile : String,
+        profile : String?,
         termsOfService: Boolean,
         termsOfPrivacy: Boolean,
         termsOfLocation: Boolean,
@@ -62,6 +58,7 @@ class MemberRepositoryImpl @Inject constructor(
     ): Flow<Boolean> = safeApiCall(Dispatchers.IO) {
         val nameBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
         val profileBody = file?.absolutePath?.toRequestBody("text/plain".toMediaTypeOrNull()) ?: "".toRequestBody("text/plain".toMediaTypeOrNull())
+        //val profileBody = profile?.toRequestBody("text/plain".toMediaTypeOrNull()) ?: null
         val serviceTerms =
             termsOfService.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val privacyTerms =
@@ -75,8 +72,6 @@ class MemberRepositoryImpl @Inject constructor(
 
         val fileBody = file?.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val filePart = fileBody?.let { MultipartBody.Part.createFormData("imageFile", "photo.jpg", it) }
-
-        Log.d("profileBody" , "profileBody" + profileBody.toString())
 
         memberService.updateMember(
             filePart,

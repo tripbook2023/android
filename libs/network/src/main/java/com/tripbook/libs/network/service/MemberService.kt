@@ -26,6 +26,6 @@ interface MemberService {
     @POST("update")
     suspend fun updateMember(
         @Part file : MultipartBody.Part?,
-        @PartMap params : Map<String, @JvmSuppressWildcards RequestBody>
+        @PartMap params : Map<String, @JvmSuppressWildcards RequestBody?>
     ) : UpdateMemberResponse
 }

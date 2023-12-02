@@ -44,6 +44,9 @@ class InfoViewModel @Inject constructor(
         initialValue = ""
     )
 
+    private var _nicknameChecked = MutableStateFlow(false)
+    val nicknameChecked: StateFlow<Boolean> get() = _nicknameChecked
+
     val email: StateFlow<String?> = memberInfo.filterNotNull().map {
         it.email
     }.stateIn(
@@ -71,6 +74,7 @@ class InfoViewModel @Inject constructor(
             profilePath.value = it
         }
         profileDefault.value = default
+
     }
 
     fun setVersion(ver: String){
@@ -102,14 +106,23 @@ class InfoViewModel @Inject constructor(
         }
     }
 
+    fun nickCheck(nick : String) {
+        _nicknameChecked.value = _memberInfo.value?.name != nick
+    }
+
     fun updateProfile(name: String, path: String?): Flow<Boolean> {
-        val imageFile: File? = if (profileUri.value == null || profileDefault.value) {
+        val imageFile: File? = if (path == null) {
             null
         } else {
             File(path)
         }
 
-        val profile = ""
+        var profileChk : String? = null
+
+        if(profileDefault.value) { //true -> 프로필 이미지 따로 있음
+            profileChk = ""
+        }
+
         val gender = memberInfo.value?.gender ?: ""
         val serviceChecked = memberInfo.value?.termsOfService ?: false
         val personalInfoChecked = memberInfo.value?.termsOfPrivacy ?: false
@@ -121,7 +134,7 @@ class InfoViewModel @Inject constructor(
         return updateMemberUseCase(
             name,
             imageFile,
-            profile,
+            profileChk,
             serviceChecked,
             personalInfoChecked,
             locationChecked,

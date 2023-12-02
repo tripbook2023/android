@@ -1,6 +1,5 @@
 package com.tripbook.tripbook.views.trip.detail
 
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
@@ -42,7 +41,7 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
             viewModel.articleDetailInfo.collect {
 
                 viewModel.content.onEach { content ->
-                    val webView = binding.webView
+                    val webView = binding.mainEditor
 
                     if (!content.isNullOrBlank()) {
                         val modifiedContent =  replaceImagePlaceholders(content, it?.imageList.orEmpty())
@@ -61,7 +60,7 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
         //좋아요
         binding.like.setOnClickListener {
 
-            val articleId: Long = 19 //test용
+            val articleId: Long = 42 //test용
 
             if(isLiked) {
                 viewModel.likeArticle(articleId)
@@ -133,10 +132,10 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
                         .toFloat() / appBarLayout.totalScrollRange.toFloat() // 백분율로 계산하기
 
                 if(totalScroll > 0.5) {
-                    sideBar.visibility = View.GONE
+                    //sideBar.visibility = View.GONE
                     //sideBar.startAnimation(fadeOutAnim)
                 } else {
-                    sideBar.visibility = View.VISIBLE
+                    //sideBar.visibility = View.VISIBLE
                     //sideBar.startAnimation(fadeInAnim)
                 }
 
