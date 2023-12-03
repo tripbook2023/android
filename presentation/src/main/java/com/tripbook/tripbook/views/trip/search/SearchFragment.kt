@@ -48,7 +48,7 @@ class SearchFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.searchedItem.collect {
-                    searchResultAdapter.submitList(it)
+                    searchResultAdapter.submitData(it)
                 }
             }
         }

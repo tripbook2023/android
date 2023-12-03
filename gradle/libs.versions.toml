@@ -18,6 +18,7 @@ fragment = "1.6.2"
 navigation = "2.7.5"
 datastore = "1.0.0"
 room = "2.6.1"
+paging = "3.2.1"
 
 # Firebase
 gms = "4.4.0"
@@ -89,6 +90,8 @@ navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", ver
 
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room"}
+
+paging = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging"}
 
 datastore-preference = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 

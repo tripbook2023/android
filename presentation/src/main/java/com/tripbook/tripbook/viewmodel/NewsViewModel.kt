@@ -1,18 +1,16 @@
 package com.tripbook.tripbook.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.tripbook.base.BaseViewModel
-import com.tripbook.tripbook.domain.model.ArticleDetail
 import com.tripbook.tripbook.domain.model.SortType
 import com.tripbook.tripbook.domain.usecase.GetArticleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,36 +21,33 @@ class NewsViewModel @Inject constructor(
     private val getArticleUseCase: GetArticleUseCase
 ) : BaseViewModel() {
 
-    private val _articleList: MutableStateFlow<List<ArticleDetail>> = MutableStateFlow(emptyList())
-    val articleList: StateFlow<List<ArticleDetail>>
-        get() = _articleList
-
-    val keyword: MutableStateFlow<String> = MutableStateFlow("") // USE in XML
-    private val searchedData: StateFlow<String>
-        get() = keyword.debounce(800)
-            .distinctUntilChanged()
-            .onEach {
-                getFilteredItem()
-            }.stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
-                initialValue = ""
-            )
-
     private val _sortType: MutableStateFlow<SortType> = MutableStateFlow(SortType.CREATED_DESC)
     val sortType: StateFlow<SortType>
         get() = _sortType
 
-    init {
-        getFilteredItem()
+    private val _openSpinner: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
+    val openSpinner: StateFlow<Boolean>
+        get() = _openSpinner
+
+    val articleList = sortType.flatMapLatest {
+        getArticleUseCase("", it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = PagingData.empty()
+    ).cachedIn(viewModelScope)
+
+    fun setSortType(sortType: SortType) {
+        viewModelScope.launch {
+            _sortType.emit(sortType)
+            _openSpinner.emit(false)
+        }
     }
 
-    private fun getFilteredItem() {
+    fun openSpinner() {
         viewModelScope.launch {
-            getArticleUseCase(searchedData.value, sortType.value)
-                .onEach {
-                    _articleList.emit(it?.content ?: emptyList())
-                }.collect()
+            _openSpinner.emit(true)
         }
     }
 }

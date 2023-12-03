@@ -71,6 +71,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.lottie)
     implementation(libs.glide)
+    implementation(libs.paging)
 
     val firebaseBom = platform(libs.firebase.bom)
     implementation(firebaseBom)

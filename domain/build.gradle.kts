@@ -9,4 +9,5 @@ android {
 
 dependencies {
     implementation(libs.coroutine)
+    implementation(libs.paging)
 }

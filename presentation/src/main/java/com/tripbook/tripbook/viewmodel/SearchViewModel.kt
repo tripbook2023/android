@@ -1,13 +1,13 @@
 package com.tripbook.tripbook.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.tripbook.base.BaseViewModel
 import com.tripbook.tripbook.domain.usecase.ClearItemUseCase
 import com.tripbook.tripbook.domain.usecase.DeleteSearchUseCase
 import com.tripbook.tripbook.domain.usecase.GetCurrentKeywordUseCase
 import com.tripbook.tripbook.domain.usecase.SearchItemUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -20,12 +20,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-@ExperimentalCoroutinesApi
 class SearchViewModel @Inject constructor(
     private val clearItemUseCase: ClearItemUseCase,
     private val deleteSearchUseCase: DeleteSearchUseCase,
     private val searchItemUseCase: SearchItemUseCase,
-    private val currentKeywordUseCase: GetCurrentKeywordUseCase
+    currentKeywordUseCase: GetCurrentKeywordUseCase
 ) : BaseViewModel() {
 
     val editableKeyword = MutableStateFlow("")
@@ -46,8 +45,9 @@ class SearchViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = emptyList()
+            initialValue = PagingData.empty()
         )
+
 
     fun clearEditable() = viewModelScope.launch {
         editableKeyword.emit("")

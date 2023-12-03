@@ -7,5 +7,5 @@ sealed class NetworkResult<out T> {
         val message: List<String>? = emptyList(),
         val code: Int? = 0
     ): NetworkResult<Nothing>()
-    object NetworkError : NetworkResult<Nothing>()
+    data object NetworkError : NetworkResult<Nothing>()
 }

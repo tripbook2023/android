@@ -50,7 +50,7 @@ class NewsMainFragment : BaseFragment<FragmentMainBinding, NewsViewModel>(R.layo
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.articleList.collect {
-                    articleAdapter.submitList(it)
+                    articleAdapter.submitData(it)
                 }
             }
         }

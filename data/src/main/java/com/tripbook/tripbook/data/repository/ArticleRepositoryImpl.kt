@@ -1,11 +1,13 @@
 package com.tripbook.tripbook.data.repository
 
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.tripbook.libs.network.NetworkResult
 import com.tripbook.libs.network.safeApiCall
 import com.tripbook.libs.network.service.TripArticlesService
-import com.tripbook.tripbook.data.mapper.toArticle
-import com.tripbook.tripbook.domain.model.Article
+import com.tripbook.tripbook.data.datasource.ArticlePagingSource
 import com.tripbook.tripbook.domain.model.ArticleDetail
 import com.tripbook.tripbook.domain.model.SortType
 import com.tripbook.tripbook.domain.repository.ArticleRepository
@@ -40,20 +42,10 @@ class ArticleRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getArticles(
-        word: String,
-        page: Int,
-        size: Int,
-        sortType: SortType
-    ): Flow<Article?> = safeApiCall(Dispatchers.IO) {
-        tripArticlesService.getArticleList(word, page, size, sortType.name)
-    }.map { response ->
-        when(response) {
-            is NetworkResult.Success -> {
-                response.value.toArticle()
-            }
-            else -> null
-        }
-    }
+    override fun getArticles(word: String, sortType: SortType): Flow<PagingData<ArticleDetail>> = Pager(
+        PagingConfig(pageSize = 10)
+    ) {
+        ArticlePagingSource(word, sortType, tripArticlesService)
+    }.flow
 
 }

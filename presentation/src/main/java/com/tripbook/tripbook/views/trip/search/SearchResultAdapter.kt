@@ -2,15 +2,15 @@ package com.tripbook.tripbook.views.trip.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tripbook.tripbook.databinding.ItemSearchTripBinding
 import com.tripbook.tripbook.domain.model.ArticleDetail
 
 class SearchResultAdapter(
     private val onItemClick: (id: Long) -> Unit
-) : ListAdapter<ArticleDetail, SearchResultAdapter.ViewHolder>(comparator){
+) : PagingDataAdapter<ArticleDetail, SearchResultAdapter.ViewHolder>(comparator){
 
     private companion object {
         val comparator = object : DiffUtil.ItemCallback<ArticleDetail>() {
@@ -28,10 +28,12 @@ class SearchResultAdapter(
         private val binding: ItemSearchTripBinding,
         private val onItemClick: (id: Long) -> Unit
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ArticleDetail) = binding.run {
-            article = item
-            root.setOnClickListener {
-                onItemClick(item.id)
+        fun bind(item: ArticleDetail?) = binding.run {
+            item?.let { detail ->
+                article = detail
+                root.setOnClickListener {
+                    onItemClick(detail.id)
+                }
             }
         }
     }
@@ -42,6 +44,6 @@ class SearchResultAdapter(
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(currentList[position])
+        holder.bind(getItem(position))
     }
 }
