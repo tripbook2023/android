@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_newsMainFragment_to_tripDetailFragment"
             app:destination="@id/tripDetailFragment" />
+        <action
+            android:id="@+id/action_newsMainFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/tripDetailFragment"
@@ -56,5 +59,16 @@
         app:destination="@id/loginFragment"
         app:popUpTo="@id/nav_graph"
         app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.tripbook.tripbook.views.trip.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_tripDetailFragment"
+            app:destination="@id/tripDetailFragment"
+            app:popUpTo="@id/searchFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
 
 </navigation>

@@ -28,7 +28,14 @@ class NewsMainFragment : BaseFragment<FragmentMainBinding, NewsViewModel>(R.layo
     override fun init() {
         binding.viewmodel = viewModel
         initRecyclerView()
+        initListener()
         collectProperties()
+    }
+
+    private fun initListener() {
+        binding.imageviewSearch.setOnClickListener {
+            findNavController().navigate(NewsMainFragmentDirections.actionNewsMainFragmentToSearchFragment())
+        }
     }
 
     private fun initRecyclerView() {

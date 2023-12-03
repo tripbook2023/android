@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.tripbook.tripbook.viewmodel.NewsViewModel" />
+            type="com.tripbook.tripbook.viewmodel.SearchViewModel" />
 
         <import type="android.view.View"/>
     </data>
@@ -26,13 +26,14 @@
             >
 
             <ImageView
+                android:id="@+id/imageview_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/icn_before_24"
                 android:contentDescription="@null"/>
 
             <EditText
-                android:text="@={vm.keyword}"
+                android:text="@={vm.editableKeyword}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -53,12 +54,14 @@
                 android:src="@drawable/icn_clear_20"
                 android:contentDescription="@null"
                 android:layout_marginEnd="8dp"
-                android:visibility="@{vm.keyword.empty ? View.GONE : View.VISIBLE}"/>
+                android:onClick="@{() -> vm.clearEditable()}"
+                android:visibility="@{vm.editableKeyword.empty ? View.GONE : View.VISIBLE}"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:contentDescription="@null"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> vm.searchKeyword()}"
                 android:src="@drawable/icn_search_24"/>
         </LinearLayout>
 
@@ -79,7 +82,7 @@
             android:textColor="@color/gray_G_80"
             android:textSize="18sp"
             android:layout_marginTop="16dp"
-            android:visibility="@{vm.keyword.empty ? View.VISIBLE : View.GONE}"/>
+            android:visibility="@{vm.currentKeyword.empty ? View.VISIBLE : View.GONE}"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -91,7 +94,8 @@
             android:layout_marginEnd="20dp"
             android:fontFamily="@font/suit_medium"
             android:textColor="@color/gray_G_50"
-            android:visibility="@{vm.keyword.empty ? View.VISIBLE : View.GONE}"/>
+            android:onClick="@{() -> vm.clearItem()}"
+            android:visibility="@{vm.currentKeyword.empty ? View.VISIBLE : View.GONE}"/>
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -105,7 +109,7 @@
             tools:layout_editor_absoluteX="0dp"
             tools:listitem="@layout/item_recent_search"
             tools:visibility="visible"
-            android:visibility="@{vm.keyword.empty ? View.VISIBLE : View.GONE}"/>
+            android:visibility="@{vm.currentKeyword.empty ? View.VISIBLE : View.GONE}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_result"
@@ -115,14 +119,14 @@
             tools:listitem="@layout/item_search_result"
             tools:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="@{vm.keyword.empty ? View.GONE : View.VISIBLE}" />
+            android:visibility="@{vm.currentKeyword.empty ? View.GONE : View.VISIBLE}" />
 
         <!--    focus 일때만 동작.    -->
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="@{vm.keyword.empty ? View.GONE : View.VISIBLE}"
+            android:visibility="@{vm.editableKeyword.empty ? View.GONE : View.VISIBLE}"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="16dp"
             android:layout_marginHorizontal="20dp"
@@ -131,6 +135,7 @@
             android:textSize="16sp"
             android:textColor="@color/gray_G_50"
             app:backgroundTint="@color/gray_G_10"
+            android:onClick="@{() -> vm.searchKeyword()}"
             android:paddingVertical="14dp"
             app:cornerRadius="12dp"/>
 

@@ -14,11 +14,11 @@ fun ArticleDetailResponse.toArticleDetail() = ArticleDetail(
     author = MemberSimple(
         id = author.id,
         name = author.name,
-        profileUrl = author.profileUrl,
+        profileUrl = author.profileUrl ?: "",
         role = author.role
     ),
-    imageList = imageList.map { it.toImage() },
-    thumbnail = thumbnail.toImage(),
+    imageList = imageList?.map { it.toImage() },
+    thumbnail = thumbnail?.toImage(),
     tagList = tagList,
     numberOfHearts = numberOfHearts,
     numberOfBookmarks = numberOfBookmarks,
@@ -40,7 +40,7 @@ fun CommentResponse.toComment() = Comment(
     author = MemberSimple(
         id = author.id,
         name = author.name,
-        profileUrl = author.profileUrl,
+        profileUrl = author.profileUrl ?: "",
         role = author.role
     ),
     //childList = childList.map { it.toComment() },

@@ -33,5 +33,10 @@ gradlePlugin {
             id = "com.tripbook.library"
             implementationClass = "AndroidLibraryPlugin"
         }
+
+        register("androidApplication") {
+            id = "com.tripbook.application"
+            implementationClass = "AndroidApplicationPlugin"
+        }
     }
 }

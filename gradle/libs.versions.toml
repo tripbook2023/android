@@ -1,12 +1,12 @@
 [versions]
 # Plugin Version
 kotlin = "1.9.10"
-androidGradlePlugin = "8.1.4"
+androidGradlePlugin = "8.2.0"
 minSDK = "24"
 targetSDK = "34"
 versionCode = "1"
 versionName = "1.0.0"
-buildTools = "33.0.2"
+buildTools = "34.0.0"
 
 # AndroidX
 core-ktx = "1.12.0"
@@ -17,9 +17,10 @@ activity = "1.8.1"
 fragment = "1.6.2"
 navigation = "2.7.5"
 datastore = "1.0.0"
+room = "2.6.1"
 
 # Firebase
-gms = "4.3.15"
+gms = "4.4.0"
 firebase-bom = "32.6.0"
 
 # Timber
@@ -27,6 +28,7 @@ timber = "5.0.1"
 
 # Kotlinx
 coroutine = "1.7.1"
+datetime = "0.4.0"
 
 #Test
 junit = "4.13.2"
@@ -85,6 +87,9 @@ fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref
 navigation = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
 
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room"}
+
 datastore-preference = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 
 # Google
@@ -92,6 +97,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 
 # Coroutine
 coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine" }
+datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime"}
 
 # Firebase
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
