@@ -1,8 +1,7 @@
 @file:Suppress("UnstableApiUsage", "DSL_SCOPE_VIOLATION")
 
 plugins {
-    alias(libs.plugins.kotlin.plugin)
-    alias(libs.plugins.android.application)
+    id("com.tripbook.application")
     id("com.tripbook.hilt")
     id("com.google.gms.google-services")
     id("androidx.navigation.safeargs.kotlin")
@@ -72,6 +71,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.lottie)
     implementation(libs.glide)
+    implementation(libs.paging)
 
     val firebaseBom = platform(libs.firebase.bom)
     implementation(firebaseBom)

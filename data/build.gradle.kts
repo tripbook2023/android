@@ -12,6 +12,8 @@ dependencies {
     implementation(project(":libs:network"))
     implementation(project(":libs:database"))
 
+    implementation(libs.paging)
+
     implementation(libs.retrofit)
     implementation(libs.moshi)
     implementation(libs.timber)

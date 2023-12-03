@@ -42,11 +42,14 @@ object BindingAdapter {
 
     @JvmStatic
     @BindingAdapter("imgURL")
-    fun setImageWithString(imageView: ImageView, urlString: String) {
-        Glide.with(imageView.context)
-            .load(urlString)
-            .placeholder(R.drawable.icn_pic_36)
-            .into(imageView)
+    fun setImageWithString(imageView: ImageView, urlString: String?) {
+        urlString?.let {
+            Glide.with(imageView.context)
+                .load(it)
+                .placeholder(R.drawable.icn_pic_36)
+                .into(imageView)
+        } ?: imageView.setImageResource(R.drawable.icn_pic_36)
+
     }
 
     @JvmStatic

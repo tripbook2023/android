@@ -24,7 +24,6 @@ import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
 
-
 enum class Gender {
     FEMALE, MALE
 }
