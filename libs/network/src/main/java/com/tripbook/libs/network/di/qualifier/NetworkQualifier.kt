@@ -41,3 +41,7 @@ annotation class LocationServiceScope
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class TripNewsServiceScope
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CommonServiceScope

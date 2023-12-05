@@ -1,21 +1,22 @@
 package com.tripbook.tripbook.domain.usecase
 
-import com.tripbook.tripbook.domain.repository.TripNewsRepository
+import com.tripbook.tripbook.domain.repository.ArticleRepository
 import kotlinx.coroutines.flow.Flow
-import java.io.File
 import javax.inject.Inject
 
-class SaveTripNewsUseCase @Inject constructor(
-    private val repository: TripNewsRepository
+class SaveTempArticleUseCase @Inject constructor(
+    private val repository: ArticleRepository
 ) {
 
     operator fun invoke(
+        tempId: Long?,
         title: String,
         content: String,
-        thumbnail: File,
-        imageList: List<File>,
+        thumbnail: String?,
+        imageList: List<Int>?,
         tagList: List<String>?
-    ): Flow<Boolean> = repository.saveTripNews(
+    ): Flow<Long?>  = repository.saveTempArticle(
+        tempId,
         title,
         content,
         thumbnail,

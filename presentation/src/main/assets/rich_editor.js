@@ -77,7 +77,7 @@ function deleteImage(idx){
     var id = 'imageDiv' + idx
     var img = document.getElementById(id).children[0].children[0].getAttribute('src')
     document.getElementById(id).remove()
-    window.android.removeImageItem(img) // image uri 전달
+    window.android.removeImageItem(idx)
 }
 
 function changeStyle(idx){

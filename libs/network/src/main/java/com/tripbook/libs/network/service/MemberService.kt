@@ -1,6 +1,7 @@
 package com.tripbook.libs.network.service
 
 import com.tripbook.libs.network.model.response.MemberResponse
+import com.tripbook.libs.network.model.response.TempArticleResponse
 import com.tripbook.libs.network.model.response.UnitResponse
 import com.tripbook.libs.network.model.response.UpdateMemberResponse
 import okhttp3.MultipartBody
@@ -18,6 +19,9 @@ interface MemberService {
     suspend fun validateNickname(
         @Query("name") nickname: String
     ): UnitResponse
+
+    @GET("select/articles/temp")
+    suspend fun getTempArticleList(): List<TempArticleResponse>
 
     @GET("select")
     suspend fun getMember(): MemberResponse

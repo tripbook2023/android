@@ -2,12 +2,14 @@ package com.tripbook.libs.network.di.module
 
 import com.tripbook.libs.network.di.qualifier.ArticleServiceScope
 import com.tripbook.libs.network.di.qualifier.AuthServiceScope
+import com.tripbook.libs.network.di.qualifier.CommonServiceScope
 import com.tripbook.libs.network.di.qualifier.LocationServiceScope
 import com.tripbook.libs.network.di.qualifier.MemberNoAuthServiceScope
 import com.tripbook.libs.network.di.qualifier.MemberServiceScope
 import com.tripbook.libs.network.di.qualifier.TokenServiceScope
 import com.tripbook.libs.network.di.qualifier.TripNewsServiceScope
 import com.tripbook.libs.network.service.AuthService
+import com.tripbook.libs.network.service.CommonService
 import com.tripbook.libs.network.service.LocationService
 import com.tripbook.libs.network.service.MemberNoAuthService
 import com.tripbook.libs.network.service.MemberService
@@ -59,4 +61,10 @@ object ServiceModule {
     @Singleton
     fun providesTripNewsService(@TripNewsServiceScope retrofit: Retrofit)
     : TripNewsService = retrofit.create()
+
+    @Provides
+    @Singleton
+    fun providesCommonService(@CommonServiceScope retrofit: Retrofit)
+    : CommonService = retrofit.create()
+
 }

@@ -55,10 +55,10 @@ object BindingAdapter {
     // 일반 이미지 띄울 때 사용 => 프로필 사진처럼 circleCrop이 필요하지 않은 경우 사용
     // ex) thumbnail
     @JvmStatic
-    @BindingAdapter("imgUri")
-    fun setImage(imageView: ImageView, uri: Uri?) {
+    @BindingAdapter("imgUrl")
+    fun setImage(imageView: ImageView, url: String?) {
         Glide.with(imageView.context)
-            .load(uri)
+            .load(url)
             .into(imageView)
     }
 

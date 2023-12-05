@@ -60,7 +60,7 @@
     <string name="text_options_bold">B</string>
     <string name="temp_save_label">임시저장 목록</string>
     <string name="temp_save_button">선택</string>
-    <string name="temp_save_list">임시%d</string>
+    <string name="temp_save_list">임시 %d</string>
     <string name="check">확인</string>
     <string name="temp_save_popup_title">임시저장 되었습니다!</string>
     <string name="temp_save_popup_content">PC 및 다른 기기에서도 이어서\n작성이 가능합니다.</string>

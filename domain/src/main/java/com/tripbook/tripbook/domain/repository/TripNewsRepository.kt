@@ -1,16 +1,17 @@
 package com.tripbook.tripbook.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import java.io.File
 
 interface TripNewsRepository {
 
     // 여행소식 저장
     fun saveTripNews(
+        id: Long?,
         title: String,
         content: String,
-        thumbnail: File,
-        imageList: List<File>,
+        thumbnail: String,
+        imageList: List<Int>,
         tagList: List<String>?
     ): Flow<Boolean>
+
 }
