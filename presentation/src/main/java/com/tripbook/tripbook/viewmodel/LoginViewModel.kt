@@ -28,6 +28,8 @@ enum class Gender {
     FEMALE, MALE
 }
 
+
+
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
@@ -73,9 +75,6 @@ class LoginViewModel @Inject constructor(
 
     private var _errorMsg = MutableStateFlow("")
     val errorMsg: StateFlow<String> get() = _errorMsg
-
-    private var _icon = MutableStateFlow(0)
-    val icon: StateFlow<Int> get() = _icon
 
     // 프로필 사진
     private val _profileUri = MutableStateFlow<Uri?>(null)

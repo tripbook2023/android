@@ -1,13 +1,14 @@
 package com.tripbook.tripbook.views.trip.info
 
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.auth0.android.auth0.BuildConfig
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.BuildConfig
 import com.tripbook.tripbook.databinding.FragmentMypageBinding
 import com.tripbook.tripbook.viewmodel.InfoViewModel
+class MypageFragment : BaseFragment<FragmentMypageBinding, InfoViewModel>(R.layout.fragment_mypage) {
 import kotlinx.coroutines.launch
 
 class MypageFragment :

@@ -1,9 +1,7 @@
 package com.tripbook.tripbook.viewmodel
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.auth0.android.auth0.BuildConfig
 import com.tripbook.base.BaseViewModel
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.domain.model.MemberInfo

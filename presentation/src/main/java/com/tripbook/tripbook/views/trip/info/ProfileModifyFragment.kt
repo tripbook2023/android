@@ -3,6 +3,7 @@ package com.tripbook.tripbook.views.trip.info
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.widget.doOnTextChanged
+import androidx.navigation.fragment.findNavController
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController

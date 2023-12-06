@@ -125,6 +125,8 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
             var isViewsVisible = false
 
             //appbar 관련 이벤트
+            appBar.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            //appbar 관련 이벤트
              appBar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
 
                 val totalScroll =

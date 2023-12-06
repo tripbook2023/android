@@ -35,6 +35,7 @@ fun ImageResponse.toImage() = Image(
     url = url
 )
 
+
 fun CommentResponse.toComment() = Comment(
     id = id,
     content = content,

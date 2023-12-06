@@ -41,14 +41,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
                 viewModel.isValidatedUser.collect {
                     it?.let { validated ->
                         when (validated) {
-                            UserLoginStatus.STATUS_REQUIRED_AUTH -> findNavController()
-                                .navigate(
-                                    LoginFragmentDirections.actionLoginFragmentToNewsMainFragment()
-                                )
+                            UserLoginStatus.STATUS_REQUIRED_AUTH , UserLoginStatus.STATUS_WITHDRAWAL -> findNavController()
+                                .navigate(R.id.action_loginFragment_to_profile)
 
                             UserLoginStatus.STATUS_NORMAL -> {
-                                val action = LoginFragmentDirections.actionLoginFragmentToNewsMainFragment()
-                                findNavController().navigate(action)
+                                // TODO : 여기서 바로 메인 화면으로 넘어갈 수 있도록
+                                //findNavController().navigate(R.id.action_loginFragment_to_nav_info)
+                                findNavController().navigate(R.id.action_loginFragment_to_nav_detail)
                             }
                         }.also {
                             viewModel.clearStatus()
