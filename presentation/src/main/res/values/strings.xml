@@ -84,4 +84,8 @@
     <string name="search_keyword_hint">검색어를 입력하세요</string>
     <string name="search">검색</string>
     <string name="version_name">버전정보 v %1$s</string>
+
+    <string name="created_asc">최신순</string>
+    <string name="created_desc">오래된순</string>
+    <string name="popularity">인기순</string>
 </resources>

@@ -60,7 +60,7 @@
             android:textColor="@color/gray_G_80"/>
 
         <ImageView
-            android:id="@+id/imageview_sort"
+            android:id="@+id/iv_sort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@null"
@@ -69,15 +69,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="24dp"
             android:src="@drawable/icn_filter_24"/>
-
-<!--        <androidx.appcompat.widget.AppCompatSpinner-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintTop_toTopOf="@id/imageview_sort"-->
-<!--            app:layout_constraintStart_toStartOf="@id/imageview_sort"-->
-<!--            app:layout_constraintEnd_toEndOf="@id/imageview_sort"-->
-<!--            android:background="@color/tripBook_main_transparent"-->
-<!--            android:visibility="@{}"/>-->
 
 
         <androidx.recyclerview.widget.RecyclerView

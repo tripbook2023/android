@@ -22,7 +22,7 @@ class NewsViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val _sortType: MutableStateFlow<SortType> = MutableStateFlow(SortType.CREATED_DESC)
-    val sortType: StateFlow<SortType>
+    private val sortType: StateFlow<SortType>
         get() = _sortType
 
     private val _openSpinner: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -41,13 +41,6 @@ class NewsViewModel @Inject constructor(
     fun setSortType(sortType: SortType) {
         viewModelScope.launch {
             _sortType.emit(sortType)
-            _openSpinner.emit(false)
-        }
-    }
-
-    fun openSpinner() {
-        viewModelScope.launch {
-            _openSpinner.emit(true)
         }
     }
 }
