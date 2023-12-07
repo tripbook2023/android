@@ -1,11 +1,8 @@
 import com.tripbook.libs.network.model.response.ArticleDetailResponse
 import com.tripbook.tripbook.domain.model.ArticleDetail
 import com.tripbook.tripbook.domain.model.MemberSimple
-import com.tripbook.libs.network.model.response.ImageResponse
 import com.tripbook.tripbook.domain.model.Comment
 import com.tripbook.libs.network.model.response.CommentResponse
-import com.tripbook.tripbook.domain.model.Image
-import com.tripbook.tripbook.domain.model.Thumbnail
 
 
 fun ArticleDetailResponse.toArticleDetail() = ArticleDetail(
@@ -18,8 +15,9 @@ fun ArticleDetailResponse.toArticleDetail() = ArticleDetail(
         profileUrl = author.profileUrl ?: "",
         role = author.role
     ),
-    imageList = imageList?.map { it.toImage() },
-    thumbnail = thumbnail?.toImage(),
+    thumbnailUrl = thumbnailUrl,
+    //imageList = imageList?.map { it.toImage() },
+    //thumbnail = thumbnail.toImage(),
     tagList = tagList,
     numberOfHearts = numberOfHearts,
     numberOfBookmarks = numberOfBookmarks,
@@ -30,10 +28,10 @@ fun ArticleDetailResponse.toArticleDetail() = ArticleDetail(
     bookmark = bookmark
 )
 
-fun ImageResponse.toImage() = Image(
+/*fun ImageResponse.toImage() = Image(
     id = id,
     url = url
-)
+)*/
 
 
 fun CommentResponse.toComment() = Comment(

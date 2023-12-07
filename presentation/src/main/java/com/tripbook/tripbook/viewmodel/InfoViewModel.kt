@@ -89,7 +89,9 @@ class InfoViewModel @Inject constructor(
     fun getMemberInformation(){
         viewModelScope.launch{
             memberUseCase().collect{
-                _memberInfo.value = it
+                memberInfo.value?.name
+
+                memberInfo.value = it
                 it?.let{
                     _nickname.value = it.name
                     _email.value= it.email
@@ -105,7 +107,7 @@ class InfoViewModel @Inject constructor(
     }
 
     fun nickCheck(nick : String) {
-        _nicknameChecked.value = _memberInfo.value?.name != nick
+        _nicknameChecked.value = memberInfo.value?.name != nick
     }
 
     fun updateProfile(name: String, path: String?): Flow<Boolean> {

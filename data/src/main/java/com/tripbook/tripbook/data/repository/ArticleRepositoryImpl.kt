@@ -9,6 +9,7 @@ import com.tripbook.libs.network.safeApiCall
 import com.tripbook.libs.network.service.TripArticlesService
 import com.tripbook.tripbook.data.datasource.ArticlePagingSource
 import com.tripbook.tripbook.domain.model.ArticleDetail
+import com.tripbook.tripbook.domain.model.SortType
 import com.tripbook.tripbook.domain.repository.ArticleRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

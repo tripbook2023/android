@@ -6,8 +6,6 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.tripbook.base.BaseViewModel
 import com.tripbook.tripbook.domain.model.ArticleDetail
-import com.tripbook.tripbook.domain.model.Image
-import com.tripbook.tripbook.domain.model.UserLoginStatus
 import com.tripbook.tripbook.domain.usecase.ArticleDetailUseCase
 import com.tripbook.tripbook.domain.usecase.ArticleLikeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,13 +24,12 @@ class ArticleViewModel @Inject constructor(
     private val articleLikeUseCase : ArticleLikeUseCase
 ) : BaseViewModel() {
 
-
     //여행소식 상세보기
     private val _articleDetailInfo: MutableStateFlow<ArticleDetail?> = MutableStateFlow(null)
     val articleDetailInfo: MutableStateFlow<ArticleDetail?> = _articleDetailInfo
 
-    private val _imageList = MutableStateFlow<List<Image>>(emptyList())
-    val imageList: MutableStateFlow<List<Image>> get() = _imageList
+/*    private val _imageList = MutableStateFlow<List<Image>>(emptyList())
+    val imageList: MutableStateFlow<List<Image>> get() = _imageList*/
 
     //프로필 사진
     private val _profileUri = MutableStateFlow<Uri?>(null)
@@ -43,8 +40,8 @@ class ArticleViewModel @Inject constructor(
     val nickname: StateFlow<String?> = _nickname
 
     //썸네일
-    private val _thumbnail = MutableStateFlow<Uri?>(null)
-    val thumbnail: StateFlow<Uri?> = _thumbnail
+    private val _thumbnail = MutableStateFlow<String?>(null)
+    val thumbnail: StateFlow<String?> = _thumbnail
 
     //큰제목
     private val _title: MutableStateFlow<String?> = MutableStateFlow(null)
@@ -68,11 +65,10 @@ class ArticleViewModel @Inject constructor(
         it?.run {
             Log.d("getArticleDetail", "profileUri" + it.author?.profileUrl)
             Log.d("getArticleDetail", "name" + it.author?.name)
-            Log.d("getArticleDetail", "thumbnail" + it.thumbnail?.url)
+            Log.d("getArticleDetail", "thumbnail" + it.thumbnailUrl)
             Log.d("getArticleDetail", "title" + it.title)
             Log.d("getArticleDetail", "content" + it.content)
             Log.d("getArticleDetail", "numberOfHearts" + it.numberOfHearts)
-            Log.d("getArticleDetail", "imageList" + it.imageList)
 
             //프로필 사진
             _profileUri.emit(Uri.parse(author?.profileUrl))
@@ -81,12 +77,11 @@ class ArticleViewModel @Inject constructor(
             _nickname.value = it.author?.name
 
             //썸네일
-            _thumbnail.emit(thumbnail?.url?.let { Uri.parse(it) })
+            _thumbnail.emit(it.thumbnailUrl)
 
             //큰제목
             _title.value = it?.title
 
-            _imageList.value =  it.imageList
 
             //내용
             _content.value = it?.content

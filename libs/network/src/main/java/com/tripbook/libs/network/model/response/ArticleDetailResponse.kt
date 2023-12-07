@@ -7,8 +7,9 @@ data class ArticleDetailResponse(
     val title: String,
     val content: String,
     val author: MemberSimpleDto,
-    val imageList: List<ImageResponse>?,
-    val thumbnail: ImageResponse?,
+    //val imageList: List<ImageResponse>?,
+    //val thumbnail: ImageResponse?,
+    val thumbnailUrl: String,
     val tagList: List<String>,
     @Json(name = "heartNum")
     val numberOfHearts: Long,
@@ -28,15 +29,15 @@ data class MemberSimpleDto(
     val role: String
 )
 
-data class ImageResponse(
+/*data class ImageResponse(
     val id: Long,
     val url: String
-)
+)*/
 
-data class ThumbnailResponse(
+/*data class ThumbnailResponse(
     val id: Long,
     val url: String
-)
+)*/
 
 data class CommentResponse(
     val id: Long,

@@ -5,8 +5,8 @@ data class ArticleDetail(
     val title: String,
     val content: String,
     val author: MemberSimple,
-    val imageList: List<Image>,
-    val thumbnail: Thumbnail,
+    //val imageList: List<Image>,
+    val thumbnailUrl: String,
     val tagList: List<String>,
     val numberOfHearts: Long,
     val numberOfBookmarks: Long,
@@ -24,15 +24,17 @@ data class MemberSimple(
     val role: String
 )
 
+/*
 data class Thumbnail(
     val id: Long,
     val url: String
 )
+*/
 
-data class Image(
+/*data class Image(
     val id: Long,
     val url: String
-)
+)*/
 
 data class Comment(
     val id: Long,
