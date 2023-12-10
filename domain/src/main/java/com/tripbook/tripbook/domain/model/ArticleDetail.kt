@@ -6,7 +6,7 @@ data class ArticleDetail(
     val content: String,
     val author: MemberSimple,
     //val imageList: List<Image>,
-    val thumbnailUrl: String,
+    val thumbnailUrl: String?,
     val tagList: List<String>,
     val numberOfHearts: Long,
     val numberOfBookmarks: Long,
@@ -20,7 +20,7 @@ data class ArticleDetail(
 data class MemberSimple(
     val id: Long,
     val name: String,
-    val profileUrl: String,
+    val profileUrl: String?,
     val role: String
 )
 

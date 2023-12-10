@@ -16,8 +16,6 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 
-
-
 @HiltViewModel
 class ArticleViewModel @Inject constructor(
     private val articleDetailUseCase: ArticleDetailUseCase,
@@ -40,8 +38,8 @@ class ArticleViewModel @Inject constructor(
     val nickname: StateFlow<String?> = _nickname
 
     //썸네일
-    private val _thumbnail = MutableStateFlow<String?>(null)
-    val thumbnail: StateFlow<String?> = _thumbnail
+    private val _thumbnailUrl = MutableStateFlow<String?>(null)
+    val thumbnailUrl: StateFlow<String?> = _thumbnailUrl
 
     //큰제목
     private val _title: MutableStateFlow<String?> = MutableStateFlow(null)
@@ -77,7 +75,7 @@ class ArticleViewModel @Inject constructor(
             _nickname.value = it.author?.name
 
             //썸네일
-            _thumbnail.emit(it.thumbnailUrl)
+            _thumbnailUrl.emit(it.thumbnailUrl)
 
             //큰제목
             _title.value = it?.title

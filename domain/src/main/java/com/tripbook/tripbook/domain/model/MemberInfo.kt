@@ -2,7 +2,7 @@ package com.tripbook.tripbook.domain.model
 
 data class MemberInfo(
     val email: String?,
-    val name: String?,
+    val name: String,
     val gender: String?,
     val role: String?,
     val birth: String?,

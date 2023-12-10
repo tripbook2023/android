@@ -17,4 +17,5 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.moshi)
     implementation(libs.timber)
+    implementation("androidx.paging:paging-common-android:+")
 }

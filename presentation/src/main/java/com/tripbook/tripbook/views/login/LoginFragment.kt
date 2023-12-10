@@ -47,7 +47,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
                             UserLoginStatus.STATUS_NORMAL -> {
                                 // TODO : 여기서 바로 메인 화면으로 넘어갈 수 있도록
                                 //findNavController().navigate(R.id.action_loginFragment_to_nav_info)
-                                findNavController().navigate(R.id.action_loginFragment_to_nav_detail)
+                                //findNavController().navigate(R.id.action_loginFragment_to_nav_detail)
+                                val action = LoginFragmentDirections.actionLoginFragmentToNewsMainFragment()
+                                findNavController().navigate(action)
                             }
                         }.also {
                             viewModel.clearStatus()

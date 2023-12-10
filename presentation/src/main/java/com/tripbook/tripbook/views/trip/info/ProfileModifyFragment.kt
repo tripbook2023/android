@@ -6,7 +6,6 @@ import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentProfileModifyBinding
@@ -15,6 +14,7 @@ import com.tripbook.tripbook.viewmodel.InfoViewModel
 import com.tripbook.tripbook.viewmodel.LoginViewModel
 import com.tripbook.tripbook.views.login.profile.ProfileDialogFragment
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class ProfileModifyFragment :
     BaseFragment<FragmentProfileModifyBinding, LoginViewModel>(R.layout.fragment_profile_modify) {
@@ -45,7 +45,7 @@ class ProfileModifyFragment :
             infoviewModel.nickCheck(binding.nickname.text.toString())
             val nickChk = infoviewModel.nicknameChecked.value
 
-            if (nickChk) { //기존 닉넴과 바뀐 닉넴 다를 때만 체크해줘도 update 에서 걸리는 듯 ? 백엔드 추후 문의
+            if (nickChk) {
                 duplicateCheck()
             }
 
@@ -64,7 +64,9 @@ class ProfileModifyFragment :
                 if (it) {
                     //내정보로 다시 돌아가기
                     Timber.tag("updateProfile").d("프로필 변경 성공")
-                    findNavController().popBackStack()
+                    findNavController().navigate(
+                        ProfileModifyFragmentDirections.actionProfileModifyFragmentToMypageFragment()
+                    )
                 } else {
                     // 프로필 변경 실패
                     Timber.tag("error updateProfile").d("프로필 변경 실패")

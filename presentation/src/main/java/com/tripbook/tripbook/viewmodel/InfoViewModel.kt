@@ -1,9 +1,9 @@
 package com.tripbook.tripbook.viewmodel
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.tripbook.base.BaseViewModel
-import com.tripbook.tripbook.R
 import com.tripbook.tripbook.domain.model.MemberInfo
 import com.tripbook.tripbook.domain.usecase.LogoutUseCase
 import com.tripbook.tripbook.domain.usecase.MemberUseCase
@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
 
@@ -75,9 +74,6 @@ class InfoViewModel @Inject constructor(
 
     }
 
-    fun setVersion(ver: String){
-        _version.value = ver
-    }
     // 프로필 사진
     private val _profileUri = MutableStateFlow<Uri?>(null)
     val profileUri: StateFlow<Uri?> = _profileUri
@@ -85,26 +81,6 @@ class InfoViewModel @Inject constructor(
     private val profilePath = MutableStateFlow<String?>("")
 
     private val profileDefault = MutableStateFlow(false)
-
-    fun getMemberInformation(){
-        viewModelScope.launch{
-            memberUseCase().collect{
-                memberInfo.value?.name
-
-                memberInfo.value = it
-                it?.let{
-                    _nickname.value = it.name
-                    _email.value= it.email
-
-                    _profileUri.value = if (it.profile != null) {
-                        Uri.parse(it.profile)
-                    } else {
-                        Uri.parse("android.resource://com.tripbook.tripbook/" + R.drawable.tripbook_image)
-                    }
-                }
-            }
-        }
-    }
 
     fun nickCheck(nick : String) {
         _nicknameChecked.value = memberInfo.value?.name != nick
@@ -119,7 +95,7 @@ class InfoViewModel @Inject constructor(
 
         var profileChk : String? = null
 
-        if(profileDefault.value) { //true -> 프로필 이미지 따로 있음
+        if(profileDefault.value) {
             profileChk = ""
         }
 

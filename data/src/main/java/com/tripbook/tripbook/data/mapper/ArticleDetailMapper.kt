@@ -15,7 +15,7 @@ fun ArticleDetailResponse.toArticleDetail() = ArticleDetail(
         profileUrl = author.profileUrl ?: "",
         role = author.role
     ),
-    thumbnailUrl = thumbnailUrl,
+    thumbnailUrl = thumbnailUrl ?: "",
     //imageList = imageList?.map { it.toImage() },
     //thumbnail = thumbnail.toImage(),
     tagList = tagList,
@@ -27,12 +27,6 @@ fun ArticleDetailResponse.toArticleDetail() = ArticleDetail(
     heart = heart,
     bookmark = bookmark
 )
-
-/*fun ImageResponse.toImage() = Image(
-    id = id,
-    url = url
-)*/
-
 
 fun CommentResponse.toComment() = Comment(
     id = id,

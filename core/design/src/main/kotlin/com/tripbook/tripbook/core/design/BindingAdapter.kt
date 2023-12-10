@@ -49,6 +49,23 @@ object BindingAdapter {
 
     }
 
+    @JvmStatic
+    @BindingAdapter("profileImg")
+    fun setProfileImage(imageView: ImageView, urlString: String?) {
+        urlString?.let {
+            Glide.with(imageView.context)
+                .load(urlString)
+                .circleCrop()
+                .into(imageView)
+        } ?: kotlin.run {
+            Glide.with(imageView.context)
+                .load(R.drawable.icn_pic_36)
+                .circleCrop()
+                .into(imageView)
+        }
+
+    }
+
         // 일반 이미지 띄울 때 사용 => 프로필 사진처럼 circleCrop이 필요하지 않은 경우 사용
         // ex) thumbnail
         @JvmStatic
