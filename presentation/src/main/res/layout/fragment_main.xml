@@ -60,7 +60,7 @@
             android:textColor="@color/gray_G_80"/>
 
         <ImageView
-            android:id="@+id/iv_sort"
+            android:id="@+id/imageview_sort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@null"
@@ -69,7 +69,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="24dp"
             android:src="@drawable/icn_filter_24"/>
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_main"
