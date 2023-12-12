@@ -8,7 +8,8 @@ data class ArticleDetailResponse(
     val content: String,
     val author: MemberSimpleDto,
     val imageList: List<ImageResponse>?,
-    val thumbnail: ImageResponse?,
+    @Json(name = "thumbnailUrl")
+    val thumbnailUrl: ImageResponse?,
     val tagList: List<String>,
     @Json(name = "heartNum")
     val numberOfHearts: Long,

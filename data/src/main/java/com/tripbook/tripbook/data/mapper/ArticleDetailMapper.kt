@@ -18,7 +18,7 @@ fun ArticleDetailResponse.toArticleDetail() = ArticleDetail(
         role = author.role
     ),
     imageList = imageList?.map { it.toImage() },
-    thumbnail = thumbnail?.toImage(),
+    thumbnail = thumbnailUrl?.toImage(),
     tagList = tagList,
     numberOfHearts = numberOfHearts,
     numberOfBookmarks = numberOfBookmarks,

@@ -6,7 +6,8 @@ import java.io.File
 import javax.inject.Inject
 
 class UpdateMemberUseCase @Inject constructor(
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
+    private val getMemberUseCase: MemberUseCase,
 ) {
     operator fun invoke(
         name: String,
@@ -24,6 +25,6 @@ class UpdateMemberUseCase @Inject constructor(
         gender,
         birth
     ).also {
-        memberRepository.getMember()
+        getMemberUseCase()
     }
 }
