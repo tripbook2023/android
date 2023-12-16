@@ -54,3 +54,10 @@ fun Context.createImageFile(): Uri? {
         content
     )
 }
+
+fun String.convertDateFormat(): String?{
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+    val result = dateFormat.parse(this)
+    val formatter = SimpleDateFormat("yy.MM.dd", Locale.getDefault())
+    return result?.let { formatter.format(it) }
+}

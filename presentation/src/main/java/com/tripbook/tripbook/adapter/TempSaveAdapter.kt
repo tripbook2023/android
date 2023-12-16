@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.TempSaveItemBinding
 import com.tripbook.tripbook.domain.model.TempArticle
-import java.text.SimpleDateFormat
-import java.util.Locale
+import com.tripbook.tripbook.utils.convertDateFormat
 
 class TempSaveAdapter(val onClickDelete: (Int) -> Unit, val itemClickListener: (Int) -> Unit) :
     ListAdapter<TempArticle, TempSaveAdapter.TempSaveViewHolder>(DiffUtil) {
@@ -20,11 +19,8 @@ class TempSaveAdapter(val onClickDelete: (Int) -> Unit, val itemClickListener: (
     inner class TempSaveViewHolder(private val itemBinding: TempSaveItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(item: TempArticle, position: Int) {
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-            val date = dateFormat.parse(item.updatedAt)
-            val formatter = SimpleDateFormat("yy.MM.dd", Locale.getDefault())
             itemBinding.tempTitle.text = item.title
-            itemBinding.tempDate.text = date?.let { formatter.format(it) }
+            itemBinding.tempDate.text = item.updatedAt.convertDateFormat()
             itemBinding.deleteButton.setOnClickListener {
                 onClickDelete(position)
             }

@@ -5,7 +5,7 @@ data class ArticleDetail(
     val title: String,
     val content: String,
     val author: MemberSimple,
-    val thumbnailUrl: String,
+    val thumbnailUrl: String?,
     val tagList: List<String>,
     val numberOfHearts: Long,
     val numberOfBookmarks: Long,

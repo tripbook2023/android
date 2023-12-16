@@ -109,4 +109,44 @@ class ArticleRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun saveArticle(
+        id: Long?,
+        title: String,
+        content: String,
+        thumbnail: String,
+        imageList: List<Int>,
+        tagList: List<String>?
+    ): Flow<Long?> = safeApiCall(Dispatchers.IO) {
+        val titleBody = title.toRequestBody("text/plain".toMediaTypeOrNull())
+        val contentBody = content.toRequestBody("text/plain".toMediaTypeOrNull())
+        val thumbnailBody = thumbnail.toRequestBody("text/plain".toMediaTypeOrNull())
+        val tagListBody: MutableList<RequestBody> = mutableListOf()
+
+        tagList?.map {
+            val tagBody = it.toRequestBody("text/plain".toMediaTypeOrNull())
+            tagListBody.add(tagBody)
+        }
+
+        tripArticlesService.saveTripNews(
+            mapOf(
+                "title" to titleBody,
+                "content" to contentBody,
+                "thumbnail" to thumbnailBody
+            ),
+            imageList,
+            tagListBody,
+            id
+        )
+    }.map {
+        when (it) {
+            is NetworkResult.Success -> {
+                it.value.id
+            }
+
+            else -> {
+                null
+            }
+        }
+    }
+
 }

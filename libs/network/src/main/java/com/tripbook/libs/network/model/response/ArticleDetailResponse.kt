@@ -7,7 +7,7 @@ data class ArticleDetailResponse(
     val title: String,
     val content: String,
     val author: MemberSimpleDto,
-    val thumbnailUrl: String,
+    val thumbnailUrl: String?,
     val tagList: List<String>,
     @Json(name = "heartNum")
     val numberOfHearts: Long,

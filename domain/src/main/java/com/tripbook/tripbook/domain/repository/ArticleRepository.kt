@@ -22,4 +22,13 @@ interface ArticleRepository {
         imageList: List<Int>?,
         tagList: List<String>?
     ): Flow<Long?>
+
+    fun saveArticle(
+        id: Long?,
+        title: String,
+        content: String,
+        thumbnail: String,
+        imageList: List<Int>,
+        tagList: List<String>?
+    ): Flow<Long?>
 }

@@ -1,6 +1,5 @@
 package com.tripbook.tripbook.viewmodel
 
-import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.tripbook.base.BaseViewModel
@@ -8,7 +7,6 @@ import com.tripbook.tripbook.domain.model.MemberInfo
 import com.tripbook.tripbook.domain.usecase.LogoutUseCase
 import com.tripbook.tripbook.domain.usecase.MemberUseCase
 import com.tripbook.tripbook.domain.usecase.UpdateMemberUseCase
-import com.tripbook.tripbook.utils.getImagePathFromURI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

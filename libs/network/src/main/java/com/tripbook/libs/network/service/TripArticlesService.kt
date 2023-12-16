@@ -41,7 +41,7 @@ interface TripArticlesService {
     ) : UnitResponse
 
     @Multipart
-    @POST("temp")
+    @POST("articles/temp")
     suspend fun tempSaveArticle(
         @PartMap params: Map<String, @JvmSuppressWildcards RequestBody?>, // title, content
         @Part("thumbnail") thumbnail: @JvmSuppressWildcards RequestBody?,
@@ -49,4 +49,13 @@ interface TripArticlesService {
         @Part("fileIds") imageList: List<Int>?,
         @Part("articleId") id: Long?
     ): TempArticleResponse
+
+    @Multipart
+    @POST("articles")
+    suspend fun saveTripNews( // 여행소식 저장
+        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>, // title, content, thumbnail
+        @Part("fileIds") imageList: List<Int>?,
+        @Part("tagList") tagList: List<@JvmSuppressWildcards RequestBody>?,
+        @Part("articleId") id: Long?
+    ): ArticleDetailResponse
 }

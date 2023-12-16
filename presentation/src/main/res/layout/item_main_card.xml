@@ -35,7 +35,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
-                    app:imgURL="@{article.thumbnail.url}"/>
+                    app:imgURL="@{article.thumbnailUrl}"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imageview_isHeart"
@@ -71,7 +71,7 @@
                     app:layout_constraintBottom_toTopOf="@id/imageview_isHeart"
                     android:layout_marginHorizontal="24dp"
                     android:fontFamily="@font/suit_bold"
-                    android:textColor="@color/white"
+                    android:textColor="@color/p_50"
                     android:textSize="20sp"
                     tools:text="떠나고 싶을 때 \n기분전환하는 바다 BEST 3"
                     android:text="@{article.title}"/>

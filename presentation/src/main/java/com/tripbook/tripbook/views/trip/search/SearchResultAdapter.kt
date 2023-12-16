@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.tripbook.tripbook.databinding.ItemSearchTripBinding
 import com.tripbook.tripbook.domain.model.ArticleDetail
+import com.tripbook.tripbook.utils.convertDateFormat
 
 class SearchResultAdapter(
     private val onItemClick: (id: Long) -> Unit
@@ -31,6 +32,7 @@ class SearchResultAdapter(
         fun bind(item: ArticleDetail?) = binding.run {
             item?.let { detail ->
                 article = detail
+                createAt = detail.createdAt.convertDateFormat()
                 root.setOnClickListener {
                     onItemClick(detail.id)
                 }
