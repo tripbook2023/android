@@ -214,7 +214,7 @@ class NewsAddViewModel @Inject constructor(
         _tempId.value = id
     }
 
-    fun saveTripNews(title: String, content: String): Flow<Boolean> {
+    fun saveTripNews(title: String, content: String): Flow<Long?> {
         _thumbnailId.value?.let { addImage(it) }
         return saveArticleUseCase(
             _tempId.value,
