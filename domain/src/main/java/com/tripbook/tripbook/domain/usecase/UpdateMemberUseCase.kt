@@ -6,12 +6,12 @@ import java.io.File
 import javax.inject.Inject
 
 class UpdateMemberUseCase @Inject constructor(
-    private val memberRepository: MemberRepository,
-    private val getMemberUseCase: MemberUseCase,
+    private val memberRepository: MemberRepository
 ) {
     operator fun invoke(
         name: String,
         file: File?,
+        profile : String?,
         termsOfService: Boolean,
         termsOfPrivacy: Boolean,
         termsOfLocation: Boolean,
@@ -19,12 +19,12 @@ class UpdateMemberUseCase @Inject constructor(
         gender: String,
         birth: String
     ): Flow<Boolean> = memberRepository.updateMember(
-        name, file, termsOfService, termsOfPrivacy,
+        name, file, profile, termsOfService, termsOfPrivacy,
         termsOfLocation,
         marketingConsent,
         gender,
         birth
     ).also {
-        getMemberUseCase()
+        memberRepository.getMember()
     }
 }

@@ -2,7 +2,6 @@ package com.tripbook.tripbook.data.repository
 
 
 import com.tripbook.database.TokenDataStore
-import com.tripbook.database.TokenEntity
 import com.tripbook.libs.network.NetworkResult
 import com.tripbook.libs.network.safeApiCall
 import com.tripbook.libs.network.service.MemberService
@@ -20,8 +19,7 @@ import java.io.File
 import javax.inject.Inject
 
 class MemberRepositoryImpl @Inject constructor(
-    private val memberService: MemberService,
-    private val tokenDataStore: TokenDataStore
+    private val memberService: MemberService
 ) : MemberRepository {
 
 
@@ -51,6 +49,7 @@ class MemberRepositoryImpl @Inject constructor(
     override fun updateMember (
         name: String,
         file: File?,
+        profile : String?,
         termsOfService: Boolean,
         termsOfPrivacy: Boolean,
         termsOfLocation: Boolean,
@@ -59,6 +58,7 @@ class MemberRepositoryImpl @Inject constructor(
         birth: String
     ): Flow<Boolean> = safeApiCall(Dispatchers.IO) {
         val nameBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
+        val profileBody = file?.absolutePath?.toRequestBody("text/plain".toMediaTypeOrNull()) ?: "".toRequestBody("text/plain".toMediaTypeOrNull())
         val serviceTerms =
             termsOfService.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val privacyTerms =
@@ -71,12 +71,13 @@ class MemberRepositoryImpl @Inject constructor(
         val birthBody = birth.toRequestBody("text/plain".toMediaTypeOrNull())
 
         val fileBody = file?.asRequestBody("image/jpeg".toMediaTypeOrNull())
-        val filePart = fileBody?.let { MultipartBody.Part.createFormData("photo", "photo.jpg", it) }
+        val filePart = fileBody?.let { MultipartBody.Part.createFormData("imageFile", "photo.jpg", it) }
 
         memberService.updateMember(
             filePart,
             mapOf(
                 "name" to nameBody,
+                "profile" to profileBody,
                 "termsOfService" to serviceTerms,
                 "termsOfPrivacy" to privacyTerms,
                 "termsOfLocation" to locationTerms,
@@ -86,21 +87,12 @@ class MemberRepositoryImpl @Inject constructor(
             )
         )
     }.map {
-        when (it) {
+        when(it) {
             is NetworkResult.Success -> {
-                tokenDataStore.setToken(
-                    TokenEntity(
-                        it.value.accessToken,
-                        it.value.refreshToken
-                    )
-                )
                 true
-            }
-            else -> run {
-                tokenDataStore.setToken(null)
-                false
-            }
+            } else -> false
         }
+
     }
 
 

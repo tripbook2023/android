@@ -12,6 +12,7 @@ import com.tripbook.tripbook.R
 import com.tripbook.tripbook.utils.createImageFile
 import com.tripbook.tripbook.utils.getImagePathFromURI
 import com.tripbook.tripbook.databinding.FragmentProfileDialogBinding
+import com.tripbook.tripbook.viewmodel.InfoViewModel
 import com.tripbook.tripbook.viewmodel.LoginViewModel
 import timber.log.Timber
 
@@ -20,12 +21,15 @@ class ProfileDialogFragment :
     BaseDialogFragment<FragmentProfileDialogBinding, LoginViewModel>(R.layout.fragment_profile_dialog) {
 
     override val viewModel: LoginViewModel by activityViewModels()
+    private val infoviewModel: InfoViewModel by activityViewModels()
+
     private lateinit var photoUri: Uri
     private val galleryLauncher = registerForActivityResult(PickVisualMedia()) { uri ->
         uri?.let {
             Timber.tag("Photo Picker Uri").d(uri.toString())
             val fullPath = requireContext().getImagePathFromURI(uri)
             viewModel.setProfileUri(uri, fullPath, false)
+            infoviewModel.setProfileUri(uri, fullPath, false)
         } ?: {
             Timber.tag("Photo Picker").d("No Media selected")
         }
@@ -37,6 +41,7 @@ class ProfileDialogFragment :
             if (isSuccess) {
                 val fullPath = requireContext().getImagePathFromURI(photoUri)
                 viewModel.setProfileUri(photoUri, fullPath, false)
+                infoviewModel.setProfileUri(photoUri, fullPath, false)
             } else {
                 Timber.tag("cameraLauncher").d("Failed")
             }
@@ -70,6 +75,7 @@ class ProfileDialogFragment :
                 .build()
             val fullPath = requireContext().getImagePathFromURI(uri)
             viewModel.setProfileUri(uri, fullPath, true)
+            infoviewModel.setProfileUri(uri, fullPath, true)
             dismiss()
         }
         binding.cancelButton.setOnClickListener {

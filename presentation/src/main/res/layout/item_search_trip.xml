@@ -35,7 +35,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
-                    app:imgURL="@{article.thumbnail.url}"/>
+                    app:imgURL="@{article.thumbnailUrl}"/>
 
                 <TextView
                     android:id="@+id/text_created_at"
