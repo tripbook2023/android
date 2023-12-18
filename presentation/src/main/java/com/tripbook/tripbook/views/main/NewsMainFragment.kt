@@ -41,7 +41,7 @@ class NewsMainFragment : BaseFragment<FragmentMainBinding, NewsViewModel>(R.layo
         binding.imageviewSearch.setOnClickListener {
             findNavController().navigate(NewsMainFragmentDirections.actionNewsMainFragmentToSearchFragment())
         }
-        binding.ivSort.setOnClickListener {
+        binding.imageviewSort.setOnClickListener {
             val menu = PopupMenu(requireContext(), it, Gravity.END)
             menu.menuInflater.inflate(R.menu.menu_sort, menu.menu)
             menu.setOnMenuItemClickListener { item ->
