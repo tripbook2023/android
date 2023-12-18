@@ -22,6 +22,7 @@
         <item name="android:radioButtonStyle">@style/RadioButtonStyle</item>
         <item name="android:checkboxStyle">@style/CheckboxStyle</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="listPopupWindowStyle">@style/myListPopupWindow</item>
     </style>
 
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
@@ -77,4 +78,7 @@
         <item name="android:background">@drawable/border_bottom_sheet</item>
     </style>
 
+    <style name="myListPopupWindow" parent="Widget.Material3.PopupMenu">
+        <item name="android:popupBackground">@drawable/bg_popup</item>
+    </style>
 </resources>

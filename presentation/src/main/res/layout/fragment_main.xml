@@ -70,16 +70,6 @@
             android:layout_marginEnd="24dp"
             android:src="@drawable/icn_filter_24"/>
 
-<!--        <androidx.appcompat.widget.AppCompatSpinner-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintTop_toTopOf="@id/imageview_sort"-->
-<!--            app:layout_constraintStart_toStartOf="@id/imageview_sort"-->
-<!--            app:layout_constraintEnd_toEndOf="@id/imageview_sort"-->
-<!--            android:background="@color/tripBook_main_transparent"-->
-<!--            android:visibility="@{}"/>-->
-
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_main"
             android:layout_width="match_parent"

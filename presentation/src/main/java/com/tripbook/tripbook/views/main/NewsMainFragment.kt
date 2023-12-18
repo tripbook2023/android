@@ -1,5 +1,7 @@
 package com.tripbook.tripbook.views.main
 
+import android.view.Gravity
+import android.widget.PopupMenu
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentMainBinding
+import com.tripbook.tripbook.domain.model.SortType
 import com.tripbook.tripbook.viewmodel.NewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -19,9 +22,11 @@ class NewsMainFragment : BaseFragment<FragmentMainBinding, NewsViewModel>(R.layo
 
     private val articleAdapter by lazy {
         ArticleDetailAdapter {
-            findNavController().navigate(NewsMainFragmentDirections.actionNewsMainFragmentToTripDetailFragment(
-                articleId = it
-            ))
+            findNavController().navigate(
+                NewsMainFragmentDirections.actionNewsMainFragmentToTripDetailFragment(
+                    articleId = it
+                )
+            )
         }
     }
 
@@ -35,6 +40,15 @@ class NewsMainFragment : BaseFragment<FragmentMainBinding, NewsViewModel>(R.layo
     private fun initListener() {
         binding.imageviewSearch.setOnClickListener {
             findNavController().navigate(NewsMainFragmentDirections.actionNewsMainFragmentToSearchFragment())
+        }
+        binding.ivSort.setOnClickListener {
+            val menu = PopupMenu(requireContext(), it, Gravity.END)
+            menu.menuInflater.inflate(R.menu.menu_sort, menu.menu)
+            menu.setOnMenuItemClickListener { item ->
+                viewModel.setSortType(SortType.from(item.title.toString()))
+                true
+            }
+            menu.show()
         }
     }
 
@@ -55,4 +69,5 @@ class NewsMainFragment : BaseFragment<FragmentMainBinding, NewsViewModel>(R.layo
             }
         }
     }
+
 }
