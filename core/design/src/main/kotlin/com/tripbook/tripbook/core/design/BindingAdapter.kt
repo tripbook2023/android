@@ -90,23 +90,6 @@ object BindingAdapter {
     }
 
     @JvmStatic
-    @BindingAdapter("profileImgUri")
-    fun setProfileImage(imageView: ImageView, uri: Uri?) {
-        uri?.let {
-            Glide.with(imageView.context)
-                .load(uri)
-                .circleCrop()
-                .into(imageView)
-        } ?: kotlin.run {
-            Glide.with(imageView.context)
-                .load(R.drawable.icn_pic_36)
-                .circleCrop()
-                .into(imageView)
-        }
-
-    }
-
-    @JvmStatic
     @BindingAdapter("profileImg")
     fun setProfileImage(imageView: ImageView, urlString: String?) {
         urlString?.let {
