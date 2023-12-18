@@ -8,6 +8,9 @@
         <variable
             name="article"
             type="com.tripbook.tripbook.domain.model.ArticleDetail" />
+        <variable
+            name="createAt"
+            type="String"/>
     </data>
 
     <LinearLayout
@@ -43,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/suit_medium"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:text="@{article.createdAt}"
+                    android:text="@{createAt}"
                     tools:text="2022.02.22"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginStart="16dp"

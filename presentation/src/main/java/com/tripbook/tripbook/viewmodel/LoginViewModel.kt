@@ -74,9 +74,6 @@ class LoginViewModel @Inject constructor(
     private var _errorMsg = MutableStateFlow("")
     val errorMsg: StateFlow<String> get() = _errorMsg
 
-    private var _icon = MutableStateFlow(0)
-    val icon: StateFlow<Int> get() = _icon
-
     // 프로필 사진
     private val _profileUri = MutableStateFlow<Uri?>(null)
     val profileUri: StateFlow<Uri?> = _profileUri
@@ -159,7 +156,6 @@ class LoginViewModel @Inject constructor(
     fun validateUserName(name: String) = validateUserNameUseCase(name)
 
     fun setNicknameValid(errorMsg: String?) {
-        _icon.value = R.drawable.ic_clear
         errorMsg?.let { str ->
             _errorMsg.value = str
             _isNicknameValid.value = false
@@ -171,10 +167,6 @@ class LoginViewModel @Inject constructor(
 
     fun setNickname(nickname: String) {
         _nickname.value = nickname
-    }
-
-    fun setIcon(value: Int) {
-        _icon.value = value
     }
 
     fun setProfileUri(uri: Uri?, fullPath: String?, default: Boolean) {

@@ -14,7 +14,12 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-// Context를 기반으로 한 extension 함수로
+fun String.convertDateFormat(): String?{
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+    val result = dateFormat.parse(this)
+    val formatter = SimpleDateFormat("yy.MM.dd", Locale.getDefault())
+    return result?.let { formatter.format(it) }
+}
 
 fun Context.convertPxToDp(px: Int): Float {
     return px / ((this.resources.displayMetrics.densityDpi.toFloat()) / DisplayMetrics.DENSITY_DEFAULT)

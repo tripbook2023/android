@@ -3,9 +3,6 @@
 
     <data>
 
-        <variable
-            name="tag_name"
-            type="String" />
     </data>
 
     <LinearLayout

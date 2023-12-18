@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingVertical="10dp"
-                android:paddingStart="@dimen/margin_start"
+                android:paddingStart="@dimen/basic_margin"
                 android:src="@drawable/icn_before_24" />
 
             <Space
@@ -62,7 +62,7 @@
                 style="@style/ButtonSolidStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_start"
+                android:layout_marginEnd="@dimen/basic_margin"
                 android:enabled="@{viewModel.allConditionSatisfied}"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
@@ -90,15 +90,15 @@
                     android:layout_height="310dp">
 
                     <ImageView
-                        android:id="@+id/title_image"
+                        android:id="@+id/thumbnail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:alpha="@{viewModel.thumbNailUri == null ? 0.3f : 1.0f}"
+                        android:alpha="@{viewModel.thumbNailUrl == null ? 0.3f : 1.0f}"
                         android:background="@color/gray_G_80"
                         android:contentDescription="@null"
                         android:scaleType="fitXY"
                         android:tintMode="src_atop"
-                        app:imageUrl="@{viewModel.thumbNailUri}"
+                        app:imgUrl="@{viewModel.thumbNailUrl}"
                         app:tint="#80000000" />
 
                     <TextView
@@ -106,13 +106,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:drawableTop="@{viewModel.thumbNailUri == null ? @drawable/icn_pic_36 : null}"
+                        android:drawableTop="@{viewModel.thumbNailUrl == null ? @drawable/icn_pic_36 : null}"
                         android:drawablePadding="8dp"
                         android:gravity="center"
                         android:onClick="@{() -> viewModel.setUiStatus(uiStatus.TITLE_GALLERY)}"
                         android:padding="25dp"
                         android:text="@string/news_add_pic_add"
-                        android:textColor="@{viewModel.thumbNailUri == null ? @color/white : @android:color/transparent}"
+                        android:textColor="@{viewModel.thumbNailUrl == null ? @color/white : @android:color/transparent}"
                         android:textSize="10sp"
                         app:drawableTint="@color/white" />
 
@@ -121,7 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:layout_marginHorizontal="@dimen/margin_start"
+                        android:layout_marginHorizontal="@dimen/basic_margin"
                         android:layout_marginBottom="38dp"
                         android:background="@null"
                         android:hint="@string/news_add_title_hint"
@@ -157,7 +157,7 @@
                     </LinearLayout>
                 </FrameLayout>
 
-                <com.tripbook.tripbook.views.tripAdd.CustomRichEditor
+                <com.tripbook.tripbook.views.trip.add.CustomRichEditor
                     android:id="@+id/main_editor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -334,7 +334,7 @@
                     android:visibility="@{viewModel.tempSaveCount == 0 ? View.GONE : View.VISIBLE}" />
 
                 <TextView
-                    android:id="@+id/button_temp_save"
+                    android:id="@+id/button_temp_select"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> viewModel.setUiStatus(uiStatus.TEMP_SAVE_SUCCESS)}"

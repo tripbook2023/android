@@ -5,6 +5,7 @@ import com.tripbook.database.TokenDataStore
 import com.tripbook.libs.network.di.qualifier.ArticleServiceScope
 import com.tripbook.libs.network.di.qualifier.AuthNetworkQualifier
 import com.tripbook.libs.network.di.qualifier.AuthServiceScope
+import com.tripbook.libs.network.di.qualifier.CommonServiceScope
 import com.tripbook.libs.network.di.qualifier.LocationServiceScope
 import com.tripbook.libs.network.di.qualifier.MemberNoAuthServiceScope
 import com.tripbook.libs.network.di.qualifier.MemberServiceScope
@@ -152,6 +153,18 @@ object NetworkModule {
         @AuthNetworkQualifier client: OkHttpClient
     ): Retrofit = Retrofit.Builder()
         .baseUrl("$BASE_URL/")
+        .client(client)
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .build()
+
+    @Provides
+    @Singleton
+    @CommonServiceScope
+    fun providesCommonRetrofit(
+        moshi: Moshi,
+        @AuthNetworkQualifier client: OkHttpClient
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl("$BASE_URL/common/")
         .client(client)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()

@@ -6,10 +6,13 @@ import com.tripbook.libs.network.NetworkResult
 import com.tripbook.libs.network.safeApiCall
 import com.tripbook.libs.network.service.MemberService
 import com.tripbook.tripbook.data.mapper.toMemberInfo
+import com.tripbook.tripbook.data.mapper.toTempArticle
 import com.tripbook.tripbook.domain.model.MemberInfo
+import com.tripbook.tripbook.domain.model.TempArticle
 import com.tripbook.tripbook.domain.repository.MemberRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -32,6 +35,19 @@ class MemberRepositoryImpl @Inject constructor(
             }
             else -> false
         }
+    }
+
+    override fun getTempArticleList():Flow<List<TempArticle>?> = safeApiCall(Dispatchers.IO){
+        memberService.getTempArticleList()
+    }.map {
+        when(it){
+                is NetworkResult.Success -> {
+                    it.value.map { article ->
+                        article.toTempArticle()
+                    }
+                }
+                else -> null
+            }
     }
 
     override fun getMember(): Flow<MemberInfo?> =

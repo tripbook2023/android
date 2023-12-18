@@ -1,4 +1,4 @@
-package com.tripbook.tripbook.views.tripAdd
+package com.tripbook.tripbook.views.trip.add
 
 import androidx.fragment.app.activityViewModels
 import com.tripbook.base.BasePopupDialogFragment
@@ -29,9 +29,12 @@ class TempSaveDeleteDialogFragment(private val pos: Int): BasePopupDialogFragmen
             this.dismiss()
         }
         binding.btnPositive.setOnClickListener {
-            // 임시저장 아이템 삭제 -> 서버 방식 확인 후 작업
-            pos // pos 위치에 해당하는 아이템 삭제
+            // 임시저장 아이템 삭제
+            val tempArticle = viewModel.tempSaveList.value[pos]
+            viewModel.setTempSaveListIndex(pos)
+            viewModel.deleteArticle(tempArticle.id)
             this.dismiss()
+            viewModel.setUiStatus(NewsAddViewModel.UiStatus.DELETE_TEMP)
         }
     }
 }

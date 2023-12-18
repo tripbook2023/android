@@ -22,9 +22,10 @@ object BindingAdapter {
         }
     }
 
+    // 회원가입 이미지 설정 시에만 사용 => placeholder 때문
     @JvmStatic
-    @BindingAdapter("imgUri")
-    fun setImageUri(imageView: ImageView, uri: Uri?) {
+    @BindingAdapter("signUpProfileImgUri")
+    fun setSignUpProfileImage(imageView: ImageView, uri: Uri?) {
         Glide.with(imageView.context)
             .load(uri)
             .placeholder(R.drawable.icn_pic_36)
@@ -32,11 +33,32 @@ object BindingAdapter {
             .into(imageView)
     }
 
+    // 프로필 사진 띄울 때 사용 => 내 정보, 여행소식 상세보기 등
+    // 프로필 사진을 지정 안했을 경우(null)은 기본 이미지 뜨도록 설정해둠
     @JvmStatic
-    @BindingAdapter("imageUrl")
-    fun setTitleImageUri(imageView: ImageView, uri: Uri?) {
+    @BindingAdapter("profileImgUri")
+    fun setProfileImage(imageView: ImageView, uri: Uri?) {
+        uri?.let {
+            Glide.with(imageView.context)
+                .load(uri)
+                .circleCrop()
+                .into(imageView)
+        } ?: kotlin.run {
+            Glide.with(imageView.context)
+                .load(R.drawable.tripbook_image)
+                .circleCrop()
+                .into(imageView)
+        }
+
+    }
+
+    // 일반 이미지 띄울 때 사용 => 프로필 사진처럼 circleCrop이 필요하지 않은 경우 사용
+    // ex) thumbnail
+    @JvmStatic
+    @BindingAdapter("imgUrl")
+    fun setImage(imageView: ImageView, url: String?) {
         Glide.with(imageView.context)
-            .load(uri)
+            .load(url)
             .into(imageView)
     }
 

@@ -1,4 +1,4 @@
-package com.tripbook.tripbook.views.tripAdd
+package com.tripbook.tripbook.views.trip.add
 
 import android.content.Context
 import android.util.AttributeSet
@@ -10,8 +10,7 @@ class CustomRichEditor @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : RichEditor(context, attrs) {
 
-    private var locationIdx = 0
-    private var imageIdx = 0
+    var locationIdx = 0
 
     init {
         setEditorFontSize(13)
@@ -37,10 +36,9 @@ class CustomRichEditor @JvmOverloads constructor(
         parentScrollView = parentScroll
     }
 
-    fun insertImageC(uri: String, alt: String, width: Int){
+    fun insertImageC(uri: String, alt: String, width: Int, imageIdx: Int){
         exec("javascript:RE.prepareInsert();")
         exec("javascript:RE.insertImageC('$uri', '$alt','$width', '$imageIdx');")
-        imageIdx += 1
     }
 
     fun insertLocation(location: String){

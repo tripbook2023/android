@@ -7,22 +7,21 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.TempSaveItemBinding
-import com.tripbook.tripbook.views.tripAdd.TempSaveItem
+import com.tripbook.tripbook.domain.model.TempArticle
+import com.tripbook.tripbook.utils.convertDateFormat
 
 class TempSaveAdapter(val onClickDelete: (Int) -> Unit, val itemClickListener: (Int) -> Unit) :
-    ListAdapter<TempSaveItem, TempSaveAdapter.TempSaveViewHolder>(DiffUtil) {
+    ListAdapter<TempArticle, TempSaveAdapter.TempSaveViewHolder>(DiffUtil) {
 
     private var selectedPosition: Int = -1
     private var lastSelectedPosition: Int = -1
 
     inner class TempSaveViewHolder(private val itemBinding: TempSaveItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(item: TempSaveItem, position: Int) {
+        fun bind(item: TempArticle, position: Int) {
             itemBinding.tempTitle.text = item.title
-            itemBinding.tempDate.text = item.date
+            itemBinding.tempDate.text = item.updatedAt.convertDateFormat()
             itemBinding.deleteButton.setOnClickListener {
-                // 둘 중 하나 이용해 아이템 삭제 -> 임시저장 관련 API 연결시 적용할 예정
-                deleteItem(position)
                 onClickDelete(position)
             }
         }
@@ -52,17 +51,13 @@ class TempSaveAdapter(val onClickDelete: (Int) -> Unit, val itemClickListener: (
         }
     }
 
-    fun deleteItem(index: Int){
-        onClickDelete(index)
-    }
-
     companion object {
-        val DiffUtil = object : DiffUtil.ItemCallback<TempSaveItem>() {
-            override fun areItemsTheSame(oldItem: TempSaveItem, newItem: TempSaveItem): Boolean {
+        val DiffUtil = object : DiffUtil.ItemCallback<TempArticle>() {
+            override fun areItemsTheSame(oldItem: TempArticle, newItem: TempArticle): Boolean {
                 return oldItem.title == newItem.title
             }
 
-            override fun areContentsTheSame(oldItem: TempSaveItem, newItem: TempSaveItem): Boolean {
+            override fun areContentsTheSame(oldItem: TempArticle, newItem: TempArticle): Boolean {
                 return oldItem == newItem
             }
         }

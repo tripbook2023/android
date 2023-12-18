@@ -1,4 +1,4 @@
-package com.tripbook.tripbook.views.tripAdd
+package com.tripbook.tripbook.views.trip.add
 
 import com.tripbook.base.BasePopupDialogFragment
 import com.tripbook.tripbook.R

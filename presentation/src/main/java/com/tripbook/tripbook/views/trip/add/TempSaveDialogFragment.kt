@@ -1,7 +1,10 @@
-package com.tripbook.tripbook.views.tripAdd
+package com.tripbook.tripbook.views.trip.add
 
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tripbook.base.BaseDialogFragment
@@ -21,34 +24,6 @@ class TempSaveDialogFragment : BaseDialogFragment<FragmentTempSaveBinding, NewsA
         setStyle(STYLE_NORMAL, R.style.FullScreenDialogTheme)
     }
 
-    override fun init() {
-        binding.viewModel = viewModel
-        binding.dialogClose.setOnClickListener { dismiss() }
-
-        adapter = TempSaveAdapter ({ pos ->
-            TempSaveDeleteDialogFragment(pos).show(
-                requireActivity().supportFragmentManager, "TempSaveFragment"
-            )
-        }, { selectedPos ->
-            viewModel.setLocationListIndex(selectedPos)
-        })
-
-        binding.tempSaveList.adapter = adapter
-        binding.tempSaveList.layoutManager = LinearLayoutManager(requireContext())
-
-        // 임시저장 예제 리스트 -> 나중에 viewModel에서 연결할 예정
-//        val list = listOf(
-//            TempSaveItem("혼자 가기 좋은 벚꽃 여행지", "23.10.10"),
-//            TempSaveItem("제주도에 가면", "23.10.10")
-//        )
-//        adapter.submitList(list)
-
-        binding.buttonTempSave.setOnClickListener {
-            // 선택한 임시저장글 적용 -> viewModel.listIndex 사용
-            dismiss()
-        }
-    }
-
     private fun deleteItem(position: Int) {
         binding.tempSaveList.itemAnimator = null
         val tempList = ArrayList(adapter.currentList)
@@ -56,6 +31,38 @@ class TempSaveDialogFragment : BaseDialogFragment<FragmentTempSaveBinding, NewsA
         adapter.submitList(tempList) {
             adapter.notifyItemRangeChanged(position, adapter.itemCount - position)
             binding.tempSaveList.itemAnimator = DefaultItemAnimator()
+        }
+    }
+
+    override fun init() {
+        binding.viewModel = viewModel
+        binding.dialogClose.setOnClickListener { dismiss() }
+
+        adapter = TempSaveAdapter({ pos ->
+            TempSaveDeleteDialogFragment(pos).show(
+                requireActivity().supportFragmentManager, "TempSaveFragment"
+            )
+        }, { selectedPos ->
+            viewModel.setTempSaveListIndex(selectedPos)
+        })
+
+        binding.tempSaveList.adapter = adapter
+        binding.tempSaveList.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.buttonTempSelect.setOnClickListener {
+            viewModel.setUiStatus(NewsAddViewModel.UiStatus.SELECT_TEMP)
+            dismiss()
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiStatus.collect { status ->
+                    when (status) {
+                        NewsAddViewModel.UiStatus.DELETE_TEMP -> deleteItem(viewModel.tempSaveListIndex.value)
+                        else -> {}
+                    }
+                }
+            }
         }
     }
 }

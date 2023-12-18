@@ -13,5 +13,4 @@ data class MemberInfo(
     val marketingConsent: Boolean,
     val point: Long,
     val status: String,
-
 )

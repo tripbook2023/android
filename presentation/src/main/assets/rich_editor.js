@@ -33,14 +33,13 @@ RE.editor = document.getElementById('editor');
 
 //RE.editor.addEventListener("input", function() { RE.getCaret(); });
 document.addEventListener("selectionchange", function() { RE.backuprange(); });
-var bold = document.createElement('b')
 
 RE.checkSelection = function(){
 // selection: 드래그하거나, 선택한 텍스트 범위
     var selection = document.getSelection();
     var parent = selection.anchorNode.parentElement;
 
-    if(parent.isEqualNode(bold)){
+    if(parent == "[object HTMLElement]"){
         parent = parent.parentElement
     }
     return parent.getAttribute('size'); // return 널값인 경우: 아무런 옵션 선택 X, 크기가 2일 때 bold
@@ -78,7 +77,7 @@ function deleteImage(idx){
     var id = 'imageDiv' + idx
     var img = document.getElementById(id).children[0].children[0].getAttribute('src')
     document.getElementById(id).remove()
-    window.android.removeImageItem(img) // image uri 전달
+    window.android.removeImageItem(idx)
 }
 
 function changeStyle(idx){
@@ -97,6 +96,35 @@ function changeStyle(idx){
     }
 }
 
+RE.deleteImgBorder = function (idx){
+    var id = 'image' + idx
+    var img = document.getElementById(id)
+    var btn = document.getElementById(idx)
+
+    if(img){
+        img.style.border = '0px solid transparent'
+        btn.style.visibility='hidden'
+        img.className = 'imgBorderOff'
+    }
+}
+
+RE.tagButtonInvisible = function(idx){
+    var id = 'locationBtn' + idx
+    var location = document.getElementById(id)
+
+    if(location){
+        location.style.visibility='hidden'
+    }
+}
+
+RE.tagButtonVisible = function(idx){
+    var id = 'locationBtn' + idx
+    var location = document.getElementById(id)
+
+    if(location){
+        location.style.visibility='visible'
+    }
+}
 // Initializations
 RE.callback = function() {
     window.location.href = "re-callback://" + encodeURIComponent(RE.getHtml());
@@ -260,7 +288,7 @@ RE.insertImageW = function(url, alt, width) {
 RE.insertImageC = function(uri, alt, width, imageIdx){
     var imageDivId = 'imageDiv' + imageIdx
     var imageId = 'image' + imageIdx
-//    margin-bottom: 10px;
+
     var html = '<div contenteditable = "false" id="' + imageDivId + '" style="text-align: center;">' +
         '<div style="margin-top: 8px; display: inline-block; position: relative;">' +
         '<img id="' + imageId + '" class="imgBorderOff" onclick="changeStyle(' + imageIdx + ')" style="border-radius: 10px;" src="' + uri + '" alt="' + alt + '" width="' + width + '"/>' +
@@ -272,10 +300,12 @@ RE.insertImageC = function(uri, alt, width, imageIdx){
 
 RE.insertLocation = function(location, locationIdx){
     var locationDivId = 'location' + locationIdx
+    var locationBtnId = 'locationBtn' + locationIdx
+
     var html = '<div id="' + locationDivId + '" contenteditable="false" style="padding-top: 8px; padding-bottom: 8px">' +
         '<img style="vertical-align: middle" src="file:///android_asset/ic_location.svg"> ' +
         '<span style="vertical-align: middle; color: #7F7471">' + location + '</span> ' +
-        '<img id = "' + locationIdx + '" onclick="deleteLocation(' + locationIdx + ')" style="margin-left: 8px; vertical-align: middle" src="file:///android_asset/ic_delete.svg"></div><br>'
+        '<img id = "' + locationBtnId + '" onclick="deleteLocation(' + locationIdx + ')" style="margin-left: 8px; vertical-align: middle; visibility: visible" src="file:///android_asset/ic_delete.svg"></div><br>'
     RE.insertHTML(html);
 }
 

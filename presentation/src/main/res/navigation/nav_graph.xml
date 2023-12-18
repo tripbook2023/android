@@ -51,9 +51,15 @@
     </fragment>
     <fragment
         android:id="@+id/newsAddFragment"
-        android:name="com.tripbook.tripbook.views.tripAdd.NewsAddFragment"
+        android:name="com.tripbook.tripbook.views.trip.add.NewsAddFragment"
         android:label="NewsAddFragment"
-        tools:layout="@layout/fragment_news_add"/>
+        tools:layout="@layout/fragment_news_add">
+        <action
+            android:id="@+id/action_newsAddFragment_to_tripDetailFragment"
+            app:destination="@id/tripDetailFragment"
+            app:popUpTo="@id/newsMainFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
     <action
         android:id="@+id/action_global_loginFragment"
         app:destination="@id/loginFragment"

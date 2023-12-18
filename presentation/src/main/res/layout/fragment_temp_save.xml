@@ -7,6 +7,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="uiStatus"
+            type="com.tripbook.tripbook.viewmodel.NewsAddViewModel.UiStatus" />
+
+        <variable
             name="viewModel"
             type="com.tripbook.tripbook.viewmodel.NewsAddViewModel" />
     </data>
@@ -21,7 +25,7 @@
             android:layout_height="0dp"
             android:layout_marginBottom="12dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/button_temp_save"
+            app:layout_constraintBottom_toTopOf="@+id/button_temp_select"
             app:layout_constraintTop_toTopOf="parent">
 
             <FrameLayout
@@ -53,19 +57,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:paddingHorizontal="@dimen/margin_start" />
+                android:paddingHorizontal="@dimen/basic_margin"
+                app:tempSaveList="@{viewModel.tempSaveList}"/>
 
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_temp_save"
+            android:id="@+id/button_temp_select"
             style="@style/ButtonSolidStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_start"
+            android:layout_marginHorizontal="@dimen/basic_margin"
             android:layout_marginBottom="56dp"
-            android:enabled="@{viewModel.locationListIndex >= 0}"
+            android:enabled="@{viewModel.tempSaveListIndex >= 0}"
             android:paddingHorizontal="14dp"
             android:text="@string/temp_save_button"
             app:layout_constraintBottom_toBottomOf="parent"

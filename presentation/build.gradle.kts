@@ -76,6 +76,8 @@ dependencies {
     val firebaseBom = platform(libs.firebase.bom)
     implementation(firebaseBom)
     implementation(libs.firebase.analytics)
+    implementation(libs.firebase.storage)
+
 
     implementation(libs.activity.ktx)
     implementation(libs.fragment.ktx)
