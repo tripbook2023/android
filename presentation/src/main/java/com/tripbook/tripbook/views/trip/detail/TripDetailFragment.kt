@@ -6,13 +6,18 @@ import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentTripDetailBinding
 import com.tripbook.tripbook.viewmodel.ArticleViewModel
+import com.tripbook.tripbook.viewmodel.InfoViewModel
 import com.tripbook.tripbook.viewmodel.TripDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,34 +45,62 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
         val webView = binding.mainEditor
 
         viewModel.loadArticleDetailInfo(webView)
+        articleViewModel.getUserList()
 
-        var isLiked = false
+        viewModel.viewModelScope.launch {
+            viewModel.articleDetail.collect { detail ->
+                Log.d("heart value", "heart value: ${detail?.heart}")
+
+                val likeImageResource = if (detail?.heart == true) {
+                    com.tripbook.tripbook.core.design.R.drawable.icn_like_active_24
+                } else {
+                    com.tripbook.tripbook.core.design.R.drawable.icn_like_24
+                }
+
+                var author = detail?.author?.name
+                if (author != null) {
+                    articleViewModel.authorChk(author)
+                }
+                var authorChk = articleViewModel.author.value
+
+                if (authorChk) {
+                    binding.icnMainReport.visibility = View.GONE
+                    binding.icnMainDefault.setImageResource(com.tripbook.tripbook.core.design.R.drawable.icn_more_default_24)
+                } else {
+                    binding.icnMainReport.visibility = View.VISIBLE
+                    binding.icnMainDefault.setImageResource(com.tripbook.tripbook.core.design.R.drawable.icn_more_active_24)
+                }
+
+                detail?.heartNum?.let { articleViewModel.setHeartNum(it) }
+
+                detail?.heart?.let { articleViewModel.setHeart(it) }
+
+                binding.like.setImageResource(likeImageResource)
+
+            }
+        }
 
         //좋아요
         binding.like.setOnClickListener {
 
-            if(isLiked) {
+            articleViewModel.likeArticle(args.articleId)
 
-                articleViewModel.likeArticle(args.articleId)
-                val like = ContextCompat.getDrawable(requireContext(), com.tripbook.tripbook.core.design.R.drawable.icn_like_24)
+            var isLiked = articleViewModel.heart.value
 
-                val currentHeartNum = articleViewModel.heartNum.value ?: 0
-                articleViewModel.setHeartNum(currentHeartNum - 1)
+            isLiked = !isLiked
 
-                binding.like.setImageDrawable(like)
-                isLiked = false
+            val likeImageResource = if (isLiked) {
+                com.tripbook.tripbook.core.design.R.drawable.icn_like_active_24
             } else {
-                articleViewModel.likeArticle(args.articleId)
-
-                val like = ContextCompat.getDrawable(requireContext(), com.tripbook.tripbook.core.design.R.drawable.icn_like_active_24)
-
-                val currentHeartNum = articleViewModel.heartNum.value ?: 0
-                articleViewModel.setHeartNum(currentHeartNum + 1)
-
-                binding.like.setImageDrawable(like)
-                isLiked = true
-
+                com.tripbook.tripbook.core.design.R.drawable.icn_like_24
             }
+            binding.like.setImageResource(likeImageResource)
+
+        }
+
+        //뒤로가기
+        binding.icnBefore.setOnClickListener {
+            findNavController().popBackStack()
         }
 
         with(binding) {
@@ -89,6 +122,7 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
             var toolBar = toolbar
             val icnBefore = icnBefore
             val icnDefault = icnMainDefault
+            val icnMainReport = icnMainReport
 
             var isViewsVisible = false
 
@@ -97,8 +131,9 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
 
                 val totalScroll =
                     Math.abs(verticalOffset)
-                        .toFloat() / appBarLayout.totalScrollRange.toFloat() // 백분율로 계산하기
+                        .toFloat() / appBarLayout.totalScrollRange.toFloat()
 
+                //이벤트 추후 QA 하면서 추가
                 if (totalScroll > 0.5) {
                     //sideBar.visibility = View.GONE
                     //sideBar.startAnimation(fadeOutAnim)
@@ -111,6 +146,7 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
                     toolBar.visibility = View.VISIBLE
                     icnBefore.colorFilter = null
                     icnDefault.colorFilter = null
+                    icnMainReport.colorFilter = null
                 } else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange) {
                     toolBar.visibility = View.VISIBLE
                     icnBefore.setColorFilter(
@@ -120,6 +156,12 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
                         )
                     )
                     icnDefault.setColorFilter(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.black
+                        )
+                    )
+                    icnMainReport.setColorFilter(
                         ContextCompat.getColor(
                             requireContext(),
                             R.color.black

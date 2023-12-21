@@ -1,6 +1,7 @@
 package com.tripbook.tripbook.data.repository
 
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -9,6 +10,7 @@ import com.tripbook.libs.network.safeApiCall
 import com.tripbook.libs.network.service.TripArticlesService
 import com.tripbook.tripbook.data.datasource.ArticlePagingSource
 import com.tripbook.tripbook.domain.model.ArticleDetail
+import com.tripbook.tripbook.domain.model.LikeArticle
 import com.tripbook.tripbook.domain.model.SortType
 import com.tripbook.tripbook.domain.repository.ArticleRepository
 import kotlinx.coroutines.Dispatchers
@@ -18,20 +20,22 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import toArticleDetail
+import toLikeArticle
 import javax.inject.Inject
 
 class ArticleRepositoryImpl @Inject constructor(
     private val tripArticlesService: TripArticlesService
 ) : ArticleRepository {
-    override fun likeArticle(articleId: Long): Flow<Boolean> = safeApiCall(Dispatchers.IO) {
+    override fun likeArticle(articleId: Long): Flow<LikeArticle?> = safeApiCall(Dispatchers.IO) {
         tripArticlesService.likeArticle(articleId)
     }.map {
         when (it) {
             is NetworkResult.Success -> {
-                true
-            }
+                val likeArticle = it.value.toLikeArticle()
+                likeArticle
 
-            else -> false
+            }
+            else -> null
         }
     }
 

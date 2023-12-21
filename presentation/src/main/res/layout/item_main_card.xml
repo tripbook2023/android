@@ -56,7 +56,7 @@
                     android:layout_marginStart="2dp"
                     android:textColor="@color/white"
                     tools:text="111233"
-                    android:text="@{String.valueOf(article.numberOfHearts)}"
+                    android:text="@{String.valueOf(article.heartNum)}"
                     app:layout_constraintStart_toEndOf="@id/imageview_isHeart"
                     app:layout_constraintTop_toTopOf="@id/imageview_isHeart"
                     app:layout_constraintBottom_toBottomOf="@id/imageview_isHeart"/>
