@@ -73,8 +73,8 @@
                 android:layout_height="80dp"
                 android:contentDescription="@null"
                 android:layout_marginVertical="25dp"
-                android:layout_marginLeft="20dp"
-                app:profileImgUri="@{viewModel.profileUri}"
+                android:layout_marginStart="20dp"
+                app:profileImg="@{infoViewModel.profileChgUrl}"
                 android:background="@drawable/border_circleimageview"
                 app:layout_constraintStart_toStartOf="parent" />
 

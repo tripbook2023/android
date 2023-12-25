@@ -1,7 +1,6 @@
 package com.tripbook.tripbook.viewmodel
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.tripbook.base.BaseViewModel
 import com.tripbook.tripbook.domain.model.MemberInfo
@@ -15,6 +14,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import java.io.File
@@ -52,7 +52,7 @@ class InfoViewModel @Inject constructor(
         initialValue = ""
     )
 
-    val profileUrl: StateFlow<String?> = memberInfo.filterNotNull().map {
+    val profileUrl: StateFlow<String> = memberInfo.filterNotNull().map {
         it.profile ?: ""
     }.stateIn(
         scope = viewModelScope,
@@ -60,12 +60,16 @@ class InfoViewModel @Inject constructor(
         initialValue = ""
     )
 
+    private val _profileChgUrl: MutableStateFlow<String?> = MutableStateFlow(null)
+    val profileChgUrl: StateFlow<String?> = _profileChgUrl
+
     private val _version: MutableStateFlow<String?> = MutableStateFlow(null)
     val version: StateFlow<String?> = _version
 
     fun setProfileUri(uri: Uri?, fullPath: String?, default: Boolean) {
         uri?.let {
             _profileUri.value = it
+            setProfileUriChg(it.toString())
         }
         fullPath?.let {
             profilePath.value = it
@@ -98,6 +102,12 @@ class InfoViewModel @Inject constructor(
         if(profileDefault.value) {
             profileChk = ""
         }
+        var nameChg = ""
+        nameChg = if(!nicknameChecked.value) {
+            ""
+        } else {
+            name
+        }
 
         val gender = memberInfo.value?.gender ?: ""
         val serviceChecked = memberInfo.value?.termsOfService ?: false
@@ -106,24 +116,35 @@ class InfoViewModel @Inject constructor(
         val marketingChecked = memberInfo.value?.marketingConsent ?: false
         val birth = memberInfo.value?.birth ?: ""
 
-
-        return updateMemberUseCase(
-            name,
-            imageFile,
-            profileChk,
-            serviceChecked,
-            personalInfoChecked,
-            locationChecked,
-            marketingChecked,
-            gender,
-            birth
-        )
+        return if (_nicknameChecked.value || imageFile != null) {
+            updateMemberUseCase(
+                nameChg,
+                imageFile,
+                profileChk,
+                serviceChecked,
+                personalInfoChecked,
+                locationChecked,
+                marketingChecked,
+                gender,
+                birth
+            )
+        } else {
+            flow { emit(false)}
+        }
     }
 
     fun logout() {
         viewModelScope.launch {
             logoutUseCase()
         }
+    }
+
+    fun setProfileUrl() {
+        _profileChgUrl.value = profileUrl.value
+    }
+
+    private fun setProfileUriChg(url: String) {
+        _profileChgUrl.value = url
     }
 
 }

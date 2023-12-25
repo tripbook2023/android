@@ -12,11 +12,10 @@ import androidx.navigation.fragment.navArgs
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentTripDetailBinding
+import com.tripbook.tripbook.domain.model.ArticleDetail
 import com.tripbook.tripbook.viewmodel.ArticleViewModel
-import com.tripbook.tripbook.viewmodel.InfoViewModel
 import com.tripbook.tripbook.viewmodel.TripDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,8 +37,6 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
         binding.viewModel = viewModel
         binding.articleViewModel = articleViewModel
 
-        Log.d("아이디", "DETAIL SCREEN : ${args.articleId}")
-
         val binding = binding
 
         val webView = binding.mainEditor
@@ -49,7 +46,6 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
 
         viewModel.viewModelScope.launch {
             viewModel.articleDetail.collect { detail ->
-                Log.d("heart value", "heart value: ${detail?.heart}")
 
                 val likeImageResource = if (detail?.heart == true) {
                     com.tripbook.tripbook.core.design.R.drawable.icn_like_active_24
@@ -63,19 +59,7 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
                 }
                 var authorChk = articleViewModel.author.value
 
-                if (authorChk) {
-                    binding.icnMainReport.visibility = View.GONE
-                    binding.icnMainDefault.setImageResource(com.tripbook.tripbook.core.design.R.drawable.icn_more_default_24)
-                } else {
-                    binding.icnMainReport.visibility = View.VISIBLE
-                    binding.icnMainDefault.setImageResource(com.tripbook.tripbook.core.design.R.drawable.icn_more_active_24)
-                }
-
-                detail?.heartNum?.let { articleViewModel.setHeartNum(it) }
-
-                detail?.heart?.let { articleViewModel.setHeart(it) }
-
-                binding.like.setImageResource(likeImageResource)
+                updateUI(detail, authorChk, likeImageResource)
 
             }
         }
@@ -175,4 +159,25 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
         } //binding
     }
 
+    private fun updateUI(detail: ArticleDetail?, authorChk: Boolean, likeImageResource: Int) {
+        with(binding) {
+            detail?.let {
+                if (authorChk) {
+                    icnMainReport.visibility = View.GONE
+                    icnMainDefault.setImageResource(com.tripbook.tripbook.core.design.R.drawable.icn_more_default_24)
+                } else {
+                    icnMainReport.visibility = View.VISIBLE
+                    icnMainDefault.setImageResource(com.tripbook.tripbook.core.design.R.drawable.icn_more_active_24)
+                }
+
+                it.heartNum.let { articleViewModel?.setHeartNum(it) }
+                it.heart.let { articleViewModel?.setHeart(it) }
+
+                like.setImageResource(likeImageResource)
+            }
+        }
+    }
+
 }
+
+
