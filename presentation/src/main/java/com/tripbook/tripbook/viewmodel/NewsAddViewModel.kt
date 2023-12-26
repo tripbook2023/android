@@ -96,16 +96,20 @@ class NewsAddViewModel @Inject constructor(
     private val _locationListIndex = MutableStateFlow(-1)
     val locationListIndex: StateFlow<Int> get() = _locationListIndex
 
-    private val _tagList = MutableStateFlow<MutableList<String>>(mutableListOf())
+    private val _locationList = MutableStateFlow<MutableList<Location>>(mutableListOf())
 
-    private val _locationAdd = MutableStateFlow("")
-    val locationAdd: StateFlow<String> = _locationAdd
+    fun setLocationList(list: MutableList<Location>){
+        _locationList.value = list
+    }
 
-    private val _locationList = MutableStateFlow<List<Location>>(listOf())
-    val locationList: StateFlow<List<Location>> get() = _locationList
+    private val _locationAdd = MutableStateFlow<Location?>(null)
+    val locationAdd: StateFlow<Location?> = _locationAdd
 
-    fun addLocationTag(location: String) {
-        _tagList.value.add(location)
+    private val _locationSearchList = MutableStateFlow<List<Location>>(listOf())
+    val locationSearchList: StateFlow<List<Location>> get() = _locationSearchList
+
+    fun addLocationTag(location: Location) {
+        _locationList.value.add(location)
     }
 
     fun addImage(id: Int) {
@@ -116,7 +120,7 @@ class NewsAddViewModel @Inject constructor(
         viewModelScope.launch {
             locationUseCase(location).collect {
                 if (it.isNullOrEmpty().not())
-                    _locationList.value = it as List<Location>
+                    _locationSearchList.value = it as List<Location>
             }
         }
     }
@@ -138,7 +142,7 @@ class NewsAddViewModel @Inject constructor(
         _uiStatus.value = status
     }
 
-    fun setLocation(location: String) {
+    fun setLocation(location: Location?) {
         _locationAdd.value = location
     }
 
@@ -155,7 +159,7 @@ class NewsAddViewModel @Inject constructor(
     }
 
     fun initLocationList() {
-        _locationList.value = listOf()
+        _locationSearchList.value = listOf()
     }
 
     fun setTextOptions(option: TextView, checked: Boolean?) {
@@ -222,7 +226,7 @@ class NewsAddViewModel @Inject constructor(
             content,
             _thumbnailUrl.value!!,
             _imageList.value,
-            _tagList.value
+            _locationList.value
         )
     }
 
@@ -234,7 +238,7 @@ class NewsAddViewModel @Inject constructor(
             content,
             _thumbnailUrl.value,
             _imageList.value,
-            _tagList.value
+            _locationList.value
         )
     }
 
@@ -248,7 +252,6 @@ class NewsAddViewModel @Inject constructor(
 
     fun uploadImage(file: File) = uploadImageUseCase(file)
 
-
     inner class JavaInterface {
         @JavascriptInterface
         fun removeImageItem(id: Int) {
@@ -257,7 +260,10 @@ class NewsAddViewModel @Inject constructor(
 
         @JavascriptInterface
         fun removeTagItem(tag: String) {
-            _tagList.value.remove(tag)
+            for(location in _locationList.value){
+                if(location.place_name == tag)
+                    _locationList.value.removeAt(_locationList.value.indexOf(location))
+            }
         }
     }
 

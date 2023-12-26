@@ -23,7 +23,7 @@ class NewsAddLocationBottomFragment :
         binding.locationList.layoutManager = LinearLayoutManager(requireContext())
 
         binding.locationButton.setOnClickListener {
-            viewModel.setLocation(viewModel.locationList.value[viewModel.locationListIndex.value].place_name)
+            viewModel.setLocation(viewModel.locationSearchList.value[viewModel.locationListIndex.value])
             dismiss()
         }
 

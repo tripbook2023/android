@@ -8,6 +8,7 @@ fun TempArticleResponse.toTempArticle() = TempArticle(
     title = title,
     content = content,
     thumbnailUrl = thumbnailUrl,
+    location = location?.map { it.toLocation() },
     tagList = tagList,
     createdAt = createdAt,
     updatedAt = updatedAt

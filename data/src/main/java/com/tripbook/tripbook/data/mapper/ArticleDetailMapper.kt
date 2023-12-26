@@ -1,8 +1,10 @@
+
 import com.tripbook.libs.network.model.response.ArticleDetailResponse
-import com.tripbook.tripbook.domain.model.ArticleDetail
-import com.tripbook.tripbook.domain.model.MemberSimple
-import com.tripbook.tripbook.domain.model.Comment
 import com.tripbook.libs.network.model.response.CommentResponse
+import com.tripbook.tripbook.data.mapper.toLocation
+import com.tripbook.tripbook.domain.model.ArticleDetail
+import com.tripbook.tripbook.domain.model.Comment
+import com.tripbook.tripbook.domain.model.MemberSimple
 
 
 fun ArticleDetailResponse.toArticleDetail() = ArticleDetail(
@@ -17,6 +19,7 @@ fun ArticleDetailResponse.toArticleDetail() = ArticleDetail(
     ),
     thumbnailUrl = thumbnailUrl ?: "",
     tagList = tagList,
+    location = location?.map { it.toLocation() },
     numberOfHearts = numberOfHearts,
     numberOfBookmarks = numberOfBookmarks,
     commentList = commentList.map { it.toComment() },
@@ -35,7 +38,6 @@ fun CommentResponse.toComment() = Comment(
         profileUrl = author.profileUrl ?: "",
         role = author.role
     ),
-
     childList = childList, //여기 코멘트 추가해야 됨
     createdAt = createdAt,
     updatedAt = updatedAt

@@ -71,6 +71,7 @@ class NewsAddFragment :
                 }
             }
         }
+    
     private val contentsGalleryLauncher =
         // 최대 30장, 최소 1장
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(30)) { uris ->
@@ -104,6 +105,7 @@ class NewsAddFragment :
         viewModel.getTempList()
         collectData()
         setTextLength()
+        initListener()
         periodicSave()
 
         binding.mainEditor.apply {
@@ -121,84 +123,74 @@ class NewsAddFragment :
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.locationAdd.collect { location ->
-                if (location != "") {
-                    binding.mainEditor.insertLocation(location)
+                if (location != null) {
+                    binding.mainEditor.insertLocation(location.place_name)
                     viewModel.addLocationTag(location)
                     viewModel.setLocationListIndex(-1)
-                    viewModel.setLocation("")
+                    viewModel.setLocation(null)
                 }
             }
         }
     }
 
+    private fun initListener() = binding.run {
+        upButton.setOnClickListener { findNavController().popBackStack() }
+    }
+
     private fun collectData() {
         // 클릭 리스너 연결을 한 번에 묶음
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiStatus.collect { status ->
                     when (status) {
                         NewsAddViewModel.UiStatus.NEWS_ADD -> {
                             viewLifecycleOwner.lifecycleScope.launch {
-                                // 이미지 테두리 없애기
-                                val imageProcessing = launch {
-                                    for (idx in viewModel.imageList.value) {
-                                        val script = "javascript:RE.deleteImgBorder(${idx})"
-                                        binding.mainEditor.evaluateJavascript(script) {}
-                                    }
-                                }
-                                imageProcessing.join()
-
-                                // 로케이션 태그 삭제버튼 없애기
-                                val locationProcessing = launch {
-                                    for (idx in 0 until binding.mainEditor.locationIdx) {
-                                        val script = "javascript:RE.tagButtonInvisible(${idx})"
-                                        binding.mainEditor.evaluateJavascript(script) {}
-                                    }
-                                }
-                                locationProcessing.join()
-
-                                viewModel.saveTripNews(
-                                    binding.title.text.toString(),
-                                    binding.mainEditor.html,
-                                ).collect {
-                                    it?.let {
-                                        // 여행소식 등록 성공
-                                        Toast.makeText(
-                                            requireContext(),
-                                            "여행소식 등록에 성공하였습니다.",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        findNavController().navigate(
-                                            NewsAddFragmentDirections.actionNewsAddFragmentToTripDetailFragment(
-                                                it
-                                            )
+                                binding.mainEditor.html?.let {
+                                    val replace =
+                                        binding.mainEditor.html.replace("visible", "hidden")
+                                            .replace("imgBorderOn", "imgBorderOff").replace(
+                                            "2px solid rgb(255, 78, 22)",
+                                            "0px solid transparent"
                                         )
-                                    } ?: run {
-                                        // 여행소식 등록 실패
-                                        Toast.makeText(
-                                            requireContext(),
-                                            "여행소식 등록에 실패하였습니다.",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+
+                                    viewModel.saveTripNews(
+                                        binding.title.text.toString(),
+                                        replace
+                                    ).collect {
+                                        it?.let {
+                                            findNavController().navigate(
+                                                NewsAddFragmentDirections.actionNewsAddFragmentToTripDetailFragment(
+                                                    it
+                                                )
+                                            )
+                                        } ?: run {
+                                            // 여행소식 등록 실패
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "여행소식 등록에 실패하였습니다.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
                                     }
                                 }
+
+                                viewModel.setUiStatus(NewsAddViewModel.UiStatus.IDLE)
+
                             }
                         }
 
                         NewsAddViewModel.UiStatus.TEMP_SAVE_SUCCESS -> {
                             if (binding.title.length() > 0 && !binding.mainEditor.html.isNullOrEmpty()) {
                                 viewLifecycleOwner.lifecycleScope.launch {
-                                    val imageProcessing = launch {
-                                        for (idx in viewModel.imageList.value) {
-                                            val script = "javascript:RE.deleteImgBorder(${idx})"
-                                            binding.mainEditor.evaluateJavascript(script) {}
-                                        }
-                                    }
-                                    imageProcessing.join()
+                                    val replace =
+                                        binding.mainEditor.html.replace("imgBorderOn", "imgBorderOff").replace(
+                                                "2px solid rgb(255, 78, 22)",
+                                                "0px solid transparent"
+                                            )
 
                                     viewModel.saveTempArticle(
                                         binding.title.text.toString(),
-                                        binding.mainEditor.html
+                                        replace
                                     ).collect {
                                         it?.let {
                                             TempSaveAlertDialogFragment().show(
@@ -228,17 +220,8 @@ class NewsAddFragment :
                         }
 
                         NewsAddViewModel.UiStatus.SELECT_TEMP -> {
-                            val tempArticle =
-                                viewModel.tempSaveList.value[viewModel.tempSaveListIndex.value]
-                            binding.title.setText(tempArticle.title)
-                            binding.mainEditor.html = tempArticle.content
-                            viewModel.setThumbnail(tempArticle.thumbnailUrl)
-                            viewModel.setTempId(tempArticle.id)
-                            // @TODO 이렇게 하면 정규식이 생각처럼 안됨
-                            viewModel.setContentLength(
-                                regex.replace(binding.mainEditor.html, "")
-                                    .replace("&nbsp;", " ").length
-                            )
+                            setTempArticle()
+                            viewModel.setUiStatus(NewsAddViewModel.UiStatus.IDLE)
                         }
 
                         NewsAddViewModel.UiStatus.TITLE_GALLERY -> {
@@ -307,6 +290,20 @@ class NewsAddFragment :
         }
     }
 
+    private fun setTempArticle() {
+        val tempArticle =
+            viewModel.tempSaveList.value[viewModel.tempSaveListIndex.value]
+        binding.title.setText(tempArticle.title)
+        binding.mainEditor.html = tempArticle.content
+        viewModel.setThumbnail(tempArticle.thumbnailUrl)
+        viewModel.setTempId(tempArticle.id)
+        tempArticle.location?.let { viewModel.setLocationList(it.toMutableList()) }
+        viewModel.setContentLength(
+            regex.replace(binding.mainEditor.html, "")
+                .replace("&nbsp;", " ").length
+        )
+    }
+
     private fun setTextLength() {
         binding.title.doOnTextChanged { text, _, _, _ ->
             viewModel.setTitleLength(text!!.length)
@@ -336,6 +333,7 @@ class NewsAddFragment :
     }
 
     override fun onStop() {
+        activity?.viewModelStore?.clear()
         timer.cancel()
         super.onStop()
     }

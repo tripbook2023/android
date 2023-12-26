@@ -6,6 +6,7 @@ import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
@@ -32,6 +33,7 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
     override fun init() {
         binding.viewModel = viewModel
         binding.articleViewModel = articleViewModel
+        initListener()
 
         Log.d("아이디", "DETAIL SCREEN : ${args.articleId}")
 
@@ -131,6 +133,9 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
 
             }
         } //binding
+    }
+    private fun initListener() = binding.run {
+        icnBefore.setOnClickListener { findNavController().popBackStack() }
     }
 
 }
