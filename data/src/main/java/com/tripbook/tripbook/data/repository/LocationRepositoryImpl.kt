@@ -3,7 +3,7 @@ package com.tripbook.tripbook.data.repository
 import com.tripbook.libs.network.NetworkResult
 import com.tripbook.libs.network.safeApiCall
 import com.tripbook.libs.network.service.LocationService
-import com.tripbook.tripbook.data.mapper.toDomainLocation
+import com.tripbook.tripbook.data.mapper.toLocation
 import com.tripbook.tripbook.domain.model.Location
 import com.tripbook.tripbook.domain.repository.LocationRepository
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +22,7 @@ class LocationRepositoryImpl @Inject constructor(
             when(response){
                 is NetworkResult.Success -> {
                     response.value.documents.map {
-                        it.toDomainLocation()
+                        it.toLocation()
                     }
                 }
                 else -> null

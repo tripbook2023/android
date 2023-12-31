@@ -1,6 +1,6 @@
 package com.tripbook.libs.network.service
 
-import com.tripbook.libs.network.model.response.LocationResponse
+import com.tripbook.libs.network.model.response.LocationDocResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
@@ -12,5 +12,5 @@ interface LocationService {
     suspend fun searchLocation(
         @Header("Authorization") key: String, // REST API 키
         @Query("query") query: String // 질의어
-    ): LocationResponse
+    ): LocationDocResponse
 }

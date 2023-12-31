@@ -57,8 +57,7 @@
         <action
             android:id="@+id/action_newsAddFragment_to_tripDetailFragment"
             app:destination="@id/tripDetailFragment"
-            app:popUpTo="@id/newsMainFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpTo="@id/newsMainFragment"/>
     </fragment>
     <action
         android:id="@+id/action_global_loginFragment"

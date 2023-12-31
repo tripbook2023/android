@@ -12,6 +12,7 @@ import com.tripbook.tripbook.R
 import com.tripbook.tripbook.adapter.TempSaveAdapter
 import com.tripbook.tripbook.databinding.FragmentTempSaveBinding
 import com.tripbook.tripbook.viewmodel.NewsAddViewModel
+import kotlinx.coroutines.launch
 
 
 class TempSaveDialogFragment : BaseDialogFragment<FragmentTempSaveBinding, NewsAddViewModel>(R.layout.fragment_temp_save) {
@@ -54,7 +55,7 @@ class TempSaveDialogFragment : BaseDialogFragment<FragmentTempSaveBinding, NewsA
             dismiss()
         }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiStatus.collect { status ->
                     when (status) {

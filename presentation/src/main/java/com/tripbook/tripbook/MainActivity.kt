@@ -27,6 +27,5 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
 private val homeDestinationList = listOf(
     R.id.newsMainFragment,
-    R.id.newsAddFragment,
     R.id.mypageFragment
 )
