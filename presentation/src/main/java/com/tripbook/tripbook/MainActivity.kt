@@ -22,7 +22,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
         binding.barBottom.setupWithNavController(navController)
     }
-
 }
 
 private val homeDestinationList = listOf(

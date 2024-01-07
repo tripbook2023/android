@@ -30,7 +30,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL = "https://dev.tripbook.link"
+    private const val BASE_URL = "https://tripbook.link"
     private const val KAKAO_MAP_URL = "https://dapi.kakao.com/"
     // FIXME: 서버 도메인 변경 시 같이 변경이 필요합니다!
 

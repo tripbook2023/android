@@ -3,7 +3,7 @@
     <item
         android:id="@+id/newsMainFragment"
         android:enabled="true"
-        android:icon="@drawable/icn_home_active_24"
+        android:icon="@drawable/icn_home_acitve_24"
         android:title="@string/home" />
 
     <item
