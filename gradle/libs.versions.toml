@@ -5,7 +5,7 @@ androidGradlePlugin = "8.2.0"
 minSDK = "24"
 targetSDK = "34"
 versionCode = "1"
-versionName = "1.0.0"
+versionName = "1.0.0.RC1"
 buildTools = "34.0.0"
 
 # AndroidX
