@@ -6,10 +6,10 @@ data class ArticleDetail(
     val content: String,
     val author: MemberSimple,
     val thumbnailUrl: String?,
-   // val tagList: List<String>,
-    val heartNum: Long,
-    val bookmarkNum: Long,
-    val location : List<LocationList>,
+    val tagList: List<String>?,
+    val location: List<Location>?,
+    val numberOfHearts: Long,
+    val numberOfBookmarks: Long,
     val commentList: List<Comment>,
     val createdAt: String,
     val updatedAt: String,
@@ -22,13 +22,6 @@ data class MemberSimple(
     val name: String,
     val profileUrl: String?,
     val role: String
-)
-
-data class LocationList(
-    val id : Long,
-    val locationX : String,
-    val locationY : String,
-    val name : String
 )
 
 

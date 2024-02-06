@@ -1,6 +1,5 @@
 package com.tripbook.tripbook.views.trip.detail
 
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
@@ -36,6 +35,7 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
     override fun init() {
         binding.viewModel = viewModel
         binding.articleViewModel = articleViewModel
+        initListener()
 
         val binding = binding
 
@@ -53,11 +53,11 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
                     com.tripbook.tripbook.core.design.R.drawable.icn_like_24
                 }
 
-                var author = detail?.author?.name
+                val author = detail?.author?.name
                 if (author != null) {
                     articleViewModel.authorChk(author)
                 }
-                var authorChk = articleViewModel.author.value
+                val authorChk = articleViewModel.author.value
 
                 updateUI(detail, authorChk, likeImageResource)
 
@@ -118,13 +118,13 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
                         .toFloat() / appBarLayout.totalScrollRange.toFloat()
 
                 //이벤트 추후 QA 하면서 추가
-                if (totalScroll > 0.5) {
+//                if (totalScroll > 0.5) {
                     //sideBar.visibility = View.GONE
                     //sideBar.startAnimation(fadeOutAnim)
-                } else {
+//                } else {
                     //sideBar.visibility = View.VISIBLE
                     //sideBar.startAnimation(fadeInAnim)
-                }
+//                }
 
                 if (verticalOffset == 0) {
                     toolBar.visibility = View.VISIBLE
@@ -158,6 +158,9 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
             }
         } //binding
     }
+    private fun initListener() = binding.run {
+        icnBefore.setOnClickListener { findNavController().popBackStack() }
+    }
 
     private fun updateUI(detail: ArticleDetail?, authorChk: Boolean, likeImageResource: Int) {
         with(binding) {
@@ -170,7 +173,7 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
                     icnMainDefault.setImageResource(com.tripbook.tripbook.core.design.R.drawable.icn_more_active_24)
                 }
 
-                it.heartNum.let { articleViewModel?.setHeartNum(it) }
+                it.numberOfHearts.let { articleViewModel?.setHeartNum(it) }
                 it.heart.let { articleViewModel?.setHeart(it) }
 
                 like.setImageResource(likeImageResource)
