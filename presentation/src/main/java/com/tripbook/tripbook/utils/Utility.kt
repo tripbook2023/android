@@ -6,6 +6,8 @@ import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.DisplayMetrics
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -58,4 +60,8 @@ fun Context.createImageFile(): Uri? {
         MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
         content
     )
+}
+
+fun NavController.safeNavigate(direction: NavDirections) {
+    currentDestination?.getAction(direction.actionId)?.run { navigate(direction) }
 }

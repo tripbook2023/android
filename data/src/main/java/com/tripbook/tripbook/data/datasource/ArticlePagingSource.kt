@@ -39,7 +39,7 @@ class ArticlePagingSource @Inject constructor(
             is NetworkResult.Success -> LoadResult.Page(
                 data = response.value.content.map { it.toArticleDetail() },
                 prevKey = null,
-                nextKey = response.value.number + 1
+                nextKey = if (response.value.numberOfElements == response.value.size) { response.value.number + 1} else null
             )
             else -> LoadResult.Error(IllegalStateException("MUST BE NOT HERE."))
         }

@@ -12,7 +12,9 @@ import kotlinx.coroutines.flow.callbackFlow
 
 fun Context.loginWithBrowser(account: Auth0, onLoginCompleted: (String) -> Unit) {
     WebAuthProvider.login(account)
-        .withScheme("demo")
+        .withScheme("tripbook")
+        .withTrustedWebActivity()
+        .withScope("openid profile email")
         .start(this, object : Callback<Credentials, AuthenticationException> {
             override fun onFailure(error: AuthenticationException) {
                 error.printStackTrace()
@@ -21,17 +23,20 @@ fun Context.loginWithBrowser(account: Auth0, onLoginCompleted: (String) -> Unit)
             override fun onSuccess(result: Credentials) {
                 val accessToken = result.accessToken
                 onLoginCompleted(accessToken).also {
-                    Log.d("MyTag", accessToken)
+                    Log.d("MyTag", "${result.user.email} + ${result.user.name} + ${result.idToken} + ${result.scope} + ${result.accessToken}")
                 }
             }
         })
+
+
+
 }
 
 @Suppress("UNUSED")
 fun Context.logout(account: Auth0) =
     callbackFlow {
         WebAuthProvider.logout(account)
-        .withScheme("demo")
+        .withScheme("tripbook")
         .start(this@logout, callback = object : Callback<Void?, AuthenticationException> {
             override fun onFailure(error: AuthenticationException) {
                 error.printStackTrace()
