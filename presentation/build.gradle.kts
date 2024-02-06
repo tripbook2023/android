@@ -25,7 +25,7 @@ android {
         manifestPlaceholders.putAll(
             mutableMapOf(
                 "auth0Domain" to "dev-z2b4bazfo6o536tj.us.auth0.com",
-                "auth0Scheme" to "demo"
+                "auth0Scheme" to "tripbook"
             )
         )
     }
@@ -44,6 +44,8 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("debug")
+            isDebuggable = true
         }
     }
     compileOptions {

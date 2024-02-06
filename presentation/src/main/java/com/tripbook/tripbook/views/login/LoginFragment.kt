@@ -11,8 +11,10 @@ import com.tripbook.base.BaseFragment
 import com.tripbook.tripbook.R
 import com.tripbook.tripbook.databinding.FragmentLoginBinding
 import com.tripbook.tripbook.domain.model.UserLoginStatus
+import com.tripbook.tripbook.utils.safeNavigate
 import com.tripbook.tripbook.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -28,27 +30,27 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
             getString(com.tripbook.tripbook.libs.auth.R.string.com_auth_domain)
         ) // 이걸 Hilt Module 로써 관리를 하면 어떨까..?
 
-        collectProperties()
-
         requireContext().loginWithBrowser(auth0) {token->
             viewModel.validateToken(token).start()
         }
+
+        collectProperties()
     }
 
     private fun collectProperties() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.isValidatedUser.collect {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isValidatedUser.collectLatest {
                     it?.let { validated ->
                         when (validated) {
-                            UserLoginStatus.STATUS_REQUIRED_AUTH -> findNavController()
-                                .navigate(
-                                    LoginFragmentDirections.actionLoginFragmentToNewsMainFragment()
-                                )
+                            UserLoginStatus.STATUS_REQUIRED_AUTH -> {
+                                val action = LoginFragmentDirections.actionLoginFragmentToProfile()
+                                findNavController().safeNavigate(action)
+                            }
 
                             UserLoginStatus.STATUS_NORMAL -> {
                                 val action = LoginFragmentDirections.actionLoginFragmentToNewsMainFragment()
-                                findNavController().navigate(action)
+                                findNavController().safeNavigate(action)
                             }
                         }.also {
                             viewModel.clearStatus()

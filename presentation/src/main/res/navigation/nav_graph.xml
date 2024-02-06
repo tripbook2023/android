@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <include
-        android:id="@+id/navigation_profile"
+        android:id="@+id/profile"
         app:graph="@navigation/profile"/>
 
     <include
@@ -18,7 +18,7 @@
         android:name="com.tripbook.tripbook.views.login.LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_profile"
-            app:destination="@id/navigation_profile"
+            app:destination="@id/profile"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
         <action
