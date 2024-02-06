@@ -2,13 +2,13 @@ package com.tripbook.tripbook.domain.repository
 
 import androidx.paging.PagingData
 import com.tripbook.tripbook.domain.model.ArticleDetail
-import com.tripbook.tripbook.domain.model.Location
+import com.tripbook.tripbook.domain.model.LikeArticle
 import com.tripbook.tripbook.domain.model.SortType
 import kotlinx.coroutines.flow.Flow
 
 interface ArticleRepository {
 
-    fun likeArticle(articleId: Long): Flow<Boolean>
+    fun likeArticle(articleId: Long): Flow<LikeArticle?>
 
     fun getArticleDetail(articleId: Long): Flow<ArticleDetail?>
 
@@ -21,7 +21,7 @@ interface ArticleRepository {
         content: String,
         thumbnail: String?,
         imageList: List<Int>?,
-        locationList: List<Location>?
+        tagList: List<String>?
     ): Flow<Long?>
 
     fun saveArticle(
@@ -30,6 +30,6 @@ interface ArticleRepository {
         content: String,
         thumbnail: String,
         imageList: List<Int>,
-        locationList: List<Location>?
+        tagList: List<String>?
     ): Flow<Long?>
 }

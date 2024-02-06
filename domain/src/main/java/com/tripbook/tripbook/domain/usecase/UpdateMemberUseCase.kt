@@ -9,7 +9,7 @@ class UpdateMemberUseCase @Inject constructor(
     private val memberRepository: MemberRepository
 ) {
     operator fun invoke(
-        name: String,
+        name: String?,
         file: File?,
         profile : String?,
         termsOfService: Boolean,

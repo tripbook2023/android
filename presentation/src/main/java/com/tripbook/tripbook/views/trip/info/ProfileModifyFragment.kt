@@ -27,6 +27,8 @@ class ProfileModifyFragment :
         binding.viewModel = viewModel
         binding.infoViewModel = infoviewModel
 
+        infoviewModel.setProfileUrl()
+
         addNicknameTextWatcher()
 
         binding.profile.setOnClickListener {
@@ -41,14 +43,12 @@ class ProfileModifyFragment :
         }
 
         binding.completeButton.setOnClickListener {
-
             infoviewModel.nickCheck(binding.nickname.text.toString())
             val nickChk = infoviewModel.nicknameChecked.value
 
             if (nickChk) {
                 duplicateCheck()
             }
-
             updateProfile()
         }
 
@@ -81,13 +81,13 @@ class ProfileModifyFragment :
 
     private fun duplicateCheck() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.validateUserName(binding.nickname.text.toString()).collect {
-                if (it) {
-                    viewModel.setNickname(binding.nickname.text.toString())
-                } else {
-                    viewModel.setNicknameValid(binding.nickname.setError(resources.getString(R.string.nickname_duplicate_alert)))
+                viewModel.validateUserName(binding.nickname.text.toString()).collect {
+                    if (it) {
+                        viewModel.setNickname(binding.nickname.text.toString())
+                    } else {
+                        viewModel.setNicknameValid(binding.nickname.setError(resources.getString(R.string.nickname_duplicate_alert)))
+                    }
                 }
-            }
         }
     }
 

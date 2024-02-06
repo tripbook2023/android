@@ -14,7 +14,7 @@ interface MemberRepository {
     fun getMember() : Flow<MemberInfo?>
 
     fun updateMember(
-        name: String,
+        name: String?,
         file: File?,
         profile : String?,
         termsOfService: Boolean,
