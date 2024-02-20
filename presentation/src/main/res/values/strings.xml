@@ -99,4 +99,10 @@
     <string name="created_asc">최신순</string>
     <string name="created_desc">오래된순</string>
     <string name="popularity">인기순</string>
+    <string name="report_title">게시글 신고사유를 입력해주세요.</string>
+    <string name="report_placeholder">게시글 신고사유를 입력하세요.</string>
+    <string name="report_cancel_button">신고 취소</string>
+    <string name="report_button">게시글 신고</string>
+    <string name="report_result1">게시글 신고 접수가\n정상적으로 처리되었습니다.</string>
+    <string name="report_result2">소중한 의견 감사드립니다.</string>
 </resources>

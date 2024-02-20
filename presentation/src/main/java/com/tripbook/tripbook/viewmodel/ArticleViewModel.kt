@@ -4,6 +4,7 @@ package com.tripbook.tripbook.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.tripbook.base.BaseViewModel
 import com.tripbook.tripbook.domain.usecase.ArticleLikeUseCase
+import com.tripbook.tripbook.domain.usecase.ArticleReportUseCase
 import com.tripbook.tripbook.domain.usecase.MemberUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ArticleViewModel @Inject constructor(
     private val articleLikeUseCase : ArticleLikeUseCase,
-    private val memberUseCase: MemberUseCase
+    private val memberUseCase: MemberUseCase,
+    private val articleReportUseCase: ArticleReportUseCase
 ) : BaseViewModel() {
 
     //좋아요 수
@@ -33,6 +35,18 @@ class ArticleViewModel @Inject constructor(
     private var _author = MutableStateFlow(false)
     val author: StateFlow<Boolean> get() = _author
 
+    private var _articleId = MutableStateFlow<Long>(0)
+
+    private var _reportComplete = MutableStateFlow(false)
+    val reportComplete: StateFlow<Boolean> get() = _reportComplete
+
+    fun setReportResult(result: Boolean){
+        _reportComplete.value = result
+    }
+    fun setArticleId(articleId: Long){
+        _articleId.value = articleId
+    }
+    fun reportArticle(content: String) = articleReportUseCase(_articleId.value, content)
     fun likeArticle(articleId : Long) = articleLikeUseCase(articleId).onEach {
 
         if (it != null) {

@@ -6,13 +6,14 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.tripbook.libs.network.NetworkResult
 import com.tripbook.libs.network.model.request.ArticleRequest
+import com.tripbook.libs.network.model.request.ReportRequest
 import com.tripbook.libs.network.safeApiCall
 import com.tripbook.libs.network.service.TripArticlesService
 import com.tripbook.tripbook.data.datasource.ArticlePagingSource
 import com.tripbook.tripbook.data.mapper.toLocationResponse
 import com.tripbook.tripbook.domain.model.ArticleDetail
-import com.tripbook.tripbook.domain.model.Location
 import com.tripbook.tripbook.domain.model.LikeArticle
+import com.tripbook.tripbook.domain.model.Location
 import com.tripbook.tripbook.domain.model.SortType
 import com.tripbook.tripbook.domain.repository.ArticleRepository
 import kotlinx.coroutines.Dispatchers
@@ -73,6 +74,25 @@ class ArticleRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun reportArticle(articleId: Long, content: String): Flow<Boolean> = safeApiCall(Dispatchers.IO) {
+        val reportRequest = ReportRequest(
+            articleId,
+            content
+        )
+        tripArticlesService.reportArticle(reportRequest)
+    }.map { response ->
+        when (response) {
+            is NetworkResult.Success -> {
+                response.value
+                true
+            }
+
+            else -> {
+                false
+            }
+        }
+    }
+
     override fun saveTempArticle(
         tempId: Long?,
         title: String,
@@ -81,7 +101,7 @@ class ArticleRepositoryImpl @Inject constructor(
         imageList: List<Int>?,
         locationList: List<Location>?
     ): Flow<Long?> = safeApiCall(Dispatchers.IO) {
-        val articleResponse = ArticleRequest(
+        val articleRequest = ArticleRequest(
             tempId,
             title,
             content,
@@ -91,7 +111,7 @@ class ArticleRepositoryImpl @Inject constructor(
         )
 
         tripArticlesService.tempSaveArticle(
-            articleResponse
+            articleRequest
         )
     }.map {
         when (it) {

@@ -17,6 +17,7 @@ import com.tripbook.tripbook.viewmodel.TripDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.abs
 
 @AndroidEntryPoint
 class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailViewModel>(R.layout.fragment_trip_detail) {
@@ -42,6 +43,7 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
         val webView = binding.mainEditor
 
         viewModel.loadArticleDetailInfo(webView)
+        articleViewModel.setArticleId(args.articleId)
         articleViewModel.getUserList()
 
         viewModel.viewModelScope.launch {
@@ -85,6 +87,11 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
         //뒤로가기
         binding.icnBefore.setOnClickListener {
             findNavController().popBackStack()
+        }
+
+        binding.icnMainReport.setOnClickListener{
+            // 팝업 띄우기
+            ReportFragmentDialog().show(childFragmentManager, "ReportFragmentDialog")
         }
 
         with(binding) {
@@ -131,7 +138,7 @@ class TripDetailFragment : BaseFragment<FragmentTripDetailBinding, TripDetailVie
                     icnBefore.colorFilter = null
                     icnDefault.colorFilter = null
                     icnMainReport.colorFilter = null
-                } else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange) {
+                } else if (abs(verticalOffset) >= appBarLayout.totalScrollRange) {
                     toolBar.visibility = View.VISIBLE
                     icnBefore.setColorFilter(
                         ContextCompat.getColor(

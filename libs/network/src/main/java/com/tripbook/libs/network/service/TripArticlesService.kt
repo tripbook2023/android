@@ -1,6 +1,7 @@
 package com.tripbook.libs.network.service
 
 import com.tripbook.libs.network.model.request.ArticleRequest
+import com.tripbook.libs.network.model.request.ReportRequest
 import com.tripbook.libs.network.model.response.ArticleDetailResponse
 import com.tripbook.libs.network.model.response.ArticleResponse
 import com.tripbook.libs.network.model.response.LikeArticleResponse
@@ -38,10 +39,14 @@ interface TripArticlesService {
         @Path("articleId") articledId: Long
     ) : UnitResponse
 
+    @POST("articles/report")
+    suspend fun reportArticle(
+        @Body reportRequest: ReportRequest
+    ) : UnitResponse
 
     @POST("articles/temp")
     suspend fun tempSaveArticle(
-        @Body articleResponse: ArticleRequest
+        @Body articleRequest: ArticleRequest
     ): TempArticleResponse
 
     @POST("articles")

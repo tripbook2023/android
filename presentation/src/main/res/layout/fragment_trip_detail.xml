@@ -78,7 +78,6 @@
                             app:layout_constraintStart_toEndOf="@id/icn_before"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:visibility="gone"
                             app:tint="@color/white" />
 
                         <ImageView
